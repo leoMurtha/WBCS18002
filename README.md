@@ -2,6 +2,8 @@
 Official repository for the WBCS18002 Web Engineering Project.
 ## Group 26
 
+# API Documentation
+
 **Title**
 ----
   <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
@@ -58,3 +60,53 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+  
+**EXAMPLE Show User**
+----
+  Returns json data about a single user.
+
+* **URL**
+
+  /users/:id
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+  None
+
+* **Success Response:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ id : 12, name : "Michael Bloom" }`
+ 
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "User doesn't exist" }`
+
+  OR
+
+  * **Code:** 401 UNAUTHORIZED <br />
+    **Content:** `{ error : "You are unauthorized to make this request." }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/users/1",
+      dataType: "json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
