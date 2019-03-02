@@ -142,8 +142,10 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If JSON:
       
-      `[
-   {
+      ```json
+  [
+  
+  {
     "airport": {
       "code": "PHL",
       "name": "Philadelphia, PA: Philadelphia International",
@@ -169,8 +171,8 @@ Official repository for the WBCS18002 Web Engineering Project.
       }
     ]
   },
-  *MORE ENTRIES*
-]`
+  
+]```
     
     If CSV:
     
