@@ -141,6 +141,7 @@ Official repository for the WBCS18002 Web Engineering Project.
     **Content:** 
     
     If JSON:
+      
       `[
    {
     "airport": {
@@ -167,7 +168,8 @@ Official repository for the WBCS18002 Web Engineering Project.
         "link": "carriers/144"
       }
     ]
-  }
+  },
+  *MORE ENTRIES*
 ]`
     
     If CSV:
