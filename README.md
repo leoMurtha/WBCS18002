@@ -144,11 +144,12 @@ Official repository for the WBCS18002 Web Engineering Project.
     `{ id : 12 }`
     
     If CSV:
-    ---
-    layout: default
-    title: Examples
-    redirect_from: /examples/
-    ---
+First Name  |  Last Name  |  Location           |  Allegiance
+------------|-------------|---------------------|-----------------
+Mance       |  Rayder     |  North of the Wall  |  Wildlings
+Margaery    |  Tyrell     |  The Reach          |  House Tyrell
+Danerys     |  Targaryen  |  Meereen            |  House Targaryen
+Tyrion      |  Lannister  |  King's Landing     |  House Lannister
  
 * **Error Response:**
 
