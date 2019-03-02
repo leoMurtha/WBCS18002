@@ -195,10 +195,12 @@ Official repository for the WBCS18002 Web Engineering Project.
               }
           ]
       }
-
-
-    ]```
+    ]
+    ```
+    
+    
    
+    
     If CSV:
     
       First Name  |  Last Name  |  Location           |  Allegiance
