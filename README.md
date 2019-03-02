@@ -141,16 +141,43 @@ Official repository for the WBCS18002 Web Engineering Project.
     **Content:** 
     
     If JSON:
-    `{ id : 12 }`
+      `[
+   {
+    "airport": {
+      "code": "PHL",
+      "name": "Philadelphia, PA: Philadelphia International",
+      "link": "/airports/123"
+    },
+    "flights_statistics": {
+      "cancelled": 7,
+      "on time": 600,
+      "total": 759,
+      "delayed": 151,
+      "diverted": 1
+    },
+    "carriers": [
+      {
+        "code": "AA",
+        "name": "American Airlines Inc.",
+        "link": "/carriers/124"
+      },
+      {
+        "code": "AS",
+        "name": "Alaska Airlines Inc.",
+        "link": "carriers/144"
+      }
+    ]
+  }
+]`
     
     If CSV:
     
-First Name  |  Last Name  |  Location           |  Allegiance
-------------|-------------|---------------------|-----------------
-Mance       |  Rayder     |  North of the Wall  |  Wildlings
-Margaery    |  Tyrell     |  The Reach          |  House Tyrell
-Danerys     |  Targaryen  |  Meereen            |  House Targaryen
-Tyrion      |  Lannister  |  King's Landing     |  House Lannister
+      First Name  |  Last Name  |  Location           |  Allegiance
+      ------------|-------------|---------------------|-----------------
+      Mance       |  Rayder     |  North of the Wall  |  Wildlings
+      Margaery    |  Tyrell     |  The Reach          |  House Tyrell
+      Danerys     |  Targaryen  |  Meereen            |  House Targaryen
+      Tyrion      |  Lannister  |  King's Landing     |  House Lannister
  
 * **Error Response:**
 
