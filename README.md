@@ -113,7 +113,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 **All airports available in the USA**
 ----
-  Returns json/csv data about the available airports in the USA from 2003 to 2016.
+  Returns json/csv list of links to the available airports in the USA along with their latest statistics.
 
 * **URL**
 
@@ -121,32 +121,34 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 * **Method:**
   
-  <_The request type_>
-
   `GET`
   
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
-
    **Required:**
  
-   `id=[integer]`
+   `type=[json | csv]`
 
    **Optional:**
- 
-   `photo_id=[alphanumeric]`
-
-* **Data Params**
-
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
-
+    
+   `date=[month/year]`
+    
 * **Success Response:**
   
   <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
 
   * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+    **Content:** 
+    
+    If JSON:
+    `{ id : 12 }`
+    
+    If CSV:
+    ---
+    layout: default
+    title: Examples
+    redirect_from: /examples/
+    ---
  
 * **Error Response:**
 
