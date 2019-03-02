@@ -211,21 +211,27 @@ Official repository for the WBCS18002 Web Engineering Project.
       Tyrion      |  Lannister  |  King's Landing     |  House Lannister
  
 * **Error Response:**
-
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
-
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
-
-  OR
+  * **Code:** 404 NOT FOUND  <br />
+    **Content:** `{ error : "Invalid date" }`
 
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+    **Content:** `{ error : "Invalid date format" }`
+  
+  * **Code:** 405 METHOD NOT ALLOWED <br />
+    **Content:** `{ error : "Invalid method" }`
+  
 
 * **Sample Call:**
 
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> 
-
+  ```javascript
+    $.ajax({
+      url: "/airports?type=json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
 * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
+  If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
