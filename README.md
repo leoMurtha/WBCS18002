@@ -165,7 +165,7 @@ Official repository for the WBCS18002 Web Engineering Project.
               {
                   "code": "AS",
                   "name": "Alaska Airlines Inc.",
-                  "link": "carriers/144"
+                  "link": "/carriers/144"
               }
           ]
       },
@@ -191,7 +191,7 @@ Official repository for the WBCS18002 Web Engineering Project.
               {
                   "code": "AS",
                   "name": "Alaska Airlines Inc.",
-                  "link": "carriers/144"
+                  "link": "/carriers/144"
               }
           ]
       }
@@ -203,12 +203,12 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-      First Name  |  Last Name  |  Location           |  Allegiance
-      ------------|-------------|---------------------|-----------------
-      Mance       |  Rayder     |  North of the Wall  |  Wildlings
-      Margaery    |  Tyrell     |  The Reach          |  House Tyrell
-      Danerys     |  Targaryen  |  Meereen            |  House Targaryen
-      Tyrion      |  Lannister  |  King's Landing     |  House Lannister
+      Code |  Airport Name        |  Airport Link  |  Statistics
+      -----|----------------------|----------------|-----------------
+      PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
+      AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
+ 
+   
  
 * **Error Response:**
   * **Code:** 404 NOT FOUND  <br />
