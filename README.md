@@ -142,38 +142,63 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If JSON:
       
-      ```json
-  [
-  
-  {
-    "airport": {
-      "code": "PHL",
-      "name": "Philadelphia, PA: Philadelphia International",
-      "link": "/airports/123"
-    },
-    "flights_statistics": {
-      "cancelled": 7,
-      "on time": 600,
-      "total": 759,
-      "delayed": 151,
-      "diverted": 1
-    },
-    "carriers": [
-      {
-        "code": "AA",
-        "name": "American Airlines Inc.",
-        "link": "/carriers/124"
+      ```javascript
+        [
+          {
+          "airport": {
+              "code": "PHL",
+              "name": "Philadelphia, PA: Philadelphia International",
+              "link": "/airports/123"
+          },
+          "flights_statistics": {
+              "cancelled": 7,
+              "on time": 600,
+              "total": 759,
+              "delayed": 151,
+              "diverted": 1
+          },
+          "carriers": [{
+                  "code": "AA",
+                  "name": "American Airlines Inc.",
+                  "link": "/carriers/124"
+              },
+              {
+                  "code": "AS",
+                  "name": "Alaska Airlines Inc.",
+                  "link": "carriers/144"
+              }
+          ]
       },
+
       {
-        "code": "AS",
-        "name": "Alaska Airlines Inc.",
-        "link": "carriers/144"
+          "airport": {
+              "code": "AHR",
+              "name": "American Hour Rapid",
+              "link": "/airports/123"
+          },
+          "flights_statistics": {
+              "cancelled": 7,
+              "on time": 600,
+              "total": 759,
+              "delayed": 151,
+              "diverted": 1
+          },
+          "carriers": [{
+                  "code": "AA",
+                  "name": "American Airlines Inc.",
+                  "link": "/carriers/124"
+              },
+              {
+                  "code": "AS",
+                  "name": "Alaska Airlines Inc.",
+                  "link": "carriers/144"
+              }
+          ]
       }
-    ]
-  },
-  
-]```
-    
+
+
+    ]```
+   
     If CSV:
     
       First Name  |  Last Name  |  Location           |  Allegiance
