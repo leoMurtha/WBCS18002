@@ -881,7 +881,7 @@ If CSV:
 ```
 If CSV:
 
-
+```markdown
   | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__weather | minutes delayed__carrier | minutes delayed__security | minutes delayed__all | minutes delayed__national aviation system | airport__code | airport__name                                         | airport__link |
 |------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|--------------------------|---------------------------|----------------------|-------------------------------------------|---------------|-------------------------------------------------------|---------------|
 | AA               | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | 1269                           | 1722                     | 1367                     | 139                       | 8314                 | 3817                                      | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
@@ -889,7 +889,7 @@ If CSV:
 | AS               | Alaska Airlines Inc.   | /carriers/144  | 2003                 | 6                     | 167                            | 232                      | 135                      | 239                       | 1774                 | 1001                                      | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
 |                  |                        |                |                      |                       |                                |                          |                          |                           |                      |                                           | AHR           | American Hour Rapid                                   | /airports/123 |
 
-
+```
 
 
 
