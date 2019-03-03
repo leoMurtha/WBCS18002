@@ -150,7 +150,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           },
           "date": {
               "month": 4,
-              "year": 2016,
+              "year": 2016
           },
           "flights_statistics": {
               "cancelled": 7,
@@ -180,7 +180,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           },
           "date": {
               "month": 4,
-              "year": 2016,
+              "year": 2016
           },
           "flights_statistics": {
               "cancelled": 7,
@@ -209,13 +209,12 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-| ﻿"airport__code" | airport__name                                | airport__link | 	flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
-|-----------------|----------------------------------------------|---------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
-| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
-| AHR             | American Hour Rapid                          | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |    
- 
+| ﻿"airport__code" | airport__name                                | airport__link | date__month | date__year | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
+|-----------------|----------------------------------------------|---------------|-------------|------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
+| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | 4           | 2016       | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+|                 |                                              |               |             |            |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
+| AHR             | American Hour Rapid                          | /airports/123 | 4           | 2016       | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+|                 |                                              |               |             |            |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
    
  
 * **Error Response:**
