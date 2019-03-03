@@ -255,7 +255,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 * **URL**
 
-  /airports
+  /carriers
 
 * **Method:**
   
@@ -279,59 +279,59 @@ Official repository for the WBCS18002 Web Engineering Project.
     If JSON:
       
       ```javascript
-        [
+          [
           {
-          "airport": {
-              "code": "PHL",
-              "name": "Philadelphia, PA: Philadelphia International",
-              "link": "/airports/123"
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
+          "carriers": {
                   "code": "AA",
                   "name": "American Airlines Inc.",
                   "link": "/carriers/124"
               },
-              {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-                  "link": "/carriers/144"
-              }
-          ]
-      },
-
-      {
-          "airport": {
+          "carriers_statistics": {
+              "cancelled": 40,
+              "on time": 259,
+              "total": 400,
+              "delayed": 101,
+              "diverted": 0
+              },
+            "airport":'[{
               "code": "AHR",
               "name": "American Hour Rapid",
-              "link": "/airports/123"
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-                  "link": "/carriers/124"
+              "link": "/airports/126"
               },
               {
+              "code": "PHL",
+              "name": "Philadelphia, PA: Philadelphia International",
+              "link": "/airports/127"
+              }
+            ]
+          }, 
+          {
+           "carriers": {
                   "code": "AS",
                   "name": "Alaska Airlines Inc.",
                   "link": "/carriers/144"
+              },
+              ,
+          "carriers_statistics": {
+               "cancelled": 15,
+              "on time": 211,
+              "total": 245,
+              "delayed": 10,
+              "diverted": 9
+              },
+            "airport":'[{
+              "code": "AHR",
+              "name": "American Hour Rapid",
+              "link": "/airports/133"
+              },
+              {
+              "code": "PHL",
+              "name": "Philadelphia, PA: Philadelphia International",
+              "link": "/airports/134"
               }
-          ]
-      }
-    ]
+            ]
+          }
+      ]
     ```
     
     
