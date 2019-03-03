@@ -613,9 +613,7 @@ If CSV:
 
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
 
-
-
-**Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports**
+ **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports**
 ----
   Returns json/csv list of number of minutes of delay per carrier 
 
@@ -648,8 +646,9 @@ If CSV:
     
    
       Number of minutes of delay per carrier attributed to carrier-specific reasons for a all airports for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
- If JSON:
-      ```javascript
+
+ If JSON  
+ ```javascript
         [
           {
           "carriers": {
@@ -781,13 +780,12 @@ If CSV:
             ]
           }
         ]
-
-    ```
+```
+    
   
   If CSV:
 
-```
-
+```markdown
 | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__carrier | airport__code | airport__name                                         | airport__link |
 |------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|---------------|-------------------------------------------------------|---------------|
 | AA               | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | 1269                           | 1367                     | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
@@ -804,11 +802,12 @@ If CSV:
 
 
 
+
   Number of minutes of delay per carrier attributed to all reasons for a specific airport (American Hour Rapid) for a given month ( 6 / 2003) and across all US airports (which on this example are only 3)
-   If JSON:
-      ```javascript
-      
-       [
+
+  If JSON  
+```javascript
+      [
           {
           "carriers": {
             "code": "AA",
@@ -879,14 +878,12 @@ If CSV:
             ]
           }
       ]
-
-
+```
 
 If CSV:
 
 
-```
-
+```markdown
 | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__weather | minutes delayed__carrier | minutes delayed__security | minutes delayed__all | minutes delayed__national aviation system | airport__code | airport__name                                         | airport__link |
 |------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|--------------------------|---------------------------|----------------------|-------------------------------------------|---------------|-------------------------------------------------------|---------------|
 | AA               | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | 1269                           | 1722                     | 1367                     | 139                       | 8314                 | 3817                                      | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
@@ -895,14 +892,6 @@ If CSV:
 |                  |                        |                |                      |                       |                                |                          |                          |                           |                      |                                           | AHR           | American Hour Rapid                                   | /airports/123 |
 
 ```
-
-
-
-
-
-
-
-
 
 
 * **Error Response:**
