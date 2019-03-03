@@ -612,3 +612,319 @@ If CSV:
 * **Notes:**
 
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+
+
+
+**Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports**
+----
+  Returns json/csv list of number of minutes of delay per carrier 
+
+
+* **URL**
+
+  /carriers/:id?minutes_delayed&airport
+
+* **Method:**
+  
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `type=[json | csv]`
+
+
+   **Optional:**
+    `date=[month/year] (06/2008)` 
+    `airport_id=[all | int] `
+    `minutes_delayed=[all | 'carrier_reasons']`
+   
+    
+* **Success Response:**
+  
+  * **Code:** 200 <br />
+    **Content:** 
+    
+   
+      Number of minutes of delay per carrier attributed to carrier-specific reasons for a all airports for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
+ If JSON:
+      ```javascript
+        [
+          {
+          "carriers": {
+            "code": "AA",
+            "name": "American Airlines Inc.",
+            "link": "/carriers/124",
+            "date": {    
+                "year": 2003, 
+                "month": 6
+              } 
+            },    
+            "minutes delayed": {
+                "late aircraft": 1269, 
+                "carrier": 1367                      
+            },
+            "airport": [{
+      
+                "code": "PHL",
+                "name": "Philadelphia, PA: Philadelphia International",
+                "link": "/airports/134"
+              },
+                {
+      
+                "code": "AHR",
+                "name": "American Hour Rapid",
+                "link": "/airports/123"
+                }
+            ]
+          },
+
+          {
+            "carriers": 
+              {
+              "code": "AA",
+              "name": "American Airlines Inc.",
+              "link": "/carriers/124",
+              "date": 
+                {    
+                  "year": 2003, 
+                  "month": 7
+                } 
+              },    
+              "minutes delayed": 
+              {
+                  "late aircraft": 1169, 
+                  "carrier": 1007 
+                        
+              },
+              "airport":
+              [ {
+        
+                "code": "PHL",
+                "name": "Philadelphia, PA: Philadelphia International",
+                "link": "/airports/134"
+                },
+                {
+      
+                "code": "AHR",
+                "name": "American Hour Rapid",
+                "link": "/airports/123"
+                }
+              ]
+          },
+
+          {
+            "carriers":
+            {
+              "code": "AS",
+              "name": "Alaska Airlines Inc.",
+              "link": "/carriers/144",
+              "date": 
+              {    
+                "year": 2003, 
+                "month": 6
+              } 
+            },    
+            "minutes delayed": 
+            {
+                "late aircraft": 167, 
+                "carrier": 135 
+                      
+            },
+            "airport":
+            [ {
+      
+              "code": "ATL",
+              "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International",
+              "link": "/airports/133"
+              },
+              {
+      
+              "code": "AHR",
+              "name": "American Hour Rapid",
+              "link": "/airports/123"
+              }
+            ]
+          },
+          {
+            "carriers":
+            {
+              "code": "AS",
+              "name": "Alaska Airlines Inc.",
+              "link": "/carriers/144",
+              "date": 
+              {    
+                "year": 2003, 
+                "month": 6
+              } 
+            },    
+            "minutes delayed": 
+            {
+                "late aircraft": 187, 
+                "carrier": 131 
+                      
+            },
+            "airport":
+            [ {
+      
+              "code": "ATL",
+              "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International",
+              "link": "/airports/133"
+              },
+              {
+      
+              "code": "AHR",
+              "name": "American Hour Rapid",
+              "link": "/airports/123"
+              }
+            ]
+          }
+]
+
+    ```
+  If CSV:
+   | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__carrier | airport__code | airport__name                                         | airport__link |
+|------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|---------------|-------------------------------------------------------|---------------|
+| AA               | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | 1269                           | 1367                     | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
+|                  |                        |                |                      |                       |                                |                          | AHR           | American Hour Rapid                                   | /airports/123 |
+| AA               | American Airlines Inc. | /carriers/124  | 2003                 | 7                     | 1169                           | 1007                     | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
+|                  |                        |                |                      |                       |                                |                          | AHR           | American Hour Rapid                                   | /airports/123 |
+| AS               | Alaska Airlines Inc.   | /carriers/144  | 2003                 | 6                     | 167                            | 135                      | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
+|                  |                        |                |                      |                       |                                |                          | AHR           | American Hour Rapid                                   | /airports/123 |
+| AS               | Alaska Airlines Inc.   | /carriers/144  | 2003                 | 6                     | 187                            | 131                      | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
+|                  |                        |                |                      |                       |                                |                          | AHR           | American Hour Rapid                                   | /airports/123 |
+
+
+
+
+
+  Number of minutes of delay per carrier attributed to all reasons for a specific airport (American Hour Rapid) for a given month ( 6 / 2003) and across all US airports (which on this example are only 3)
+   If JSON:
+      ```javascript
+      
+       [
+          {
+          "carriers": {
+            "code": "AA",
+            "name": "American Airlines Inc.",
+            "link": "/carriers/124",
+            "date": {    
+                "year": 2003, 
+                "month": 6
+              } 
+            },    
+            "minutes delayed": {
+                "late aircraft": 1269, 
+                "weather": 1722, 
+                "carrier": 1367, 
+                "security": 139, 
+                "all": 8314, 
+                "national aviation system": 3817                 
+            },
+            "airport": [{
+      
+                "code": "PHL",
+                "name": "Philadelphia, PA: Philadelphia International",
+                "link": "/airports/134"
+              },
+                {
+      
+                "code": "AHR",
+                "name": "American Hour Rapid",
+                "link": "/airports/123"
+                }
+            ]
+          },
+
+          {
+            "carriers":
+            {
+              "code": "AS",
+              "name": "Alaska Airlines Inc.",
+              "link": "/carriers/144",
+              "date": 
+              {    
+                "year": 2003, 
+                "month": 6
+              } 
+            },    
+            "minutes delayed": 
+            {
+                "late aircraft": 167, 
+                "weather": 232, 
+                "carrier": 135, 
+                "security": 239, 
+                "all": 1774, 
+                "national aviation system": 1001  
+                      
+            },
+            "airport":
+            [ {
+      
+              "code": "ATL",
+              "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International",
+              "link": "/airports/133"
+              },
+              {
+      
+              "code": "AHR",
+              "name": "American Hour Rapid",
+              "link": "/airports/123"
+              }
+            ]
+          }
+          
+]
+
+
+    ```
+
+    
+    
+   
+    
+    If CSV:
+  | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__weather | minutes delayed__carrier | minutes delayed__security | minutes delayed__all | minutes delayed__national aviation system | airport__code | airport__name                                         | airport__link |
+|------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|--------------------------|---------------------------|----------------------|-------------------------------------------|---------------|-------------------------------------------------------|---------------|
+| AA               | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | 1269                           | 1722                     | 1367                     | 139                       | 8314                 | 3817                                      | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
+|                  |                        |                |                      |                       |                                |                          |                          |                           |                      |                                           | AHR           | American Hour Rapid                                   | /airports/123 |
+| AS               | Alaska Airlines Inc.   | /carriers/144  | 2003                 | 6                     | 167                            | 232                      | 135                      | 239                       | 1774                 | 1001                                      | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
+|                  |                        |                |                      |                       |                                |                          |                          |                           |                      |                                           | AHR           | American Hour Rapid                                   | /airports/123 |
+
+
+
+
+
+
+
+
+
+
+
+
+* **Error Response:**
+  * **Code:** 404 NOT FOUND  <br />
+    **Content:** `{ error : "Invalid date" }`
+
+  * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Invalid date format" }`
+  
+  * **Code:** 405 METHOD NOT ALLOWED <br />
+    **Content:** `{ error : "Invalid method" }`
+  
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/carriers?type=json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+* **Notes:**
+
+  If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
