@@ -510,3 +510,92 @@ If CSV:
     });
   ```
 
+
+**All statistics about flights of a carrier from/to a US airport for a given month/all months available.**
+----
+  Returns json/csv all of the statistics about flights of a carrier from/to a US airport for a given month/all months available.
+
+* **URL**
+/airports/:id?carrier=:carrier_id&statistics='flights'
+
+* **Method:**
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+   `id=[integer]`
+   `carrier_id=[integer]`
+   `statistics=['flights' | 'delays']` 
+    
+   **Optional:**
+   `month=[integer]`
+    
+* **Success Response:**
+  
+  * **Code:** 200 <br />
+    **Content:** 
+    
+    If JSON:
+	```javascript
+    "airport": {
+        "code": "PHL",
+        "name": "Philadelphia, PA: Philadelphia International",
+        "id": 123,
+        "link": "/airports/123"
+    },
+    "carrier": {
+        "code": "AA",
+        "name": "American Airlines Inc.",
+        "id": 124,
+        "link": "/carriers/124",
+    },
+    "flights_statistics": {
+        "cancelled": 5,
+        "on time": 561,
+        "total": 752,
+        "delayed": 186,
+        "diverted": 0
+    },
+    "date": {
+        "year": 2003,
+        "month": 6
+    }
+    ```
+       
+
+	
+	If CSV:
+	
+| airport/code | airport/name | airport/id | airport/link | carrier/code | carrier/name | carrier/id | carrier/link | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/total | flights_statistics/delayed | flights_statistics/diverted | date/year | date/month |
+|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|--------------------------|----------------------------|-----------------------------|-----------|------------|
+| PHL | Philadelphia, PA: Philadelphia International | 123 | /airports/123 | AA | American Airlines Inc. | 124 | /carriers/124 | 5 | 561 | 752 | 186 | 0 | 2003 | 6 |
+    
+
+   
+ 
+* **Error Response:**
+  * **Code:** 404 NOT FOUND  <br />
+    **Content:** `{ error : "Airport not found" }
+    { error : "Carrier not found" }`
+
+  * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Invalid statistics type" }`
+
+* **Sample Call:**
+
+  ```curl -H "Accept: application/json" http://server//airports/123?carrier=1234&statistics='flights'```
+  
+  ```javascript
+    $.ajax({
+      url: "/airports/123?carrier=1245&statistics='flights'",
+      type : "GET",
+      dataType: "csv",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+* **Notes:**
+
+   * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
