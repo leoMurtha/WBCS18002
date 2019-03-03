@@ -228,7 +228,8 @@ Official repository for the WBCS18002 Web Engineering Project.
   
 
 * **Sample Call:**
-  curl -H "Accept: application/json" 'http://localhost:8080/otp/routers/default/plan?fromPlace=52.5895,13.2836&toPlace=52.5461,13.3588&date=2017/04/04&time=12:00:00'
+  ```curl -H "Accept: application/json" 'http://server/airports```
+  
   ```javascript
     $.ajax({
       url: "/airports?type=json",
