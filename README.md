@@ -209,7 +209,7 @@ Official repository for the WBCS18002 Web Engineering Project.
    
     
    
-If CSV:
+    If CSV:
     
 | ﻿"airport__code" | airport__name                                | airport__link | date__month | date__year | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
 |-----------------|----------------------------------------------|---------------|-------------|------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
