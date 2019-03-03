@@ -131,7 +131,8 @@ Official repository for the WBCS18002 Web Engineering Project.
 
    **Optional:**
     
-   `date=[month/year] (6/2008)`
+   `month=[integer]`
+   `year=[integer]`
     
 * **Success Response:**
   
