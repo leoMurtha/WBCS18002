@@ -207,7 +207,13 @@ Official repository for the WBCS18002 Web Engineering Project.
       -----|----------------------|----------------|-----------------
       PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
       AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
- 
+  
+  **"airport\_\_code"**|**"airport\_\_name"**|**"airport\_\_link"**|**"flights\_statistics\_\_cancelled"**|**"flights\_statistics\_\_on time"**|**"flights\_statistics\_\_total"**|**"flights\_statistics\_\_delayed"**|**"flights\_statistics\_\_diverted"**|**"carriers\_\_code"**|**"carriers\_\_name"**|**"carriers\_\_link"**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
+"PHL"|"Philadelphia| PA: Philadelphia International"|"/airports/123"|"7"|"600"|"759"|"151"|"1"|"AA"|"American Airlines Inc."
+""|""|""|""|""|""|""|""|"AS"|"Alaska Airlines Inc."|"/carriers/144"
+"AHR"|"American Hour Rapid"|"/airports/123"|"7"|"600"|"759"|"151"|"1"|"AA"|"American Airlines Inc."|"/carriers/124"
+""|""|""|""|""|""|""|""|"AS"|"Alaska Airlines Inc."|"/carriers/144"
    
  
 * **Error Response:**
