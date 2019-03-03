@@ -111,6 +111,7 @@ Official repository for the WBCS18002 Web Engineering Project.
     });
   ```
 
+
 **All airports available in the USA**
 ----
   Returns json/csv list of links to the available airports in the USA along with their latest statistics.
@@ -150,7 +151,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           },
           "date": {
               "month": 4,
-              "year": 2016
+              "year": 2016,
           },
           "flights_statistics": {
               "cancelled": 7,
@@ -180,7 +181,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           },
           "date": {
               "month": 4,
-              "year": 2016
+              "year": 2016,
           },
           "flights_statistics": {
               "cancelled": 7,
@@ -207,7 +208,8 @@ Official repository for the WBCS18002 Web Engineering Project.
     
    
     
-    If CSV:
+   
+If CSV:
     
 | ﻿"airport__code" | airport__name                                | airport__link | date__month | date__year | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
 |-----------------|----------------------------------------------|---------------|-------------|------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
@@ -229,12 +231,14 @@ Official repository for the WBCS18002 Web Engineering Project.
   
 
 * **Sample Call:**
-  ```curl -H "Accept: application/json" 'http://server/airports```
+
+  ```curl -H "Accept: application/json" 'http://server/airports?month=5&year=2008```
   
   ```javascript
     $.ajax({
-      url: "/airports?type=json",
+      url: "/airports",
       type : "GET",
+      dataType: "csv",
       success : function(r) {
         console.log(r);
       }
@@ -242,9 +246,9 @@ Official repository for the WBCS18002 Web Engineering Project.
   ```
 * **Notes:**
 
-  If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-  User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
-
+  * If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
+  * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+  
 **All carriers operating in US airports**
 ----
   Returns json/csv list of links to the available airports in the USA along with their latest statistics.
