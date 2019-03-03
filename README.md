@@ -131,143 +131,12 @@ Official repository for the WBCS18002 Web Engineering Project.
 
    **Optional:**
     
-   `month=[integer]`
-   
-   `year=[integer]`
+   `date=[month/year]`
     
 * **Success Response:**
   
-  * **Code:** 200 <br />
-    **Content:** 
-    
-    If JSON:
-      
-      ```javascript
-        [
-          {
-          "airport": {
-              "code": "PHL",
-              "name": "Philadelphia, PA: Philadelphia International",
-              "link": "/airports/123"
-          },
-          "date": {
-              "month": 4,
-              "year": 2016,
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-                  "link": "/carriers/124"
-              },
-              {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-                  "link": "/carriers/144"
-              }
-          ]
-      },
+  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
 
-      {
-          "airport": {
-              "code": "AHR",
-              "name": "American Hour Rapid",
-              "link": "/airports/123"
-          },
-          "date": {
-              "month": 4,
-              "year": 2016,
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-                  "link": "/carriers/124"
-              },
-              {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-                  "link": "/carriers/144"
-              }
-          ]
-      }
-    ]
-    ```
-    
-    
-   
-    
-    If CSV:
-    
-      Code |  Airport Name        |  Airport Link  |  Statistics
-      -----|----------------------|----------------|-----------------
-      PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
-      AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
- 
-   
- 
-* **Error Response:**
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Invalid date" }`
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid date format" }`
-  
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
-  
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/airports?type=json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-* **Notes:**
-
-  If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-
-**All carriers operating in US airports**
-----
-  Returns json/csv list of links to the available airports in the USA along with their latest statistics.
-
-* **URL**
-
-  /airports
-
-* **Method:**
-  
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `type=[json | csv]`
-
-   **Optional:**
-    
-   `date=[month/year] (6/2008)`
-    
-* **Success Response:**
-  
   * **Code:** 200 <br />
     **Content:** 
     
@@ -334,12 +203,29 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-      Code |  Airport Name        |  Airport Link  |  Statistics
-      -----|----------------------|----------------|-----------------
-      PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
-      AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
+     | ﻿"airport__code" | airport__name                                | airport__link |
+     |------------------|----------------------------------------------|---------------|
+     | PHL              | Philadelphia, PA: Philadelphia International | /airports/123 |
+     |                  |                                              |               |
+     | AHR              | American Hour Rapid                          | /airports/123 |
+     |                  |                                              |               |
+     
+     
+     | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | 
+     |-------------------------------|-----------------------------|---------------------------|
+     | 7                             | 600                         | 759                       |
+     |                               |                             |                           |
+     | 7                             | 600                         | 759                       |
+     |                               |                             |                           |
+     
+     
+     | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
+     |-----------------------------|------------------------------|----------------|------------------------|----------------|
+     | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+     |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
+     | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+     |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
  
-   
  
 * **Error Response:**
   * **Code:** 404 NOT FOUND  <br />
@@ -366,4 +252,3 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-
