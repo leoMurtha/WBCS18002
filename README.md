@@ -780,7 +780,7 @@ If CSV:
               }
             ]
           }
-]
+        ]
 
     ```
   If CSV:
@@ -879,12 +879,8 @@ If CSV:
           
 ]
 ```
+If CSV:
 
-    
-    
-   
-    
-    If CSV:
 
   | ﻿"carriers__code" | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | minutes delayed__late aircraft | minutes delayed__weather | minutes delayed__carrier | minutes delayed__security | minutes delayed__all | minutes delayed__national aviation system | airport__code | airport__name                                         | airport__link |
 |------------------|------------------------|----------------|----------------------|-----------------------|--------------------------------|--------------------------|--------------------------|---------------------------|----------------------|-------------------------------------------|---------------|-------------------------------------------------------|---------------|
