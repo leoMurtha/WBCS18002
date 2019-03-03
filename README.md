@@ -339,12 +339,12 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-      Code |  Airport Name        |  Airport Link  |  Statistics
-      -----|----------------------|----------------|-----------------
-      PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
-      AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
- 
-   
+    | ﻿"carriers__code" | carriers__name         | carriers__link | carriers_statistics__cancelled | carriers_statistics__on time | carriers_statistics__total | carriers_statistics__delayed | carriers_statistics__diverted | airport__code | airport__name                                | airport__link |
+|------------------|------------------------|----------------|--------------------------------|------------------------------|----------------------------|------------------------------|-------------------------------|---------------|----------------------------------------------|---------------|
+| AA               | American Airlines Inc. | /carriers/124  | 40                             | 259                          | 400                        | 101                          | 0                             | AHR           | American Hour Rapid                          | /airports/126 |
+|                  |                        |                |                                |                              |                            |                              |                               | PHL           | Philadelphia, PA: Philadelphia International | /airports/127 |
+| AS               | Alaska Airlines Inc.   | /carriers/144  | 15                             | 211                          | 245                        | 10                           | 9                             | AHR           | American Hour Rapid                          | /airports/133 |
+|                  |                        |                |                                |                              |                            |                              |                               | PHL           | Philadelphia, PA: Philadelphia International | /airports/134 |
  
 * **Error Response:**
   * **Code:** 404 NOT FOUND  <br />
@@ -361,7 +361,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 
   ```javascript
     $.ajax({
-      url: "/airports?type=json",
+      url: "/carriers?type=json",
       type : "GET",
       success : function(r) {
         console.log(r);
@@ -371,4 +371,3 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-
