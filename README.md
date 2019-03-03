@@ -149,6 +149,10 @@ Official repository for the WBCS18002 Web Engineering Project.
               "name": "Philadelphia, PA: Philadelphia International",
               "link": "/airports/123"
           },
+          "date": {
+              "month": 4,
+              "year": 2016,
+          },
           "flights_statistics": {
               "cancelled": 7,
               "on time": 600,
@@ -174,6 +178,10 @@ Official repository for the WBCS18002 Web Engineering Project.
               "code": "AHR",
               "name": "American Hour Rapid",
               "link": "/airports/123"
+          },
+          "date": {
+              "month": 4,
+              "year": 2016,
           },
           "flights_statistics": {
               "cancelled": 7,
