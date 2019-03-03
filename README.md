@@ -209,10 +209,12 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-      Code |  Airport Name        |  Airport Link  |  Statistics
-      -----|----------------------|----------------|-----------------
-      PHL  |  Philadelphia Int... |  /airports/123 |  {cancelled: 7,}
-      AHL  |  American Hour Rapid |  /airports/123 |  House Tyrell
+| ﻿"airport__code" | airport__name                                | airport__link | 	flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
+|-----------------|----------------------------------------------|---------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
+| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
+| AHR             | American Hour Rapid                          | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
+|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |    
  
    
  
