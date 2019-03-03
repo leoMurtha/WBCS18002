@@ -147,6 +147,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           "airport": {
               "code": "PHL",
               "name": "Philadelphia, PA: Philadelphia International",
+	      "id": 123,
               "link": "/airports/123"
           },
           "date": {
@@ -163,12 +164,14 @@ Official repository for the WBCS18002 Web Engineering Project.
           "carriers": [{
                   "code": "AA",
                   "name": "American Airlines Inc.",
-                  "link": "/carriers/124"
+                  "id": 124,
+		  "link": "/carriers/124"
               },
               {
                   "code": "AS",
                   "name": "Alaska Airlines Inc.",
-                  "link": "/carriers/144"
+                  "id": 144,
+		  "link": "/carriers/144"
               }
           ]
       },
@@ -177,7 +180,8 @@ Official repository for the WBCS18002 Web Engineering Project.
           "airport": {
               "code": "AHR",
               "name": "American Hour Rapid",
-              "link": "/airports/123"
+	      "id": 125,
+              "link": "/airports/125"
           },
           "date": {
               "month": 4,
@@ -193,11 +197,13 @@ Official repository for the WBCS18002 Web Engineering Project.
           "carriers": [{
                   "code": "AA",
                   "name": "American Airlines Inc.",
+		  "id": 124,
                   "link": "/carriers/124"
               },
               {
                   "code": "AS",
                   "name": "Alaska Airlines Inc.",
+		  "id": 144,
                   "link": "/carriers/144"
               }
           ]
@@ -211,12 +217,11 @@ Official repository for the WBCS18002 Web Engineering Project.
    
     If CSV:
     
-| ﻿"airport__code" | airport__name                                | airport__link | date__month | date__year | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
-|-----------------|----------------------------------------------|---------------|-------------|------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
-| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | 4           | 2016       | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |             |            |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
-| AHR             | American Hour Rapid                          | /airports/123 | 4           | 2016       | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |             |            |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | /carriers/144  |
+"airport__code","airport__name","airport__link","flights_statistics__cancelled","flights_statistics__on time","flights_statistics__total","flights_statistics__delayed","flights_statistics__diverted","carriers__code","carriers__name","carriers__link"
+"PHL","Philadelphia, PA: Philadelphia International","/airports/123","7","600","759","151","1","AA","American Airlines Inc.","/carriers/124"
+"","","","","","","","","AS","Alaska Airlines Inc.","carriers/144"
+"AHR","American Hour Rapid","/airports/123","7","600","759","151","1","AA","American Airlines Inc.","/carriers/124"
+"","","","","","","","","AS","Alaska Airlines Inc.","carriers/144"
    
  
 * **Error Response:**
@@ -251,7 +256,7 @@ Official repository for the WBCS18002 Web Engineering Project.
   
 **All carriers operating in US airports**
 ----
-  Returns json/csv list of links to the available airports in the USA along with their latest statistics.
+  Returns json/csv list of links to the available carriers operating at airports in the USA along with their latest statistics.
 
 * **URL**
 
@@ -263,13 +268,12 @@ Official repository for the WBCS18002 Web Engineering Project.
   
 *  **URL Params**
 
-   **Required:**
- 
-   `type=[json | csv]`
+   **Required:**`
 
    **Optional:**
     
-   `date=[month/year] (6/2008)`
+   `month=[integer]`
+   `year=[integer]`
     
 * **Success Response:**
   
@@ -281,21 +285,23 @@ Official repository for the WBCS18002 Web Engineering Project.
       ```javascript
            [
           {
-          "carriers": {
+          "carrier": {
                   "code": "AA",
                   "name": "American Airlines Inc.",
+		  "id": 124,
                   "link": "/carriers/124"
               },
-          "carriers_statistics": {
+          "carrier_statistics": {
               "cancelled": 40,
               "on time": 259,
               "total": 400,
               "delayed": 101,
               "diverted": 0
               },
-            "airport":[{
+            "airports":[{
               "code": "AHR",
               "name": "American Hour Rapid",
+	      "id": 125,
               "link": "/airports/126"
               },
               {
