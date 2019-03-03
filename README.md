@@ -339,7 +339,7 @@ Official repository for the WBCS18002 Web Engineering Project.
     
     If CSV:
     
-    | ﻿"carriers__code" | carriers__name         | carriers__link | carriers_statistics__cancelled | carriers_statistics__on time | carriers_statistics__total | carriers_statistics__delayed | carriers_statistics__diverted | airport__code | airport__name                                | airport__link |
+  | ﻿"carriers__code" | carriers__name         | carriers__link | carriers_statistics__cancelled | carriers_statistics__on time | carriers_statistics__total | carriers_statistics__delayed | carriers_statistics__diverted | airport__code | airport__name                                | airport__link |
 |------------------|------------------------|----------------|--------------------------------|------------------------------|----------------------------|------------------------------|-------------------------------|---------------|----------------------------------------------|---------------|
 | AA               | American Airlines Inc. | /carriers/124  | 40                             | 259                          | 400                        | 101                          | 0                             | AHR           | American Hour Rapid                          | /airports/126 |
 |                  |                        |                |                                |                              |                            |                              |                               | PHL           | Philadelphia, PA: Philadelphia International | /airports/127 |
