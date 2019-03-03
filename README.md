@@ -279,7 +279,7 @@ Official repository for the WBCS18002 Web Engineering Project.
     If JSON:
       
       ```javascript
-          [
+           [
           {
           "carriers": {
                   "code": "AA",
@@ -293,7 +293,7 @@ Official repository for the WBCS18002 Web Engineering Project.
               "delayed": 101,
               "diverted": 0
               },
-            "airport":'[{
+            "airport":[{
               "code": "AHR",
               "name": "American Hour Rapid",
               "link": "/airports/126"
@@ -311,7 +311,6 @@ Official repository for the WBCS18002 Web Engineering Project.
                   "name": "Alaska Airlines Inc.",
                   "link": "/carriers/144"
               },
-              ,
           "carriers_statistics": {
                "cancelled": 15,
               "on time": 211,
@@ -319,7 +318,7 @@ Official repository for the WBCS18002 Web Engineering Project.
               "delayed": 10,
               "diverted": 9
               },
-            "airport":'[{
+            "airport":[{
               "code": "AHR",
               "name": "American Hour Rapid",
               "link": "/airports/133"
