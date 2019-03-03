@@ -370,3 +370,143 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
+  
+  
+
+**Show Airport Informations**
+----
+  Returns all carriers operating at a specific airport and related statistics on a specific month and year or lastest.
+
+* **URL**
+
+`/airports/:id`
+
+* **Method:**
+
+`GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+   **Optional:**
+ 
+   `month=[integer]`
+   `year=[integer]`
+
+* **Success Response:**
+  
+  If JSON:
+      
+```javascript
+{
+    "airport": {
+        "code": "PHL",
+        "name": "Philadelphia, PA: Philadelphia International",
+        "link": "/airports/123"
+    },
+    "carriers": [{
+            "code": "AA",
+            "name": "American Airlines Inc.",
+            "link": "/carriers/124",
+            "date": {
+                "year": 2003,
+                "month": 6
+            },
+            "statistics": {
+                "flights": {
+                    "cancelled": 5,
+                    "on time": 561,
+                    "total": 752,
+                    "delayed": 186,
+                    "diverted": 0
+                },
+                "# of delays": {
+                    "late aircraft": 18,
+                    "weather": 28,
+                    "security": 2,
+                    "national aviation system": 105,
+                    "carrier": 34
+                },
+                "minutes delayed": {
+                    "late aircraft": 1269,
+                    "weather": 1722,
+                    "carrier": 1367,
+                    "security": 139,
+                    "total": 8314,
+                    "national aviation system": 3817
+                }
+            }
+        },
+        {
+            "code": "AS",
+            "name": "Alaska Airlines Inc.",
+            "link": "/carriers/144",
+            "date": {
+                "year": 2003,
+                "month": 6
+            },
+            "statistics": {
+                "flights": {
+                    "cancelled": 0,
+                    "on time": 44,
+                    "total": 60,
+                    "delayed": 16,
+                    "diverted": 0
+                },
+                "# of delays": {
+                    "late aircraft": 1,
+                    "weather": 0,
+                    "security": 0,
+                    "national aviation system": 11,
+                    "carrier": 3
+                },
+                "minutes delayed": {
+                    "late aircraft": 19,
+                    "weather": 0,
+                    "carrier": 460,
+                    "security": 14,
+                    "total": 796,
+                    "national aviation system": 303
+                }
+            }
+        }
+    ]
+}
+```
+
+If CSV:
+``` markdown
+| ﻿"airport__code" | airport__name                                | airport__link | carriers__code | carriers__name         | carriers__link | carriers__date__year | carriers__date__month | carriers__statistics__| | carriers__statistics__|__late aircraft | carriers__statistics__|__weather | carriers__statistics__|__security | carriers__statistics__|__national aviation system | carriers__statistics__|__carrier | carriers__statistics__|__cancelled | carriers__statistics__|__on time | carriers__statistics__|__total | carriers__statistics__|__delayed | carriers__statistics__|__diverted |
+|-----------------|----------------------------------------------|---------------|----------------|------------------------|----------------|----------------------|-----------------------|-------------------------|----------------------------------------|----------------------------------|-----------------------------------|---------------------------------------------------|----------------------------------|------------------------------------|----------------------------------|--------------------------------|----------------------------------|-----------------------------------|
+| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | AA             | American Airlines Inc. | /carriers/124  | 2003                 | 6                     | flights                 |                                        |                                  |                                   |                                                   |                                  | 5                                  | 561                              | 752                            | 186                              | 0                                 |
+|                 |                                              |               |                |                        |                |                      |                       | # of delays             | 18                                     | 28                               | 2                                 | 105                                               | 34                               |                                    |                                  |                                |                                  |                                   |
+|                 |                                              |               |                |                        |                |                      |                       | minutes delayed         | 1269                                   | 1722                             | 139                               | 3817                                              | 1367                             |                                    |                                  | 8314                           |                                  |                                   |
+|                 |                                              |               | AS             | Alaska Airlines Inc.   | /carriers/144  | 2003                 | 6                     | flights                 |                                        |                                  |                                   |                                                   |                                  | 0                                  | 44                               | 60                             | 16                               | 0                                 |
+|                 |                                              |               |                |                        |                |                      |                       | # of delays             | 1                                      | 0                                | 0                                 | 11                                                | 3                                |                                    |                                  |                                |                                  |                                   |
+|                 |                                              |               |                |                        |                |                      |                       | minutes delayed         | 19                                     | 0                                | 14                                | 303                                               | 460                              |                                    |                                  | 796                            |                                  |                                   |
+```
+
+
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Invalid id" }`
+
+  * **Code:** 405 METHOD NOT ALLOWED <br />
+    **Content:** `{ error : "`Invalid method`" }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/airports/:id?type=json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
