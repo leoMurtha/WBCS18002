@@ -64,57 +64,8 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
-  
-**EXAMPLE Show User**
-----
-  Returns json data about a single user.
 
-* **URL**
-
-  /users/:id
-
-* **Method:**
-
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `id=[integer]`
-
-* **Data Params**
-
-  None
-
-* **Success Response:**
-
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12, name : "Michael Bloom" }`
- 
-* **Error Response:**
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "User doesn't exist" }`
-
-  OR
-
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "You are unauthorized to make this request." }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/users/1",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
+# API 
 
 **All airports available in the USA**
 ----
@@ -517,15 +468,20 @@ If CSV:
 
 * **Sample Call:**
 
+```curl -H "Accept: text/csv" http://server//airports/123```
+  
+
   ```javascript
     $.ajax({
-      url: "/airports/:id?type=json",
+      url: "/airports/:id",
       type : "GET",
+      dataType: "json",
       success : function(r) {
         console.log(r);
       }
     });
   ```
+
 
 
 **All statistics about flights of a carrier from/to a US airport for a given month/all months available.**
@@ -536,7 +492,7 @@ If CSV:
 /airports/:id?carrier=:carrier_id&statistics='flights'
 
 * **Method:**
-  `GET`
+  `GET`| `POST` | `DELETE` | `PUT`
   
 *  **URL Params**
 
@@ -547,7 +503,23 @@ If CSV:
     
    **Optional:**
    `month=[integer]`
+	`year=[integer]`
+
+* **Data Params**
+		
+	```javascript
+    {
+	    u: {
+	        "cancelled": [integer],
+	        "on time": [integer],
+	        "total": [integer],
+	        "delayed": [integer],
+	        "diverted": [integer]
+	    }
+	}
+    ```
     
+
 * **Success Response:**
   
   * **Code:** 200 <br />
@@ -592,18 +564,39 @@ If CSV:
    
  
 * **Error Response:**
+  
   * **Code:** 404 NOT FOUND  <br />
     **Content:** `{ error : "Airport not found" }
     { error : "Carrier not found" }`
 
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Invalid statistics type" }`
+	
+   * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "Invalid data in POST/PUT" }`
+
 
 * **Sample Call:**
 
   ```curl -H "Accept: application/json" http://server//airports/123?carrier=1234&statistics='flights'```
   
   ```javascript
+	$.ajax({
+      type: 'POST',
+      url: "/airports/123?carrier=1245&statistics='flights'",
+      data:{ 
+			   u: {
+			       "cancelled": 5,
+		           "on time": 561,
+			       "total": 752,
+			       "delayed": 186,
+	             "diverted": 0
+		          }  
+		      }   
+      dataType: "json",
+      success: function(resultData) { alert("Post Complete") }
+	});
+
     $.ajax({
       url: "/airports/123?carrier=1245&statistics='flights'",
       type : "GET",
@@ -617,6 +610,100 @@ If CSV:
 
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
 
+
+
+**Number of on-time, delayed, and cancelled flights of a carrier from/to a US airport for a given month/all months available.**
+----
+  Returns json/csv a minimal representation of the statistics about flights of a carrier from/to a US airport for a given month/all months available.
+
+* **URL**
+/airports/:id?carrier=:carrier_id&statistics='flights'&minimal=true
+
+* **Method:**
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+   `id=[integer]`
+   `carrier_id=[integer]`
+   `statistics=['flights' | 'delays']` 
+   `minimal=[boolean]`
+    
+   **Optional:**
+   `month=[integer]`
+	`year=[integer]`  
+
+* **Success Response:**
+  
+  * **Code:** 200 <br />
+    **Content:** 
+    
+    If JSON:
+	```javascript
+    "airport": {
+        "code": "PHL",
+        "name": "Philadelphia, PA: Philadelphia International",
+        "id": 123,
+        "link": "/airports/123"
+    },
+    "carrier": {
+        "code": "AA",
+        "name": "American Airlines Inc.",
+        "id": 124,
+        "link": "/carriers/124",
+    },
+    "flights_statistics": {
+        "cancelled": 5,
+        "on time": 561,
+        "delayed": 186
+	   },
+    "date": {
+        "year": 2003,
+        "month": 6
+    }
+    ```
+       
+
+	
+	If CSV:
+	
+| airport/code | airport/name                                 | airport/id | airport/link  | carrier/code | carrier/name           | carrier/id | carrier/link  | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/delayed | date/year | date/month |
+|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|----------------------------|-----------|------------|
+| PHL          | Philadelphia, PA: Philadelphia International | 123        | /airports/123 | AA           | American Airlines Inc. | 124        | /carriers/124 | 5                            | 561                        | 186                        | 2003      | 6          |
+    
+
+   
+ 
+* **Error Response:**
+  
+  * **Code:** 404 NOT FOUND  <br />
+    **Content:** `{ error : "Airport not found" }
+    { error : "Carrier not found" }`
+
+  * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Invalid statistics type" }`
+	
+
+* **Sample Call:**
+
+  ```curl -H "Accept: application/json" http://server//airports/123?carrier=1234&statistics='flights'&minimal=true```
+  
+  ```javascript
+	$.ajax({
+      url: "/airports/123?carrier=1245&statistics='flights'&minimal=true",
+      type : "GET",
+      dataType: "csv",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+* **Notes:**
+
+   * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+   
+   
  **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports**
 ----
   Returns json/csv list of number of minutes of delay per carrier 
