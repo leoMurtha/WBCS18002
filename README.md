@@ -3,7 +3,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 ## Group 26
 
-#Case Study Description
+# Case Study Description
 The Web app to be developed helps users to decide which carriers (airlines) and
 which airports to use in the USA for their air travel needs. It builds on the
 Airline delays dataset made available by the CORGIS dataset project, itself a
@@ -1051,3 +1051,163 @@ If CSV:
 * **Notes:**
 
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+   
+ 
+
+**Show route between two airports**
+----
+  Returns **descriptive statistics (mean, median, standard deviation) for carrier-specific delays (as above) for a flight between any two airports in the USA for a specific carrier or for all carriers serving this route**.
+  
+* **URL**
+
+`/airports/:id/routes?destiny=:airport_id`
+or
+`/airports/:id/routes?destiny=:airport_id&carrier=:carrier_id`
+
+* **Method:**
+
+`GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+    `airport_id=[integer]`
+
+   **Optional:**
+ 
+   `carrier_id=[integer]`
+
+* **Success Response:**
+  
+  If JSON and All Carriers:
+      
+```javascript  
+{
+    "airport": {
+        "code": "PHL",
+        "name": "Philadelphia, PA: Philadelphia International",
+        "id": 123,
+        "link": "/airports/123"
+    },
+    "destiny": {
+        "code": "AHR",
+        "name": "American Hour Rapid",
+        "id": 125,
+        "link": "/airports/125"
+    },
+    "link": "/airports/125/routes?destiny=125",
+    "link_back": "/airports/123/routes",
+    "carriers": [{
+            "code": "AA",
+            "name": "American Airlines Inc.",
+            "id": 124,
+            "link": "/carriers/124",
+            "link_route": "/airports/125/routes?destiny=125&carrier=124",
+            "statistics": {
+                "# of delays": {
+                    "late aircraft": {
+                        "mean": 18,
+                        "median": 17,
+                        "standart deviation": 3
+                    },
+                    "carrier": {
+                        "mean": 34,
+                        "median": 32,
+                        "standart deviation": 5
+                    }
+                },
+                "minutes delayed": {
+                    "late aircraft": {
+                        "mean": 1269,
+                        "median": 1200,
+                        "standart deviation": 100
+                    },
+                    "carrier": {
+                        "mean": 1367,
+                        "median": 1300,
+                        "standart deviation": 150
+                    }
+                },
+                "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
+            }
+        },
+        {
+            "code": "AS",
+            "name": "Alaska Airlines Inc.",
+            "id": 144,
+            "link": "/carriers/144",
+            "link_route": "/airports/125/routes?destiny=125&carrier=144",
+            "statistics": {
+                "# of delays": {
+                    "late aircraft": {
+                        "mean": 20,
+                        "median": 19,
+                        "standart deviation": 2
+                    },
+                    "carrier": {
+                        "mean": 24,
+                        "median": 22,
+                        "standart deviation": 5
+                    }
+                },
+                "minutes delayed": {
+                    "late aircraft": {
+                        "mean": 1459,
+                        "median": 1400,
+                        "standart deviation": 200
+                    },
+                    "carrier": {
+                        "mean": 1134,
+                        "median": 1100,
+                        "standart deviation": 100
+                    }
+                },
+                "link": "/airports/123?carrier=144&statistics='flights'&minimal=true"
+            }
+        }
+    ]
+}
+```
+
+
+If CSV:
+
+```markdown
+| ﻿"airport__code" | airport__name                                | airport__id | airport__link | destiny__code | destiny__name       | destiny__id | destiny__link | link                             | link_back            | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__link_route                         | carriers__statistics__| | carriers__statistics__|| | carriers__statistics__||__mean | carriers__statistics__||__median | carriers__statistics__||__standart deviation | carriers__statistics__link                                  |
+|-----------------|----------------------------------------------|-------------|---------------|---------------|---------------------|-------------|---------------|----------------------------------|----------------------|----------------|------------------------|--------------|----------------|----------------------------------------------|-------------------------|--------------------------|--------------------------------|----------------------------------|----------------------------------------------|-------------------------------------------------------------|
+| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | AHR           | American Hour Rapid | 125         | /airports/125 | /airports/125/routes?destiny=125 | /airports/123/routes | AA             | American Airlines Inc. | 124          | /carriers/124  | /airports/125/routes?destiny=125&carrier=124 | # of delays             | late aircraft            | 18                             | 17                               | 3                                            | /airports/123?carrier=124&statistics='flights'&minimal=true |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 34                             | 32                               | 5                                            |                                                             |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              | minutes delayed         | late aircraft            | 1269                           | 1200                             | 100                                          |                                                             |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 1367                           | 1300                             | 150                                          |                                                             |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | /airports/125/routes?destiny=125&carrier=144 | # of delays             | late aircraft            | 20                             | 19                               | 2                                            | /airports/123?carrier=144&statistics='flights'&minimal=true |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 24                             | 22                               | 5                                            |                                                             |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              | minutes delayed         | late aircraft            | 1459                           | 1400                             | 200                                          |                                                             |
+|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 1134                           | 1100                             | 100                                          |                                                             |
+```
+
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Invalid id" }`
+
+  * **Code:** 405 METHOD NOT ALLOWED <br />
+    **Content:** `{ error : "Invalid method" }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/airports/:id/routes?destiny=:airport_id&carrier=:carrier_id&type=json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+* **Notes:**
+	* If no carrier is specified information about all carriers related to the routes are returned else only informations about the specific carrier are returned.
+
+
+
