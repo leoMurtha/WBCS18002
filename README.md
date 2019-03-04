@@ -696,15 +696,10 @@ If CSV:
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
    
    
-<<<<<<< HEAD
- **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset) or to all reasons, for a given month or for all months available and for a specific airport or across all US airports**
-----
-  Returns a json/csv list of number of minutes of delay per carrier in general or with specific attributes.
-=======
+
  **Show carrier informations**
 ----
   Returns json/csv data containing informations of the specified carrier which includes the number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports. 
->>>>>>> 073b6f8137d3efd091b211bc4d9b16d9c59fd095
 
 
 * **URL**
@@ -735,12 +730,9 @@ If CSV:
   * **Code:** 200 <br />
     **Content:** 
     
-<<<<<<< HEAD
+
    Number of minutes of delay per carrier attributed to all reasons for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
-=======
-   
-      Number of minutes of delay per carrier attributed to carrier-specific reasons for all airports for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3).
->>>>>>> 073b6f8137d3efd091b211bc4d9b16d9c59fd095
+
 
  If JSON  
  ```javascript
