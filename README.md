@@ -461,7 +461,7 @@ If CSV:
 
   ```javascript
     $.ajax({
-      url: "/airports/:id?type=json",
+      url: "/airports/:id",
       type : "GET",
       success : function(r) {
         console.log(r);
@@ -479,6 +479,7 @@ If CSV:
   Returns json or csv all of the statistics about flights of a carrier from/to a US airport for a given month or all months available.
 
 * **URL**
+
 /airports/:id?carrier=:carrier_id&statistics='flights'
 
 * **Method:**
@@ -695,9 +696,15 @@ If CSV:
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
    
    
+<<<<<<< HEAD
  **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset) or to all reasons, for a given month or for all months available and for a specific airport or across all US airports**
 ----
   Returns a json/csv list of number of minutes of delay per carrier in general or with specific attributes.
+=======
+ **Show carrier informations**
+----
+  Returns json/csv data containing informations of the specified carrier which includes the number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports. 
+>>>>>>> 073b6f8137d3efd091b211bc4d9b16d9c59fd095
 
 
 * **URL**
@@ -715,8 +722,12 @@ If CSV:
 
    **Optional:**
 
-    `month=[integer]`
+    `month=[integer]
+    `
+    `year=[integer]`
+    
     `airport_id=[integer] `
+    
     `reasons=['all' | 'carrier_reasons']`
     
 * **Success Response:**
@@ -724,13 +735,18 @@ If CSV:
   * **Code:** 200 <br />
     **Content:** 
     
+<<<<<<< HEAD
    Number of minutes of delay per carrier attributed to all reasons for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
+=======
+   
+      Number of minutes of delay per carrier attributed to carrier-specific reasons for all airports for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3).
+>>>>>>> 073b6f8137d3efd091b211bc4d9b16d9c59fd095
 
  If JSON  
  ```javascript
       [
           {
-          "carriers": {
+          "carrier": {
             "code": "AA",
             "name": "American Airlines Inc.",
             "id": 124,
@@ -747,12 +763,12 @@ If CSV:
                 "carrier_reasons":{
                   "late aircraft": 1269, 
                   "carrier": 1367,   
-                  "link": "/carriers/124?reasons=all"
+                  "all_reasons_link": "/carriers/124?reasons=all"
 
                 }
                 
             },
-            "airport": [{
+            "airports": [{
                 "id": 134,
                 "code": "PHL",
                 "name": "Philadelphia, PA: Philadelphia International",
@@ -768,7 +784,7 @@ If CSV:
           },
 
           {
-            "carriers": 
+            "carrier": 
               {
               "code": "AA",
               "name": "American Airlines Inc.",
@@ -790,12 +806,12 @@ If CSV:
                 "carrier_reasons":{
                   "late aircraft": 1000, 
                   "carrier": 1000,   
-                  "link": "/carriers/124?reasons=all"
+                  "all_reasons_link": "/carriers/124?reasons=all"
 
                 }
                         
               },
-              "airport":
+              "airports":
               [ {
                 "id": 134,
                 "code": "PHL",
@@ -812,7 +828,7 @@ If CSV:
           },
 
           {
-            "carriers":
+            "carrier":
             {
               "code": "AS",
               "name": "Alaska Airlines Inc.",
@@ -834,12 +850,12 @@ If CSV:
                 "carrier_reasons":{
                   "late aircraft": 1001, 
                   "carrier": 1002,   
-                  "link": "/carriers/144?reasons=all"
+                  "all_reasons_link": "/carriers/144?reasons=all"
 
                 }
                       
             },
-            "airport":
+            "airports":
             [ {
               "id": 133,
               "code": "ATL",
@@ -877,12 +893,12 @@ If CSV:
                 "carrier_reasons":{
                   "late aircraft": 1000, 
                   "carrier": 1000,   
-                  "link": "/carriers/144?reasons=all"
+                  "all_reasons_link": "/carriers/144?reasons=all"
 
                 }
                       
             },
-            "airport":
+            "airports":
             [ {
               "id":133,
               "code": "ATL",
@@ -904,16 +920,16 @@ If CSV:
   If CSV:
 
 
-| ﻿"carriers__code" | carriers__name         | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__date__link            | minutes delayed__all | minutes delayed__carrier_reasons__late aircraft | minutes delayed__carrier_reasons__carrier | minutes delayed__carrier_reasons__link | airport__id | airport__code | airport__name                                         | airport__link |
-|------------------|------------------------|--------------|----------------|----------------------|-----------------------|---------------------------------|----------------------|-------------------------------------------------|-------------------------------------------|----------------------------------------|-------------|---------------|-------------------------------------------------------|---------------|
-| AA               | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 6                     | /carriers/124?month=6&year=2003 | 8314                 | 1269                                            | 1367                                      | /carriers/124?reasons=all              | 134         | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
-|                  |                        |              |                |                      |                       |                                 |                      |                                                 |                                           |                                        | 123         | AHR           | American Hour Rapid                                   | /airports/123 |
-| AA               | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 7                     | /carriers/124?month=7&year=2003 | 7678                 | 1000                                            | 1000                                      | /carriers/124?reasons=all              | 134         | PHL           | Philadelphia, PA: Philadelphia International          | /airports/134 |
-|                  |                        |              |                |                      |                       |                                 |                      |                                                 |                                           |                                        | 123         | AHR           | American Hour Rapid                                   | /airports/123 |
-| AS               | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 6                     | /carriers/144?month=6&year=2003 | 7645                 | 1001                                            | 1002                                      | /carriers/144?reasons=all              | 133         | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
-|                  |                        |              |                |                      |                       |                                 |                      |                                                 |                                           |                                        | 123         | AHR           | American Hour Rapid                                   | /airports/123 |
-| AS               | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 7                     | /carriers/144?month=7&year=2003 | 7656                 | 1000                                            | 1000                                      | /carriers/144?reasons=all              | 133         | ATL           | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133 |
-|                  |                        |              |                |                      |                       |                                 |                      |                                                 |                                           |                                        | 123         | AHR           | American Hour Rapid                                   | /airports/123 |
+| ﻿"carriers__code" | carriers__name       | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__date__link            | carrier__code | carrier__name          | carrier__id | carrier__link | carrier__date__year | carrier__date__month | carrier__date__link             | minutes delayed__all | minutes delayed__carrier_reasons__late aircraft | minutes delayed__carrier_reasons__carrier | minutes delayed__carrier_reasons__all_reasons_link | airports__id | airports__code | airports__name                                        | airports__link |
+|------------------|----------------------|--------------|----------------|----------------------|-----------------------|---------------------------------|---------------|------------------------|-------------|---------------|---------------------|----------------------|---------------------------------|----------------------|-------------------------------------------------|-------------------------------------------|----------------------------------------------------|--------------|----------------|-------------------------------------------------------|----------------|
+|                  |                      |              |                |                      |                       |                                 | AA            | American Airlines Inc. | 124         | /carriers/124 | 2003                | 6                    | /carriers/124?month=6&year=2003 | 8314                 | 1269                                            | 1367                                      | /carriers/124?reasons=all                          | 134          | PHL            | Philadelphia, PA: Philadelphia International          | /airports/134  |
+|                  |                      |              |                |                      |                       |                                 |               |                        |             |               |                     |                      |                                 |                      |                                                 |                                           |                                                    | 123          | AHR            | American Hour Rapid                                   | /airports/123  |
+|                  |                      |              |                |                      |                       |                                 | AA            | American Airlines Inc. | 124         | /carriers/124 | 2003                | 7                    | /carriers/124?month=7&year=2003 | 7678                 | 1000                                            | 1000                                      | /carriers/124?reasons=all                          | 134          | PHL            | Philadelphia, PA: Philadelphia International          | /airports/134  |
+|                  |                      |              |                |                      |                       |                                 |               |                        |             |               |                     |                      |                                 |                      |                                                 |                                           |                                                    | 123          | AHR            | American Hour Rapid                                   | /airports/123  |
+|                  |                      |              |                |                      |                       |                                 | AS            | Alaska Airlines Inc.   | 144         | /carriers/144 | 2003                | 6                    | /carriers/144?month=6&year=2003 | 7645                 | 1001                                            | 1002                                      | /carriers/144?reasons=all                          | 133          | ATL            | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133  |
+|                  |                      |              |                |                      |                       |                                 |               |                        |             |               |                     |                      |                                 |                      |                                                 |                                           |                                                    | 123          | AHR            | American Hour Rapid                                   | /airports/123  |
+| AS               | Alaska Airlines Inc. | 144          | /carriers/144  | 2003                 | 7                     | /carriers/144?month=7&year=2003 |               |                        |             |               |                     |                      |                                 | 7656                 | 1000                                            | 1000                                      | /carriers/144?reasons=all                          | 133          | ATL            | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133  |
+|                  |                      |              |                |                      |                       |                                 |               |                        |             |               |                     |                      |                                 |                      |                                                 |                                           |                                                    | 123          | AHR            | American Hour Rapid                                   | /airports/123  |
 
 
 
@@ -945,7 +961,7 @@ If CSV:
   If the user wishes to retrieve data from a specific airport or on specific month or attributed to carrier-specific reasons then he should pass the optional parameter data in the valid format.
   In this case, there would be a query on the URL such as the example below:
 
-  ```/carriers/:id?airport_id=134&month=6```
+  ```/carriers/1232?airport_id=134&month=6```
 
 
 **Show airport routes.**
