@@ -656,7 +656,8 @@ If CSV:
     "flights_statistics": {
         "cancelled": 5,
         "on time": 561,
-        "delayed": 186
+        "delayed": 186,
+	"all_statistics": "/airports/123?carrier=1245&statistics='flights'"
 	   },
     "date": {
         "year": 2003,
@@ -668,9 +669,9 @@ If CSV:
 	
 	If CSV:
 	
-| airport/code | airport/name                                 | airport/id | airport/link  | carrier/code | carrier/name           | carrier/id | carrier/link  | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/delayed | date/year | date/month |
-|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|----------------------------|-----------|------------|
-| PHL          | Philadelphia, PA: Philadelphia International | 123        | /airports/123 | AA           | American Airlines Inc. | 124        | /carriers/124 | 5                            | 561                        | 186                        | 2003      | 6          |
+| airport/code | airport/name                                 | airport/id | airport/link  | carrier/code | carrier/name           | carrier/id | carrier/link  | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/delayed | flights_statistics/all_statistics               | date/year | date/month |
+|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|----------------------------|-------------------------------------------------|-----------|------------|
+| PHL          | Philadelphia, PA: Philadelphia International | 123        | /airports/123 | AA           | American Airlines Inc. | 124        | /carriers/124 | 5                            | 561                        | 186                        | /airports/123?carrier=1245&statistics='flights' | 2003      | 6          |
     
 
    
