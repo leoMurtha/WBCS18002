@@ -1166,7 +1166,6 @@ or
 
 If CSV:
 
-```markdown
 | ﻿"airport__code" | airport__name                                | airport__id | airport__link | destiny__code | destiny__name       | destiny__id | destiny__link | link                             | link_back            | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__link_route                         | carriers__statistics__| | carriers__statistics__|| | carriers__statistics__||__mean | carriers__statistics__||__median | carriers__statistics__||__standart deviation | carriers__statistics__link                                  |
 |-----------------|----------------------------------------------|-------------|---------------|---------------|---------------------|-------------|---------------|----------------------------------|----------------------|----------------|------------------------|--------------|----------------|----------------------------------------------|-------------------------|--------------------------|--------------------------------|----------------------------------|----------------------------------------------|-------------------------------------------------------------|
 | PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | AHR           | American Hour Rapid | 125         | /airports/125 | /airports/125/routes?destiny=125 | /airports/123/routes | AA             | American Airlines Inc. | 124          | /carriers/124  | /airports/125/routes?destiny=125&carrier=124 | # of delays             | late aircraft            | 18                             | 17                               | 3                                            | /airports/123?carrier=124&statistics='flights'&minimal=true |
@@ -1177,7 +1176,9 @@ If CSV:
 |                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 24                             | 22                               | 5                                            |                                                             |
 |                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              | minutes delayed         | late aircraft            | 1459                           | 1400                             | 200                                          |                                                             |
 |                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 1134                           | 1100                             | 100                                          |                                                             |
-```
+
+
+
 
 * **Error Response:**
 
