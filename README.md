@@ -1,6 +1,20 @@
 # WBCS18002
 Official repository for the WBCS18002 Web Engineering Project.
+
 ## Group 26
+
+#Case Study Description
+The Web app to be developed helps users to decide which carriers (airlines) and
+which airports to use in the USA for their air travel needs. It builds on the
+Airline delays dataset made available by the CORGIS dataset project, itself a
+curated version of the data published by the Bureau of Transporation Statistics
+of the US Government. Both a JSON and a CSV version of the dataset are
+available. It contains statistics for all reported delays per carrier per airport per month in the USA from 2003 to 2016
+The goal of this project is to deliver to users both basic and advanced features
+based on this dataset as a Web app. It comes with a minimum set of
+requirements on what features are to be delivered, and fosters creativity on the
+app developer side by allowing for identification of further features proposed
+and implemented by each group.
 
 # API Documentation
 
@@ -209,7 +223,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 * **Notes:**
 
   * If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-  * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+  * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
   
 **All carriers operating in US airports**
 ----
@@ -225,7 +239,8 @@ Official repository for the WBCS18002 Web Engineering Project.
   
 *  **URL Params**
 
-   **Required:**`
+   **Required:**
+
 
    **Optional:**
     
@@ -347,7 +362,8 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 **Show Airport Informations**
 ----
-  Returns **all carriers operating at a specific airport** and related statistics on a specific month and year or lastest.
+  Returns **all carriers operating at a specific airport** and related statistics on a specific month and year. If case neither the year or the month are specify, the default will be the most recent date.
+
 * **URL**
 
 `/airports/:id`
@@ -453,14 +469,14 @@ If CSV:
     });
   ```
 * **Notes:**
-	* If no date (month and year) are specified, the current date is used.
+	* If no date (month and year) are specified, the most recent date is used.
 
 
 
 
-**All statistics about flights of a carrier from/to a US airport for a given month/all months available.**
+**All statistics about flights of a carrier from/to a US airport for a given month or all months available.**
 ----
-  Returns json/csv all of the statistics about flights of a carrier from/to a US airport for a given month/all months available.
+  Returns json or csv all of the statistics about flights of a carrier from/to a US airport for a given month or all months available.
 
 * **URL**
 /airports/:id?carrier=:carrier_id&statistics='flights'
@@ -586,9 +602,9 @@ If CSV:
 
 
 
-**Number of on-time, delayed, and cancelled flights of a carrier from/to a US airport for a given month/all months available.**
+**Number of on-time, delayed, and cancelled flights of a carrier from/to a US airport for a given month or for all months available.**
 ----
-  Returns json/csv a minimal representation of the statistics about flights of a carrier from/to a US airport for a given month/all months available.
+  Returns - as json/csv - a minimal representation of the statistics about flights of a carrier from/to a US airport for a given month or for all months available.
 
 * **URL**
 /airports/:id?carrier=:carrier_id&statistics='flights'&minimal=true
@@ -679,9 +695,9 @@ If CSV:
    * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
    
    
- **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports**
+ **Number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset) or to all reasons, for a given month or for all months available and for a specific airport or across all US airports**
 ----
-  Returns json/csv list of number of minutes of delay per carrier 
+  Returns a json/csv list of number of minutes of delay per carrier in general or with specific attributes.
 
 
 * **URL**
@@ -708,8 +724,7 @@ If CSV:
   * **Code:** 200 <br />
     **Content:** 
     
-   
-      Number of minutes of delay per carrier attributed to carrier-specific reasons for a all airports for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
+   Number of minutes of delay per carrier attributed to all reasons for all months available (on this example only the months 6 and 7 of 2003) and across all US airports (which on this example are only 3)
 
  If JSON  
  ```javascript
@@ -935,7 +950,7 @@ If CSV:
 
 **Show airport routes.**
 ----
-  Returns json/csv response containing the routes that the current airport does.
+  Returns a json/csv response containing the routes that the current airport does.
 
 * **URL**
 /airports/:id/routes
