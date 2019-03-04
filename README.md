@@ -1063,13 +1063,13 @@ If CSV:
   
   ```javascript
       $.ajax({
-      url: "/airports/123/routes,
-      type : "GET",
-      dataType: "csv",
-      success : function(r) {
-        console.log(r.routes);
-      }
-    });
+      	url: "/airports/123/routes,
+      	type : "GET",
+      	dataType: "csv",
+      	success : function(r) {
+        	console.log(r.routes);
+      	}
+    	});
   ```
 * **Notes:**
 
