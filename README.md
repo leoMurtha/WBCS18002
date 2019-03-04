@@ -693,15 +693,13 @@ If CSV:
   
 *  **URL Params**
 
-   **Required:**
- 
-   `type=[json | csv]`
+   **Required:** 
 
 
    **Optional:**
     `month=[integer]`
-    `airport_id=[all | int] `
-    `reasons=[all | 'carrier_reasons']`
+    `airport_id=[integer] `
+    `reasons=['all' | 'carrier_reasons']`
    
     
 * **Success Response:**
@@ -909,7 +907,7 @@ If CSV:
 
 * **Error Response:**
   * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Invalid date" }`
+    **Content:** `{ error : "Invalid date" } { error : "Airport not found" } `
 
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Invalid date format" }`
@@ -922,7 +920,7 @@ If CSV:
 
   ```javascript
     $.ajax({
-      url: "/carriers?type=json",
+      url: "/carriers/id",
       type : "GET",
       success : function(r) {
         console.log(r);
