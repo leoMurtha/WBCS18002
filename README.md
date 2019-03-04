@@ -1052,7 +1052,6 @@ If CSV:
   
   * **Code:** 404 NOT FOUND  <br />
     **Content:** `{ error : "Airport not found" }
-    { error : "Carrier not found" }`
 
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Invalid date" }`
@@ -1063,7 +1062,7 @@ If CSV:
   ```curl -H "Accept: application/json" http://server//airports/123/routes```
   
   ```javascript
-	$.ajax({
+      $.ajax({
       url: "/airports/123/routes,
       type : "GET",
       dataType: "csv",
