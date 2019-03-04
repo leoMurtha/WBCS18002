@@ -697,16 +697,10 @@ If CSV:
 
 
    **Optional:**
-<<<<<<< HEAD
+
     `month=[integer]`
     `airport_id=[integer] `
     `reasons=['all' | 'carrier_reasons']`
-=======
-    `date=[month/year] (06/2008)` 
-    `airport_id=[all | int] `
-    `minutes_delayed=[all | 'carrier_reasons']`
->>>>>>> ce78df740b59877f71f68a81b34f9e80d4a27957
-   
     
 * **Success Response:**
   
