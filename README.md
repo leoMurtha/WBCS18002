@@ -86,6 +86,7 @@ Official repository for the WBCS18002 Web Engineering Project.
    **Optional:**
     
    `month=[integer]`
+   
    `year=[integer]`
     
 * **Success Response:**
@@ -101,7 +102,7 @@ Official repository for the WBCS18002 Web Engineering Project.
           "airport": {
               "code": "PHL",
               "name": "Philadelphia, PA: Philadelphia International",
-	      "id": 123,
+	      	"id": 123,
               "link": "/airports/123"
           },
           "date": {
