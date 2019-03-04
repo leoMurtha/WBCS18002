@@ -4,6 +4,10 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 # API Documentation
 
+# Introduction
+ 	This documentation describes each API call possibilities following the template bellow (font: https://gist.github.com/iros/3426278).
+
+***Template***
 **Title**
 ----
   <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
