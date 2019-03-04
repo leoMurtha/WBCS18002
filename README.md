@@ -343,6 +343,121 @@ Official repository for the WBCS18002 Web Engineering Project.
   
   
 
+
+
+**Show Airport Informations**
+----
+  Returns **all carriers operating at a specific airport** and related statistics on a specific month and year or lastest.
+* **URL**
+
+`/airports/:id`
+
+* **Method:**
+
+`GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+   **Optional:**
+ 
+   `month=[integer]`
+   `year=[integer]`
+
+* **Success Response:**
+  
+  If JSON:
+      
+```javascript
+{
+    "airport": {
+        "code": "PHL",
+        "name": "Philadelphia, PA: Philadelphia International",
+        "id": 123,
+        "link": "/airports/123",
+        "link_back": "/airports"
+    },
+    "carriers": [{
+            "code": "AA",
+            "name": "American Airlines Inc.",
+            "id": 124,
+            "link": "/carriers/124",
+            "date": {
+                "year": 2003,
+                "month": 6
+            },
+            "statistics": {
+                "flights": {
+                    "cancelled": 5,
+                    "on time": 561,
+                    "total": 752,
+                    "delayed": 186,
+                    "diverted": 0,
+                    "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
+                }
+            }
+        },
+        {
+            "code": "AS",
+            "name": "Alaska Airlines Inc.",
+            "id": 144,
+            "link": "/carriers/144",
+            "date": {
+                "year": 2003,
+                "month": 6
+            },
+            "statistics": {
+                "flights": {
+                    "cancelled": 0,
+                    "on time": 44,
+                    "total": 60,
+                    "delayed": 16,
+                    "diverted": 0,
+                    "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
+                }
+            }
+        }
+    ]
+}
+```
+
+If CSV:
+
+| ﻿"airport__code" | airport__name                                | airport__id | airport__link | airport__link_back | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__statistics__flights__cancelled | carriers__statistics__flights__on time | carriers__statistics__flights__total | carriers__statistics__flights__delayed | carriers__statistics__flights__diverted | carriers__statistics__flights__link                         |
+|-----------------|----------------------------------------------|-------------|---------------|--------------------|----------------|------------------------|--------------|----------------|----------------------|-----------------------|------------------------------------------|----------------------------------------|--------------------------------------|----------------------------------------|-----------------------------------------|-------------------------------------------------------------|
+| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | /airports          | AA             | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 6                     | 5                                        | 561                                    | 752                                  | 186                                    | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
+|                 |                                              |             |               |                    | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 6                     | 0                                        | 44                                     | 60                                   | 16                                     | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
+
+
+
+* **Error Response:**
+
+  * **Code:** 404 NOT FOUND <br />
+    **Content:** `{ error : "Invalid id" }`
+
+  * **Code:** 405 METHOD NOT ALLOWED <br />
+    **Content:** `{ error : "`Invalid method`" }`
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/airports/:id?type=json",
+      type : "GET",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+* **Notes:**
+	* If no date (month and year) are specified, the current date is used.
+
+
+
+
 **Show Airport Informations**
 ----
   Returns all carriers operating at a specific airport and related statistics on a specific month and year or lastest.
