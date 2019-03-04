@@ -1007,7 +1007,7 @@ If CSV:
    **Optional:**
    
    `month=[integer]`
-	`year=[integer]`  
+   `year=[integer]`  
 
 * **Success Response:**
   
