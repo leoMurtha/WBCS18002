@@ -377,8 +377,9 @@ Official repository for the WBCS18002 Web Engineering Project.
         "name": "Philadelphia, PA: Philadelphia International",
         "id": 123,
         "link": "/airports/123",
-        "link_back": "/airports"
+        "parent_link": "/airports"
     },
+    "routes_link": "/airports/123/routes",
     "carriers": [{
             "code": "AA",
             "name": "American Airlines Inc.",
@@ -425,11 +426,10 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 If CSV:
 
-| ﻿"airport__code" | airport__name                                | airport__id | airport__link | airport__link_back | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__statistics__flights__cancelled | carriers__statistics__flights__on time | carriers__statistics__flights__total | carriers__statistics__flights__delayed | carriers__statistics__flights__diverted | carriers__statistics__flights__link                         |
-|-----------------|----------------------------------------------|-------------|---------------|--------------------|----------------|------------------------|--------------|----------------|----------------------|-----------------------|------------------------------------------|----------------------------------------|--------------------------------------|----------------------------------------|-----------------------------------------|-------------------------------------------------------------|
-| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | /airports          | AA             | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 6                     | 5                                        | 561                                    | 752                                  | 186                                    | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
-|                 |                                              |             |               |                    | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 6                     | 0                                        | 44                                     | 60                                   | 16                                     | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
-
+| ﻿"airport__code" | airport__name                                | airport__id | airport__link | airport__parent_link | routes_link          | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__statistics__flights__cancelled | carriers__statistics__flights__on time | carriers__statistics__flights__total | carriers__statistics__flights__delayed | carriers__statistics__flights__diverted | carriers__statistics__flights__link                         |
+|-----------------|----------------------------------------------|-------------|---------------|----------------------|----------------------|----------------|------------------------|--------------|----------------|----------------------|-----------------------|------------------------------------------|----------------------------------------|--------------------------------------|----------------------------------------|-----------------------------------------|-------------------------------------------------------------|
+| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | /airports            | /airports/123/routes | AA             | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 6                     | 5                                        | 561                                    | 752                                  | 186                                    | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
+|                 |                                              |             |               |                      |                      | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 6                     | 0                                        | 44                                     | 60                                   | 16                                     | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
 
 
 * **Error Response:**
