@@ -918,7 +918,7 @@ If CSV:
 
   ```javascript
     $.ajax({
-      url: "/carriers?type=json",
+      url: "/carriers/:id",
       type : "GET",
       success : function(r) {
         console.log(r);
