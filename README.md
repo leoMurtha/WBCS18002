@@ -685,7 +685,7 @@ If CSV:
 
 * **URL**
 
-  /carriers/:id?minutes_delayed&airport
+  /carriers/:id
 
 * **Method:**
   
@@ -927,6 +927,9 @@ If CSV:
 * **Notes:**
 
   If the user wishes to retrieve data from a specific airport or on specific month or attributed to carrier-specific reasons then he should pass the optional parameter data in the valid format.
+  In this case, there would be a query on the URL such as the example below:
+
+  ```/carriers/:id?airport_id=134&month=6```
 
 
 **Show airport routes.**
