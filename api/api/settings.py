@@ -11,12 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-# import mongoengine
-
-# mongoengine.connect(
-#     db="tools",
-#     host="localhost"
-# )
+import mongoengine
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,6 +75,11 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+
+mongoengine.connect(
+    db="tools",
+    host="mongodb+srv://dev:dev@dev-5t3gy.mongodb.net/test?retryWrites=true"
+)
 
 DATABASES = {
 }
