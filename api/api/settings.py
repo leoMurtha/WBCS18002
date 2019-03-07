@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
-import mongoengine
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'trvl',
-    'rest_framework'
+    'rest_framework',
+    'coreapi',
+    'django_filters'
 ]
 
 MIDDLEWARE = [
@@ -76,12 +76,15 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-mongoengine.connect(
-    db="tools",
-    host="mongodb+srv://dev:dev@dev-5t3gy.mongodb.net/test?retryWrites=true"
-)
-
 DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'devlldev',
+        'HOST': '35.198.182.97',
+        'PORT': '5432'
+    }
 }
 
 
