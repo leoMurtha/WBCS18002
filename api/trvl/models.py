@@ -1,16 +1,18 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Airport(models.Model):
+class Carrier(models.Model):
     code = models.CharField(max_length=10)
     name = models.TextField()
+    #airports = models.ManyToManyField(Airport) 
 
     def __str__(self):
         return self.name
 
-class Carrier(models.Model):
+class Airport(models.Model):
     code = models.CharField(max_length=10)
     name = models.TextField()
+    carriers = models.ManyToManyField(Carrier)
 
     def __str__(self):
         return self.name
