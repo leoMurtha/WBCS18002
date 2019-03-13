@@ -108,18 +108,18 @@ and implemented by each group.
       ```javascript
         [
           {
-          "airport": {
-              "code": "PHL",
-              "name": "Philadelphia, PA: Philadelphia International",
-	      	"id": 123,
-              "link": "/airports/123"
-          },
+              "airport": {
+                  "code": "PHL",
+                  "name": "Philadelphia, PA: Philadelphia International",
+	      	    "id": 123,
+                  "url": "/airports/123"
+              },
           {
               "airport": {
                   "code": "AHR",
                   "name": "American Hour Rapid",
     	      "id": 125,
-                  "link": "/airports/125"
+                  "url": "/airports/125"
           }
           .
           .
