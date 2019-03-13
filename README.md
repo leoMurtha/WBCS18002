@@ -84,7 +84,7 @@ and implemented by each group.
 
 **All airports available in the USA**
 ----
-  Returns json/csv list of links to the available airports in the USA along with their latest statistics.
+  Returns json/csv list of links to the available airports in the USA.
 
 * **URL**
 
@@ -99,17 +99,11 @@ and implemented by each group.
    **Required:**
 
    **Optional:**
-    
-   `month=[integer]`
-   
-   `year=[integer]`
-    
+     
 * **Success Response:**
   
   * **Code:** 200 <br />
     **Content:** 
-    
-    If JSON:
       
       ```javascript
         [
@@ -120,80 +114,18 @@ and implemented by each group.
 	      	"id": 123,
               "link": "/airports/123"
           },
-          "date": {
-              "month": 4,
-              "year": 2016,
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-                  "id": 124,
-		  "link": "/carriers/124"
-              },
-              {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-                  "id": 144,
-		  "link": "/carriers/144"
-              }
-          ]
-      },
-
-      {
-          "airport": {
-              "code": "AHR",
-              "name": "American Hour Rapid",
-	      "id": 125,
-              "link": "/airports/125"
-          },
-          "date": {
-              "month": 4,
-              "year": 2016,
-          },
-          "flights_statistics": {
-              "cancelled": 7,
-              "on time": 600,
-              "total": 759,
-              "delayed": 151,
-              "diverted": 1
-          },
-          "carriers": [{
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-		  "id": 124,
-                  "link": "/carriers/124"
-              },
-              {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-		  "id": 144,
-                  "link": "/carriers/144"
-              }
-          ]
-      }
-    ]
+          {
+              "airport": {
+                  "code": "AHR",
+                  "name": "American Hour Rapid",
+    	      "id": 125,
+                  "link": "/airports/125"
+          }
+          .
+          .
+          .
+        ]
     ```
-    
-    
-   
-    
-   
-    If CSV:
-    
-    
-| ﻿"airport__code" | airport__name                                | airport__link | flights_statistics__cancelled | flights_statistics__on time | flights_statistics__total | flights_statistics__delayed | flights_statistics__diverted | carriers__code | carriers__name         | carriers__link |
-|-----------------|----------------------------------------------|---------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|------------------------|----------------|
-| PHL             | Philadelphia, PA: Philadelphia International | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | carriers/144   |
-| AHR             | American Hour Rapid                          | /airports/123 | 7                             | 600                         | 759                       | 151                         | 1                            | AA             | American Airlines Inc. | /carriers/124  |
-|                 |                                              |               |                               |                             |                           |                             |                              | AS             | Alaska Airlines Inc.   | carriers/144   |
    
  
 * **Error Response:**
@@ -223,12 +155,11 @@ and implemented by each group.
   ```
 * **Notes:**
 
-  * If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
   * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
   
 **All carriers operating in US airports**
 ----
-  Returns json/csv list of links to the available carriers operating at airports in the USA along with their latest statistics.
+  Returns json/csv list of links to the available carriers operating at airports in the USA.
 
 * **URL**
 
@@ -242,94 +173,35 @@ and implemented by each group.
 
    **Required:**
 
-
    **Optional:**
-    
-   `month=[integer]`
-   
-   `year=[integer]`
     
 * **Success Response:**
   
   * **Code:** 200 <br />
     **Content:** 
-    
-    If JSON:
       
       ```javascript
-           [
-          {
-          "carrier": {
-                  "code": "AA",
-                  "name": "American Airlines Inc.",
-		  "id": 124,
-                  "link": "/carriers/124"
-              },
-          "carrier_statistics": {
-              "cancelled": 40,
-              "on time": 259,
-              "total": 400,
-              "delayed": 101,
-              "diverted": 0
-              },
-            "airports":[{
-              "code": "AHR",
-              "name": "American Hour Rapid",
-	      "id": 126,
-              "link": "/airports/126"
-              },
-              {
-              "code": "PHL",
-              "name": "Philadelphia, PA: Philadelphia International",
-              "id": 127,
-	      "link": "/airports/127"
-              }
-            ]
-          }, 
-          {
-           "carrier": {
-                  "code": "AS",
-                  "name": "Alaska Airlines Inc.",
-                  "id": 144,
-		  "link": "/carriers/144"
-              },
-          "carrier_statistics": {
-               "cancelled": 15,
-              "on time": 211,
-              "total": 245,
-              "delayed": 10,
-              "diverted": 9
-              },
-            "airports":[{
-              "code": "AHR",
-              "name": "American Hour Rapid",
-              "id": 133,
-	      "link": "/airports/133"
-              },
-              {
-              "code": "PHL",
-              "name": "Philadelphia, PA: Philadelphia International",
-              "id": 134,
-	      "link": "/airports/134"
-              }
-            ]
-          }
+      [
+        {
+        "carrier": {
+            "code": "AA",
+            "name": "American Airlines Inc.",
+		        "id": 124,
+            "url": "/carriers/124"
+        },
+        {
+         "carrier": {
+            "code": "AS",
+            "name": "Alaska Airlines Inc.",
+            "id": 144,
+		        "url": "/carriers/144"
+        },
+        .
+        .
+        .
       ]
     ```
     
-    
-   
-    
-    If CSV:
-
-
-| ﻿"carrier__code" | carrier__name          | carrier__id | carrier__link | carrier_statistics__cancelled | carrier_statistics__on time | carrier_statistics__total | carrier_statistics__delayed | carrier_statistics__diverted | airports__code | airports__name                               | airports__id | airports__link |
-|-----------------|------------------------|-------------|---------------|-------------------------------|-----------------------------|---------------------------|-----------------------------|------------------------------|----------------|----------------------------------------------|--------------|----------------|
-| AA              | American Airlines Inc. | 124         | /carriers/124 | 40                            | 259                         | 400                       | 101                         | 0                            | AHR            | American Hour Rapid                          | 126          | /airports/126  |
-|                 |                        |             |               |                               |                             |                           |                             |                              | PHL            | Philadelphia, PA: Philadelphia International | 127          | /airports/127  |
-| AS              | Alaska Airlines Inc.   | 144         | /carriers/144 | 15                            | 211                         | 245                       | 10                          | 9                            | AHR            | American Hour Rapid                          | 133          | /airports/133  |
-|                 |                        |             |               |                               |                             |                           |                             |                              | PHL            | Philadelphia, PA: Philadelphia International | 134          | /airports/134  |
-
 
 * **Error Response:**
   * **Code:** 404 NOT FOUND  <br />
@@ -348,23 +220,20 @@ and implemented by each group.
     $.ajax({
       url: "/carriers",
       type : "GET",
-      dataType: json
+      dataType: 'csv'
       success : function(r) {
         console.log(r);
       }
     });
   ```
 * **Notes:**
-
-  If the user wishes to retrieve data on different dates then he should pass the optional parameter data in the valid format.
-  
-  
+  * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
 
 
 
 **Show Airport Informations**
 ----
-  Returns **all carriers operating at a specific airport** and related statistics on a specific month and year. If case neither the year or the month are specify, the default will be the most recent date.
+  Returns **all links to the carriers operating at a specific airport**, a link to the related statistics on a specific month and year and also a link to the airport routes. If case neither the year or the month are specified, the default will be the one with most recent date.
 
 * **URL**
 
@@ -387,69 +256,27 @@ and implemented by each group.
    `year=[integer]`
 
 * **Success Response:**
-  
-  If JSON:
-      
-```javascript
-{
-    "airport": {
+
+  ```javascript
+  {
+      "airport": {
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
         "id": 123,
-        "link": "/airports/123",
-        "parent_link": "/airports"
-    },
-    "routes_link": "/airports/123/routes",
-    "carriers": [{
-            "code": "AA",
-            "name": "American Airlines Inc.",
+        "url": "/airports/123"
+      },
+      "routes_link": "/airports/123/routes",
+      "carriers": [
+          {
             "id": 124,
-            "link": "/carriers/124",
-            "date": {
-                "year": 2003,
-                "month": 6
-            },
-            "statistics": {
-                "flights": {
-                    "cancelled": 5,
-                    "on time": 561,
-                    "total": 752,
-                    "delayed": 186,
-                    "diverted": 0,
-                    "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
-                }
-            }
-        },
-        {
-            "code": "AS",
-            "name": "Alaska Airlines Inc.",
-            "id": 144,
-            "link": "/carriers/144",
-            "date": {
-                "year": 2003,
-                "month": 6
-            },
-            "statistics": {
-                "flights": {
-                    "cancelled": 0,
-                    "on time": 44,
-                    "total": 60,
-                    "delayed": 16,
-                    "diverted": 0,
-                    "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
-                }
-            }
-        }
-    ]
-}
-```
-
-If CSV:
-
-| ﻿"airport__code" | airport__name                                | airport__id | airport__link | airport__parent_link | routes_link          | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__date__year | carriers__date__month | carriers__statistics__flights__cancelled | carriers__statistics__flights__on time | carriers__statistics__flights__total | carriers__statistics__flights__delayed | carriers__statistics__flights__diverted | carriers__statistics__flights__link                         |
-|-----------------|----------------------------------------------|-------------|---------------|----------------------|----------------------|----------------|------------------------|--------------|----------------|----------------------|-----------------------|------------------------------------------|----------------------------------------|--------------------------------------|----------------------------------------|-----------------------------------------|-------------------------------------------------------------|
-| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | /airports            | /airports/123/routes | AA             | American Airlines Inc. | 124          | /carriers/124  | 2003                 | 6                     | 5                                        | 561                                    | 752                                  | 186                                    | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
-|                 |                                              |             |               |                      |                      | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | 2003                 | 6                     | 0                                        | 44                                     | 60                                   | 16                                     | 0                                       | /airports/123?carrier=124&statistics='flights'&minimal=true |
+            "url": "/carriers/124?airport_id=123",       "statistics_url":"/airports/1carrier=124&  statistics='flights'"
+          },
+          .
+          .
+          .
+        ]
+  }
+  ```
 
 
 * **Error Response:**
@@ -458,7 +285,7 @@ If CSV:
     **Content:** `{ error : "Invalid id" }`
 
   * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "`Invalid method`" }`
+    **Content:** `{ error : "Invalid method" }`
 
 * **Sample Call:**
 
@@ -473,7 +300,8 @@ If CSV:
   ```
   
 * **Notes:**
-	* If no date (month and year) are specified, the most recent date is used.
+	
+  * If no date (month and year) are specified, the most recent date is used.
 
 
 
@@ -507,7 +335,7 @@ If CSV:
 		
 	```javascript
     {
-	    u: {
+	    {
 	        "cancelled": [integer],
 	        "on time": [integer],
 	        "total": [integer],
@@ -529,13 +357,13 @@ If CSV:
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
         "id": 123,
-        "link": "/airports/123"
+        "url": "/airports/123"
     },
     "carrier": {
         "code": "AA",
         "name": "American Airlines Inc.",
         "id": 124,
-        "link": "/carriers/124",
+        "url": "/carriers/124",
     },
     "flights_statistics": {
         "cancelled": 5,
@@ -548,18 +376,7 @@ If CSV:
         "year": 2003,
         "month": 6
     }
-    ```
-       
-
-	
-	If CSV:
-	
-| airport/code | airport/name | airport/id | airport/link | carrier/code | carrier/name | carrier/id | carrier/link | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/total | flights_statistics/delayed | flights_statistics/diverted | date/year | date/month |
-|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|--------------------------|----------------------------|-----------------------------|-----------|------------|
-| PHL | Philadelphia, PA: Philadelphia International | 123 | /airports/123 | AA | American Airlines Inc. | 124 | /carriers/124 | 5 | 561 | 752 | 186 | 0 | 2003 | 6 |
-    
-
-   
+    ```	   
  
 * **Error Response:**
   
@@ -641,19 +458,18 @@ If CSV:
   * **Code:** 200 <br />
     **Content:** 
     
-    If JSON:
 	```javascript
     "airport": {
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
         "id": 123,
-        "link": "/airports/123"
+        "url": "/airports/123"
     },
     "carrier": {
         "code": "AA",
         "name": "American Airlines Inc.",
         "id": 124,
-        "link": "/carriers/124",
+        "url": "/carriers/124",
     },
     "flights_statistics": {
         "cancelled": 5,
@@ -666,18 +482,7 @@ If CSV:
         "month": 6
     }
     ```
-       
-
-	
-	If CSV:
-	
-| airport/code | airport/name                                 | airport/id | airport/link  | carrier/code | carrier/name           | carrier/id | carrier/link  | flights_statistics/cancelled | flights_statistics/on time | flights_statistics/delayed | flights_statistics/all_statistics               | date/year | date/month |
-|--------------|----------------------------------------------|------------|---------------|--------------|------------------------|------------|---------------|------------------------------|----------------------------|----------------------------|-------------------------------------------------|-----------|------------|
-| PHL          | Philadelphia, PA: Philadelphia International | 123        | /airports/123 | AA           | American Airlines Inc. | 124        | /carriers/124 | 5                            | 561                        | 186                        | /airports/123?carrier=1245&statistics='flights' | 2003      | 6          |
-    
-
-   
- 
+      
 * **Error Response:**
   
   * **Code:** 404 NOT FOUND  <br />
@@ -730,8 +535,8 @@ If CSV:
 
    **Optional:**
 
-    `month=[integer]
-    `
+    `month=[integer]`
+
     `year=[integer]`
     
     `airport_id=[integer] `
@@ -920,19 +725,6 @@ If CSV:
           }
         ]
 ```
-    
-  
-  If CSV:
-
-
-| carrier/code | carrier/name           | carrier/id | carrier/link  | carrier/date/year | carrier/date/month | carrier/date/link               | minutes delayed/all | minutes delayed/carrier_reasons/late aircraft | minutes delayed/carrier_reasons/carrier | minutes delayed/carrier_reasons/all_reasons_link | airports/0/id | airports/0/code | airports/0/name                                       | airports/0/link | airports/1/id | airports/1/code | airports/1/name     | airports/1/link |
-|--------------|------------------------|------------|---------------|-------------------|--------------------|---------------------------------|---------------------|-----------------------------------------------|-----------------------------------------|--------------------------------------------------|---------------|-----------------|-------------------------------------------------------|-----------------|---------------|-----------------|---------------------|-----------------|
-| AR           | American Airlines Inc. | 1243       | /carriers/124 | 2003              | 6                  | /carriers/124?month=6&year=2003 | 8314                | 1269                                          | 1367                                    | /carriers/124?reasons=all                        | 134           | PHL             | Philadelphia, PA: Philadelphia International          | /airports/134   | 123           | AHR             | American Hour Rapid | /airports/123   |
-| AA           | American Airlines Inc. | 124        | /carriers/124 | 2003              | 7                  | /carriers/124?month=7&year=2003 | 7678                | 1000                                          | 1000                                    | /carriers/124?reasons=all                        | 134           | PHL             | Philadelphia, PA: Philadelphia International          | /airports/134   | 123           | AHR             | American Hour Rapid | /airports/123   |
-| AS           | Alaska Airlines Inc.   | 144        | /carriers/144 | 2003              | 6                  | /carriers/144?month=6&year=2003 | 7645                | 1001                                          | 1002                                    | /carriers/144?reasons=all                        | 133           | ATL             | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133   | 123           | AHR             | American Hour Rapid | /airports/123   |
-| AS           | Alaska Airlines Inc.   | 144        | /carriers/144 | 2003              | 7                  | /carriers/144?month=7&year=2003 | 7656                | 1000                                          | 1000                                    | /carriers/144?reasons=all                        | 133           | ATL             | Atlanta, GA: Hartsfield-Jackson Atlanta International | /airports/133   | 123           | AHR             | American Hour Rapid | /airports/123   |
-
-
 
 
 * **Error Response:**
@@ -967,7 +759,7 @@ If CSV:
 
 **Show airport routes.**
 ----
-  Returns a json/csv response containing the routes that the current airport does.
+  Returns a json/csv response containing links to the routes that the specified airport does.
 
 * **URL**
 `/airports/:id/routes`
@@ -983,52 +775,31 @@ If CSV:
     
    **Optional:**
    
-   `month=[integer]`
+   `from=[month/year]`
    
-   `year=[integer]`  
+   `to=[month/year]`  
 
 * **Success Response:**
   
   * **Code:** 200 <br />
     **Content:** 
     
-    If JSON:
+  
 	```javascript
     "airport": {
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
         "id": 123,
-        "link": "/airports/123"
+        "url": "/airports/123"
     },
     "routes": [{
-            "code": "AHR",
+          "code": "AHR",
 	        "name": "American Hour Rapid",
-	        "link": "/airports/133",
-	        "route": "/airports/123/routes?destiny=133"
+	        "destination_url": "/airports/133",
+	        "route": "/airports/123/routes?destination=133&from=from&to=to"
         },
-        {
-            "code": "ATT",
-	        "name": "American True True",
-	        "link": "/airports/139",
-	        "route": "/airports/123/routes?destiny=139"
-        }
 	],
-    "date": {
-        "year": 2003,
-        "month": 6
-    }
-    ```
-       
-
-	
-	If CSV:
-	
-| ﻿"airport__code" | airport__name                                | airport__id | airport__link | routes__code | routes__name        | routes__link  | routes__route                    | date__year | date__month |
-|-----------------|----------------------------------------------|-------------|---------------|--------------|---------------------|---------------|----------------------------------|------------|-------------|
-| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | AHR          | American Hour Rapid | /airports/133 | /airports/123/routes?destiny=133 | 2003       | 6           |
-|                 |                                              |             |               | ATT          | American True True  | /airports/139 | /airports/123/routes?destiny=139 |            |             |
-
-   
+    ```   
  
 * **Error Response:**
   
@@ -1173,22 +944,6 @@ or
         }
     ]
 }
-```
-
-
-If CSV:
-
-```markdown
-| ﻿"airport__code" | airport__name                                | airport__id | airport__link | destiny__code | destiny__name       | destiny__id | destiny__link | link                             | link_back            | carriers__code | carriers__name         | carriers__id | carriers__link | carriers__link_route                         | carriers__statistics__| | carriers__statistics__|| | carriers__statistics__||__mean | carriers__statistics__||__median | carriers__statistics__||__standart deviation | carriers__statistics__link                                  |
-|-----------------|----------------------------------------------|-------------|---------------|---------------|---------------------|-------------|---------------|----------------------------------|----------------------|----------------|------------------------|--------------|----------------|----------------------------------------------|-------------------------|--------------------------|--------------------------------|----------------------------------|----------------------------------------------|-------------------------------------------------------------|
-| PHL             | Philadelphia, PA: Philadelphia International | 123         | /airports/123 | AHR           | American Hour Rapid | 125         | /airports/125 | /airports/125/routes?destiny=125 | /airports/123/routes | AA             | American Airlines Inc. | 124          | /carriers/124  | /airports/125/routes?destiny=125&carrier=124 | # of delays             | late aircraft            | 18                             | 17                               | 3                                            | /airports/123?carrier=124&statistics='flights'&minimal=true |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 34                             | 32                               | 5                                            |                                                             |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              | minutes delayed         | late aircraft            | 1269                           | 1200                             | 100                                          |                                                             |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 1367                           | 1300                             | 150                                          |                                                             |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      | AS             | Alaska Airlines Inc.   | 144          | /carriers/144  | /airports/125/routes?destiny=125&carrier=144 | # of delays             | late aircraft            | 20                             | 19                               | 2                                            | /airports/123?carrier=144&statistics='flights'&minimal=true |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 24                             | 22                               | 5                                            |                                                             |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              | minutes delayed         | late aircraft            | 1459                           | 1400                             | 200                                          |                                                             |
-|                 |                                              |             |               |               |                     |             |               |                                  |                      |                |                        |              |                |                                              |                         | carrier                  | 1134                           | 1100                             | 100                                          |                                                             |
 ```
 
 * **Error Response:**
