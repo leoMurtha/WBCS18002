@@ -269,7 +269,8 @@ and implemented by each group.
       "carriers": [
           {
             "id": 124,
-            "url": "/carriers/124?airport_id=123",       "statistics_url":"/airports/1carrier=124&  statistics='flights'"
+            "url": "/carriers/124?airport_id=123",
+            "statistics_url":"/airports/1carrier=124&statistics='flights'"
           },
           .
           .
@@ -302,8 +303,6 @@ and implemented by each group.
 * **Notes:**
 	
   * If no date (month and year) are specified, the most recent date is used.
-
-
 
 
 **All statistics about flights of a carrier from/to a US airport for a given month or all months available.**
@@ -400,13 +399,13 @@ and implemented by each group.
       type: 'POST',
       url: "/airports/123?carrier=1245&statistics='flights'",
       data:{ 
-			   u: {
+			     {
 			       "cancelled": 5,
 		           "on time": 561,
 			       "total": 752,
 			       "delayed": 186,
 	             "diverted": 0
-		          }  
+		        }  
 		      }   
       dataType: "json",
       success: function(resultData) { alert("Post Complete") }
@@ -515,7 +514,7 @@ and implemented by each group.
 
  **Show carrier informations**
 ----
-  Returns json/csv data containing informations of the specified carrier which includes the number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports. 
+  Returns json/csv data containing information of the specified carrier which includes the number of minutes of delay per carrier attributed to carrier-specific reasons (i.e. attributes carrier and late aircraft in the dataset)/all reasons, for a given month/all months available and for a specific airport/across all US airports. 
 
 
 * **URL**
@@ -539,7 +538,7 @@ and implemented by each group.
 
     `year=[integer]`
     
-    `airport_id=[integer] `
+    `airport_id=[integer]s`
     
     `reasons=['all' | 'carrier_reasons']`
     
@@ -554,176 +553,42 @@ and implemented by each group.
 
  If JSON  
  ```javascript
-      [
-          {
-          "carrier": {
-            "code": "AR",
-            "name": "American Airlines Inc.",
-            "id": 1243,
-            "link": "/carriers/124",
-            "date": {    
-                "year": 2003, 
-                "month": 6,
-                "link": "/carriers/124?month=6&year=2003"
-              } 
-            },    
-            "minutes delayed": {
-              "all": 8314, 
-                
-                "carrier_reasons":{
-                  "late aircraft": 1269, 
-                  "carrier": 1367,   
-                  "all_reasons_link": "/carriers/124?reasons=all"
-
-                }
-                
-            },
-            "airports": [{
-                "id": 134,
-                "code": "PHL",
-                "name": "Philadelphia, PA: Philadelphia International",
-                "link": "/airports/134"
-              },
-                {
-                "id": 123,
-                "code": "AHR",
-                "name": "American Hour Rapid",
-                "link": "/airports/123"
-                }
-            ]
-          },
-
-          {
-            "carrier": 
-              {
-              "code": "AA",
-              "name": "American Airlines Inc.",
-              "id": 124,
-              "link": "/carriers/124",
-              
-              "date": 
-                {    
-                  "year": 2003, 
-                  "month": 7,
-                  "link": "/carriers/124?month=7&year=2003"
-                } 
-              },    
-              "minutes delayed": 
-              {
-                
-                "all": 7678, 
-                
-                "carrier_reasons":{
-                  "late aircraft": 1000, 
-                  "carrier": 1000,   
-                  "all_reasons_link": "/carriers/124?reasons=all"
-
-                }
-                        
-              },
-              "airports":
-              [ {
-                "id": 134,
-                "code": "PHL",
-                "name": "Philadelphia, PA: Philadelphia International",
-                "link": "/airports/134"
-                },
-                {
-                "id": 123,
-                "code": "AHR",
-                "name": "American Hour Rapid",
-                "link": "/airports/123"
-                }
-              ]
-          },
-
-          {
-            "carrier":
-            {
-              "code": "AS",
-              "name": "Alaska Airlines Inc.",
-              "id": 144,
-              "link": "/carriers/144",
-             
-              "date": 
-              {    
-                "year": 2003, 
-                "month": 6,
-                "link": "/carriers/144?month=6&year=2003"
-              } 
-            },    
-            "minutes delayed": 
-            {
-                
-                "all": 7645, 
-               
-                "carrier_reasons":{
-                  "late aircraft": 1001, 
-                  "carrier": 1002,   
-                  "all_reasons_link": "/carriers/144?reasons=all"
-
-                }
-                      
-            },
-            "airports":
-            [ {
-              "id": 133,
-              "code": "ATL",
-              "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International",
-              "link": "/airports/133"
-              },
-              {
-              "id": 123,
-              "code": "AHR",
-              "name": "American Hour Rapid",
-              "link": "/airports/123"
-              }
-            ]
-          },
-          {
-            "carrier":
-            {
-              "code": "AS",
-              "name": "Alaska Airlines Inc.",
-              "id": 144,
-              "link": "/carriers/144",
-
-              "date": 
-              {    
-                "year": 2003, 
-                "month": 7,
-                "link": "/carriers/144?month=7&year=2003"
-              } 
-            },    
-            "minutes delayed": 
-            {
-                
-                "all": 7656, 
-                
-                "carrier_reasons":{
-                  "late aircraft": 1000, 
-                  "carrier": 1000,   
-                  "all_reasons_link": "/carriers/144?reasons=all"
-
-                }
-                      
-            },
-            "airports":
-            [ {
-              "id":133,
-              "code": "ATL",
-              "name": "Atlanta, GA: Hartsfield-Jackson Atlanta International",
-              "link": "/airports/133"
-              },
-              {
-              "id": 123,
-              "code": "AHR",
-              "name": "American Hour Rapid",
-              "link": "/airports/123"
-              }
-            ]
+[
+    {
+    "carrier": {
+      "code": "AR",
+      "name": "American Airlines Inc.",
+      "id": 1243,
+      "url": "/carriers/124",
+      "date": {    
+          "year": 2003, 
+          "month": 6,
+          "url": "/carriers/124?month=6&year=2003"
+        } 
+      },    
+      "minutes delayed": {
+          "all": 8314, 
+          "carrier_reasons":{
+            "late aircraft": 1269, 
+            "carrier": 1367,   
+            "all_reasons": "/carriers/124?reasons=all"
           }
-        ]
+          
+      },
+      "airports": [{
+          "id": 134,
+          "url": "/airports/134"
+        },
+          {
+          "id": 123,
+          "url": "/airports/123"
+          }
+      ]
+    },
+    .
+    .
+    .  
+  ]
 ```
 
 
@@ -754,7 +619,7 @@ and implemented by each group.
   If the user wishes to retrieve data from a specific airport or on specific month or attributed to carrier-specific reasons then he should pass the optional parameter data in the valid format.
   In this case, there would be a query on the URL such as the example below:
 
-  ```/carriers/1232?airport_id=134&month=6```
+  ```/carriers/1232?airport_id=134&month=6&reasons=all```
 
 
 **Show airport routes.**
@@ -834,9 +699,9 @@ and implemented by each group.
   
 * **URL**
 
-`/airports/:id/routes?destiny=:airport_id`
+`/airports/:id/routes?destination=:airport_id`
 or
-`/airports/:id/routes?destiny=:airport_id&carrier=:carrier_id`
+`/airports/:id/routes?destination=:airport_id&carrier=:carrier_id`
 
 * **Method:**
 
@@ -866,82 +731,51 @@ or
         "id": 123,
         "link": "/airports/123"
     },
-    "destiny": {
+    "destination": {
         "code": "AHR",
         "name": "American Hour Rapid",
         "id": 125,
-        "link": "/airports/125"
+        "url": "/airports/125"
     },
-    "link": "/airports/125/routes?destiny=125",
-    "link_back": "/airports/123/routes",
+    "route": "/airports/125/routes?destination=125",
+    "root_url": "/airports/123/routes",
     "carriers": [{
             "code": "AA",
             "name": "American Airlines Inc.",
             "id": 124,
-            "link": "/carriers/124",
-            "link_route": "/airports/125/routes?destiny=125&carrier=124",
+            "url": "/carriers/124",
+            "route": "/airports/125/routes?destination=125&carrier=124",
             "statistics": {
+                "url": "/airports/123?carrier=124&statistics='flights'&minimal=true",
                 "# of delays": {
                     "late aircraft": {
                         "mean": 18,
                         "median": 17,
-                        "standart deviation": 3
+                        "standard_deviation": 3
                     },
                     "carrier": {
                         "mean": 34,
                         "median": 32,
-                        "standart deviation": 5
+                        "standard_deviation": 5
                     }
                 },
                 "minutes delayed": {
                     "late aircraft": {
                         "mean": 1269,
                         "median": 1200,
-                        "standart deviation": 100
+                        "standard_deviation": 100
                     },
                     "carrier": {
                         "mean": 1367,
                         "median": 1300,
-                        "standart deviation": 150
+                        "standard_deviation": 150
                     }
                 },
-                "link": "/airports/123?carrier=124&statistics='flights'&minimal=true"
             }
         },
-        {
-            "code": "AS",
-            "name": "Alaska Airlines Inc.",
-            "id": 144,
-            "link": "/carriers/144",
-            "link_route": "/airports/125/routes?destiny=125&carrier=144",
-            "statistics": {
-                "# of delays": {
-                    "late aircraft": {
-                        "mean": 20,
-                        "median": 19,
-                        "standart deviation": 2
-                    },
-                    "carrier": {
-                        "mean": 24,
-                        "median": 22,
-                        "standart deviation": 5
-                    }
-                },
-                "minutes delayed": {
-                    "late aircraft": {
-                        "mean": 1459,
-                        "median": 1400,
-                        "standart deviation": 200
-                    },
-                    "carrier": {
-                        "mean": 1134,
-                        "median": 1100,
-                        "standart deviation": 100
-                    }
-                },
-                "link": "/airports/123?carrier=144&statistics='flights'&minimal=true"
-            }
-        }
+        .
+        .
+        .
     ]
 }
 ```
@@ -958,7 +792,7 @@ or
 
   ```javascript
     $.ajax({
-      url: "/airports/:id/routes?destiny=:airport_id&carrier=:carrier_id",
+      url: "/airports/:id/routes?destination=:airport_id&carrier=:carrier_id",
       dataType: "json",
       type : "GET",
       success : function(r) {
@@ -967,4 +801,4 @@ or
     });
   ```
 * **Notes:**
-	* If no carrier is specified information about all carriers related to the routes are returned else only informations about the specific carrier are returned.
+	* If no carrier is specified then the information about all carriers related to the routes are returned else only information about the specific carrier are returned.
