@@ -51,7 +51,7 @@ class Statistics(models.Model):
     month = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)])
     year = models.IntegerField(validators=[MinValueValidator(1900, message='Invalid year: year < 1900.')])
     flight_statistic = models.ForeignKey(FlightStatistics, on_delete=models.DO_NOTHING)
-    delay_count_statistic = models.ForeignKey(DelayCountStatisstics, on_delete=models.DO_NOTHING)
+    delay_count_statistic = models.ForeignKey(DelayCountStatistics, on_delete=models.DO_NOTHING)
     delay_time_statistic = models.ForeignKey(DelayTimeStatistics, on_delete=models.DO_NOTHING)
     
     # Guaranteeing the "primary key" of the tuple
