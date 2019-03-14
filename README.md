@@ -43,7 +43,7 @@ and implemented by each group.
 
    **Required:**
  
-   `id=[integer]`
+   `id=[string(unique)]`
 
    **Optional:**
  
@@ -111,15 +111,13 @@ and implemented by each group.
               "airport": {
                   "code": "PHL",
                   "name": "Philadelphia, PA: Philadelphia International",
-	      	    "id": 123,
-                  "url": "/airports/123"
+                  "url": "/airports/PHL"
               },
           {
               "airport": {
                   "code": "AHR",
                   "name": "American Hour Rapid",
-    	      "id": 125,
-                  "url": "/airports/125"
+                  "url": "/airports/AHR"
           }
           .
           .
@@ -186,15 +184,13 @@ and implemented by each group.
         "carrier": {
             "code": "AA",
             "name": "American Airlines Inc.",
-		        "id": 124,
-            "url": "/carriers/124"
+		        "url": "/carriers/AA"
         },
         {
          "carrier": {
             "code": "AS",
             "name": "Alaska Airlines Inc.",
-            "id": 144,
-		        "url": "/carriers/144"
+		        "url": "/carriers/AS"
         },
         .
         .
@@ -247,7 +243,7 @@ and implemented by each group.
 
    **Required:**
  
-   `id=[integer]`
+   `id=[code(ex: ATL)]`
 
    **Optional:**
  
@@ -262,15 +258,13 @@ and implemented by each group.
       "airport": {
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
-        "id": 123,
-        "url": "/airports/123"
+        "url": "/airports/PHL"
       },
-      "routes_link": "/airports/123/routes",
+      "routes_link": "/airports/PHL/routes",
       "carriers": [
           {
-            "id": 124,
-            "url": "/carriers/124?airport_id=123",
-            "statistics_url":"/airports/1carrier=124&statistics='flights'"
+            "url": "/carriers/AA?airport_id=PHL",
+            "statistics_url":"/airports/PHL?carrier=AA&statistics='flights'"
           },
           .
           .
@@ -320,9 +314,9 @@ and implemented by each group.
 
    **Required:**
    
-   `id=[integer]`
+   `id=[string(unique)]`
    
-   `carrier_id=[integer]`
+   `carrier_id=[string(unique)]`
    
    `statistics=['flights' | 'delays']` 
     
@@ -355,8 +349,7 @@ and implemented by each group.
     "airport": {
         "code": "PHL",
         "name": "Philadelphia, PA: Philadelphia International",
-        "id": 123,
-        "url": "/airports/123"
+        "url": "/airports/PHL"
     },
     "carrier": {
         "code": "AA",
@@ -440,9 +433,9 @@ and implemented by each group.
 
    **Required:**
    
-   `id=[integer]`
+   `id=[string(unique)]`
    
-   `carrier_id=[integer]`
+   `carrier_id=[string(unique)]`
    
    `statistics=['flights' | 'delays']` 
    
@@ -529,7 +522,7 @@ and implemented by each group.
 
    **Required:** 
    
-   `id=[integer]`
+   `id=[string(unique)]`
 
 
    **Optional:**
@@ -538,7 +531,7 @@ and implemented by each group.
 
     `year=[integer]`
     
-    `airport_id=[integer]s`
+    `airport_id=[string(unique)]s`
     
     `reasons=['all' | 'carrier_reasons']`
     
@@ -636,7 +629,7 @@ and implemented by each group.
 
    **Required:**
    
-   `id=[integer]`
+   `id=[string(unique)]`
     
    **Optional:**
    
@@ -711,13 +704,13 @@ or
 
    **Required:**
  
-   `id=[integer]`
+   `id=[string(unique)]`
    
-    `airport_id=[integer]`
+    `airport_id=[string(unique)]`
 
    **Optional:**
  
-   `carrier_id=[integer]`
+   `carrier_id=[string(unique)]`
 
 * **Success Response:**
   
