@@ -10,6 +10,8 @@ class AirportView(viewsets.ModelViewSet):
     queryset = models.Airport.objects.all()
     serializer_class = serializers.AirportDetailSerializer
 
+    def create(self, request):
+
     def list(self, request):
         airports = models.Airport.objects.only('name', 'code')
         data = serializers.AirportListSerializer(airports, many=True, context={'request': request}).data
