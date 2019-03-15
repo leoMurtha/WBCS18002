@@ -120,3 +120,5 @@ dmypy.json
 */__pycache__
 .vscode
 .vscode/*
+./.vscode
+.vscode/settings.json
