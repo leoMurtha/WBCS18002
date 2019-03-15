@@ -7,8 +7,6 @@ import requests
 def feed_api(entries, keys):
 
     for entry in entries:
-        #print('key %s data %s' % (key, entry[key]))
-        
         requests.post(url='http://127.0.0.1:8000/api/carriers/', data=entry['carrier'])
         
         data = entry['airport']
@@ -16,10 +14,10 @@ def feed_api(entries, keys):
         data.update({'carriers': ['http://127.0.0.1:8000/api/carriers/%s/' % entry['carrier']['code']]})
 
         print(data)
-        try:
-            requests.post('http://localhost:8000/api/airports/', data=data)
-        except:
-            requests.patch('http://localhost:8000/api/airports/%s' % data['airport']['code'], data=data)
+        
+        r = requests.post('http://localhost:8000/api/airports/', data=data)
+        if r.status_code != 200:
+            requests.patch('http://localhost:8000/api/airports/%s/' % data['code'], data=data)
         #return 0
 
 if __name__ == "__main__":
