@@ -23,6 +23,25 @@ class AirportView(viewsets.ModelViewSet):
         #print(serializer.data)
         return Response(serializer.data)
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        
+        serializer = serializers.AirportDetailSerializer(
+            instance=instance,
+            data=request.data,
+            context={'request': request}
+        )
+        
+        carriers = request.data
+        print(carriers.keys(), [value for value in carriers.values()])
+        print(type(carriers))
+        
+        if serializer.is_valid(raise_exception=True):
+            print(serializer.validated_data)
+            serializer.save(carriers=[])
+
+        return Response(serializer.data)
+
 
 class CarrierView(viewsets.ModelViewSet):
     queryset = models.Carrier.objects.all()
