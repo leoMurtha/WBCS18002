@@ -32,13 +32,15 @@ class AirportView(viewsets.ModelViewSet):
             context={'request': request}
         )
         
-        carriers = request.data
-        print(carriers.keys(), [value for value in carriers.values()])
-        print(type(carriers))
+        carriers = set(dict(request.data)['carriers'])
+        
         
         if serializer.is_valid(raise_exception=True):
             print(serializer.validated_data)
-            serializer.save(carriers=[])
+            for carrier in serializer.validated_data['carriers']:
+                carriers.add(carrier)
+
+            serializer.save(carriers=carriers)
 
         return Response(serializer.data)
 
