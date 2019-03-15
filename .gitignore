@@ -118,3 +118,5 @@ dmypy.json
 .pyc
 *.pyc
 */__pycache__
+.vscode
+.vscode/*
