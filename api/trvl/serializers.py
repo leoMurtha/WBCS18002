@@ -13,9 +13,10 @@ class AirportDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Airport
-        fields = ('code', 'name', 'url', 'carriers')    
+        fields = ('code', 'name', 'url')    
 
 class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
+
     class Meta:
         model = models.Carrier
         fields = ('name', 'code', 'url')
@@ -29,5 +30,28 @@ class CarrierDetailSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = models.Carrier
-        fields = ('name', 'code', 'url', 'airports')
+        fields = ('name', 'code', 'url')
 
+class StatisticsSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.Statistics
+        fields = '__all__'
+
+class FlightStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.FlightStatistics
+        fields = '__all__'
+
+class DelayCountStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.DelayCountStatistics
+        fields = '__all__'
+
+class DelayTimeStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.DelayTimeStatistics
+        fields = '__all__'

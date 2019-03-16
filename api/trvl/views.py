@@ -91,3 +91,19 @@ class CarrierView(viewsets.ModelViewSet):
         serializer = serializers.CarrierDetailSerializer(carrier, context={'request': request})
         print(serializer.data)
         return Response(serializer.data)
+
+class StatisticsView(viewsets.ModelViewSet):
+    queryset = models.Statistics.objects.all()
+    serializer_class = serializers.StatisticsSerializer
+
+class FlightStatisticsView(viewsets.ModelViewSet):
+    queryset = models.FlightStatistics.objects.all()
+    serializer_class = serializers.FlightStatisticsSerializer
+
+class DelayCountStatisticsView(viewsets.ModelViewSet):
+    queryset = models.DelayCountStatistics.objects.all()
+    serializer_class = serializers.DelayCountStatisticsSerializer
+
+class DelayTimeStatisticsView(viewsets.ModelViewSet):
+    queryset = models.DelayTimeStatistics.objects.all()
+    serializer_class = serializers.DelayTimeStatisticsSerializer
