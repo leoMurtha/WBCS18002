@@ -29,12 +29,10 @@ class AirportView(viewsets.ModelViewSet):
     """
     queryset = models.Airport.objects.all()
     serializer_class = serializers.AirportDetailSerializer
-    carrier_regex = re.compile(r'http://(?:.*)/api/carriers/([a-zA-Z]+)/', re.I | re.U | re.M)
-    #def create(self, request):
-
+    
     def list(self, request):
         # Getting only name and code, the carriers will show up only on the airport detail
-        airports = models.Airport.objects.only('name', 'code')
+        airports = models.Airport.objects.all()
         # Getting the data in the proper way -> serialized
         data = serializers.AirportListSerializer(airports, many=True, context={'request': request}).data
         return Response(data)
@@ -42,6 +40,7 @@ class AirportView(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
         airport = self.get_object()
+
         serializer = serializers.AirportDetailSerializer(airport, context={'request': request})
         
         # Overriding the original data for more features
@@ -62,17 +61,21 @@ class AirportView(viewsets.ModelViewSet):
         
         if serializer.is_valid(raise_exception=True):
             # Getting the user inputed carriers after it was validated by the serializer
-            carriers = set(request.data['carriers'])    
-
+            carriers = set(dict(request.data)['carriers'])    
             # Adding new carriers to the current airport list of carriers without deleting the old ones
             for carrier in serializer.validated_data['carriers']:
+                print(carrier)
                 carriers.add(carrier)
-
+            print('Carriers %s' % carriers)
             # Saving alterations to the db
             serializer.save(carriers=carriers)
-            
-        return Response(serializer.data)
-
+        
+        # Overriding the original data for more features
+        data = serializer.data
+        # Creating the carrier links 
+        data['carriers'] = ['http://%s/api/carriers/%s/' % (request.get_host(), carrier) for carrier in data['carriers']]
+        
+        return Response(data)
 
 class CarrierView(viewsets.ModelViewSet):
     queryset = models.Carrier.objects.all()
@@ -88,22 +91,3 @@ class CarrierView(viewsets.ModelViewSet):
         serializer = serializers.CarrierDetailSerializer(carrier, context={'request': request})
         print(serializer.data)
         return Response(serializer.data)
-
-    # def update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-        
-    #     serializer = serializers.AirportDetailSerializer(
-    #         instance=instance,
-    #         data=request.data,
-    #         context={'request': request}
-    #     )
-        
-    #     carriers = set(request.data['carriers'])    
-
-    #     if serializer.is_valid(raise_exception=True):
-    #         for carrier in serializer.validated_data['carriers']:
-    #             carriers.add(carrier)
-
-    #         serializer.save(carriers=carriers)
-            
-    #     return Response(serializer.data)

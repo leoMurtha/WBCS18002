@@ -13,7 +13,7 @@ class AirportDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Airport
-        fields = ('code', 'name', 'url', 'carriers')
+        fields = ('code', 'name', 'url', 'carriers')    
 
 class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
