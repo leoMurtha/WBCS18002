@@ -12,10 +12,9 @@ router.register('carriers', views.CarrierView)
 router.register('statistics', views.StatisticsView)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('statistics/flights/', views.FlightStatisticsView),
-    url('statistics/delaycount', views.DelayCountStatisticsView),
-    url('statistics/delaytime', views.DelayTimeStatisticsView)
+    path('', include(router.urls))
 ]
+
+print(router.urls)
 
 #urlpatterns = format_suffix_patterns(urlpatterns)

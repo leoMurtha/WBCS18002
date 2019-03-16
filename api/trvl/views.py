@@ -5,6 +5,7 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from rest_framework.request import Request
+from rest_framework.decorators import action
 
 
 class AirportView(viewsets.ModelViewSet):
@@ -95,15 +96,19 @@ class CarrierView(viewsets.ModelViewSet):
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
+    
+    @action(detail=False, methods=['post', 'get'])
+    def flight(self, request):
+        serializer = serializers.FlightStatisticsSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response({'error': '400'})
 
-class FlightStatisticsView(viewsets.ModelViewSet):
-    queryset = models.FlightStatistics.objects.all()
-    serializer_class = serializers.FlightStatisticsSerializer
 
-class DelayCountStatisticsView(viewsets.ModelViewSet):
-    queryset = models.DelayCountStatistics.objects.all()
-    serializer_class = serializers.DelayCountStatisticsSerializer
-
-class DelayTimeStatisticsView(viewsets.ModelViewSet):
-    queryset = models.DelayTimeStatistics.objects.all()
-    serializer_class = serializers.DelayTimeStatisticsSerializer
+        # serializer = serializers.FlightStatisticsSerializer(serializer, context={'request': request})
+        # if serializer.is_valid():
+        #     return Response(serializer.data)
+        # else:
+        #     return Response({'error': '400'})

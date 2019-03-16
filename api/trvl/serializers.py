@@ -32,13 +32,13 @@ class CarrierDetailSerializer(serializers.ModelSerializer):
         model = models.Carrier
         fields = ('name', 'code', 'url')
 
-class StatisticsSerializer(serializers.HyperlinkedModelSerializer):
+class StatisticsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Statistics
         fields = '__all__'
 
-class FlightStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+class FlightStatisticsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.FlightStatistics

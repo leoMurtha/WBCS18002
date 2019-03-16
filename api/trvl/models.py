@@ -23,7 +23,7 @@ class FlightStatistics(models.Model):
     diverted = models.IntegerField(validators=[MinValueValidator(0, message='Invalid value: negative.')], default=0)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 class DelayCountStatistics(models.Model):
     late_aircraft = models.IntegerField(validators=[MinValueValidator(0, message='Invalid value: negative.')], default=0)
