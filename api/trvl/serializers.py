@@ -8,14 +8,8 @@ class AirportListSerializer(serializers.ModelSerializer):
         model = models.Airport
         fields = ('code', 'name', 'url')
 
-class AirportDetailSerializer(serializers.HyperlinkedModelSerializer):
+class AirportDetailSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='airport-detail')
-    
-    # carriers = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name='carrier-detail'
-    # )
     
     class Meta:
         model = models.Airport
@@ -27,7 +21,7 @@ class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('name', 'code', 'url')
 
 
-class CarrierDetailSerializer(serializers.HyperlinkedModelSerializer):
+class CarrierDetailSerializer(serializers.ModelSerializer):
     airports = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
