@@ -3,7 +3,6 @@ from . import models
 
 class AirportListSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='airport-detail')
-
     class Meta:
         model = models.Airport
         fields = ('code', 'name', 'url')
@@ -13,7 +12,7 @@ class AirportDetailSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = models.Airport
-        fields = ('code', 'name', 'url', 'carriers')    
+        fields = ('code', 'name', 'url')    
 
 class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
