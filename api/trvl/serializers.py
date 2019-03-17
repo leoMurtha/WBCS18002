@@ -5,6 +5,7 @@ from . import models
 
 class AirportListSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='airport-detail')
+
     class Meta:
         model = models.Airport
         fields = ('code', 'name', 'url')
@@ -16,6 +17,7 @@ class AirportDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Airport
         fields = ('code', 'name', 'url')
+
 
 class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -58,6 +60,8 @@ class DelayTimeStatisticsSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class StatisticsSerializer(WritableNestedModelSerializer):
+    # Using nest serializer for handling get and post
+    # Using serializers instead of the model fields
     flight = FlightStatisticsSerializer(many=False)
     delaycount = DelayCountStatisticsSerializer(many=False)
     delaytime = DelayTimeStatisticsSerializer(many=False)

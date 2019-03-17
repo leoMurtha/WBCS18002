@@ -41,6 +41,7 @@ class AirportView(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
         airport = self.get_object()
+        #statistics = models.Statistics.objects.
 
         serializer = serializers.AirportDetailSerializer(airport, context={'request': request})
 
