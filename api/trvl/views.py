@@ -96,19 +96,3 @@ class CarrierView(viewsets.ModelViewSet):
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
-    
-    @action(detail=False, methods=['post', 'get'])
-    def flight(self, request):
-        serializer = serializers.FlightStatisticsSerializer(data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response({'error': '400'})
-    
-
-        # serializer = serializers.FlightStatisticsSerializer(serializer, context={'request': request})
-        # if serializer.is_valid():
-        #     return Response(serializer.data)
-        # else:
-        #     return Response({'error': '400'})
