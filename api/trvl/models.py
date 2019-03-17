@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from rest_framework.serializers import JSONField
 
 class Carrier(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
@@ -23,7 +24,7 @@ class FlightStatistics(models.Model):
     diverted = models.IntegerField(validators=[MinValueValidator(0, message='Invalid value: negative.')], default=0)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 class DelayCountStatistics(models.Model):
     late_aircraft = models.IntegerField(validators=[MinValueValidator(0, message='Invalid value: negative.')], default=0)
@@ -50,13 +51,14 @@ class Statistics(models.Model):
     carrier = models.ForeignKey(Carrier, on_delete=models.CASCADE)
     month = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(12)])
     year = models.IntegerField(validators=[MinValueValidator(1900, message='Invalid year: year < 1900.')])
-    flight_statistic = models.ForeignKey(FlightStatistics, on_delete=models.DO_NOTHING)
-    delay_count_statistic = models.ForeignKey(DelayCountStatistics, on_delete=models.DO_NOTHING)
-    delay_time_statistic = models.ForeignKey(DelayTimeStatistics, on_delete=models.DO_NOTHING)
+    # statistics linkage
+    flight_statistic = models.OneToOneField(FlightStatistics, on_delete=models.DO_NOTHING)
+    delay_count_statistic = models.OneToOneField(DelayCountStatistics, on_delete=models.DO_NOTHING)
+    delay_time_statistic = models.OneToOneField(DelayTimeStatistics, on_delete=models.DO_NOTHING)
     
     # Guaranteeing the "primary key" of the tuple
     class Meta:    
         unique_together = ('airport', 'carrier', 'month', 'year')
 
     def __str__(self):
-        return self.name
+        return '%s_%s_%s_%s' % (self.airport, self.carrier, self.month, self.year)
