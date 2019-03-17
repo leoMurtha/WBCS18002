@@ -10,23 +10,27 @@ class AirportSerializer(serializers.ModelSerializer):
         model = models.Airport
         fields = ('code', 'name', 'url')
 
-class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
+
+class CarrierSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='carrier-detail')
 
     class Meta:
         model = models.Carrier
-        fields = ('name', 'code', 'url')
+        fields = ('code', 'name', 'url')
 
 
-class CarrierDetailSerializer(serializers.ModelSerializer):
-    airports = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='airport-detail'
-    )
-
-    class Meta:
-        model = models.Carrier
-        fields = ('name', 'code', 'url')
+#class CarrierDetailSerializer(serializers.ModelSerializer):
+#    url = serializers.HyperlinkedIdentityField(view_name='carrier-detail')
+#
+#    #airports = serializers.HyperlinkedRelatedField(
+#    #    many=True,
+#    #    read_only=True,
+#    #    view_name='airport-detail'
+#    #)
+#
+#    class Meta:
+#        model = models.Carrier
+#        fields = ('name', 'code', 'url')
 
 
 class FlightStatisticsSerializer(serializers.ModelSerializer):
