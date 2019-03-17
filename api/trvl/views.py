@@ -105,7 +105,7 @@ class StatisticsView(viewsets.ModelViewSet):
             return Response(serializer.data)
         else:
             return Response({'error': '400'})
-
+    
 
         # serializer = serializers.FlightStatisticsSerializer(serializer, context={'request': request})
         # if serializer.is_valid():

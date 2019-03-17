@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from rest_framework.serializers import JSONField
 
 class Carrier(models.Model):
     code = models.CharField(max_length=10, primary_key=True)
@@ -60,4 +61,4 @@ class Statistics(models.Model):
         unique_together = ('airport', 'carrier', 'month', 'year')
 
     def __str__(self):
-        return self.name
+        return '%s_%s_%s_%s' % (self.airport, self.carrier, self.month, self.year)
