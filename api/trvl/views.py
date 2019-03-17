@@ -5,6 +5,7 @@ from . import models
 from . import serializers
 from rest_framework.response import Response
 from rest_framework.request import Request
+from rest_framework.decorators import action
 
 
 class AirportView(viewsets.ModelViewSet):
@@ -74,3 +75,7 @@ class CarrierView(viewsets.ModelViewSet):
         serializer = serializers.CarrierDetailSerializer(carrier, context={'request': request})
         print(serializer.data)
         return Response(serializer.data)
+
+class StatisticsView(viewsets.ModelViewSet):
+    queryset = models.Statistics.objects.all()
+    serializer_class = serializers.StatisticsSerializer
