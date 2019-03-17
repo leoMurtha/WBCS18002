@@ -263,6 +263,7 @@ and implemented by each group.
       "routes_link": "/airports/PHL/routes",
       "carriers": [
           {
+            "code":
             "url": "/carriers/AA?airport_id=PHL",
             "statistics_url":"/airports/PHL?carrier=AA&statistics='flights'"
           },

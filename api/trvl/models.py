@@ -88,11 +88,11 @@ class Statistics(models.Model):
     year = models.IntegerField(validators=[MinValueValidator(
         1900, message='Invalid year: year < 1900.')])
     # statistics linkage
-    flight = models.OneToOneField(
+    flight = models.ForeignKey(
         FlightStatistics, on_delete=models.DO_NOTHING)
-    delay_count = models.OneToOneField(
+    delay_count = models.ForeignKey(
         DelayCountStatistics, on_delete=models.DO_NOTHING)
-    delay_time = models.OneToOneField(
+    delay_time = models.ForeignKey(
         DelayTimeStatistics, on_delete=models.DO_NOTHING)
 
     # Guaranteeing the "primary key" of the tuple

@@ -29,29 +29,31 @@ class AirportView(viewsets.ModelViewSet):
     Deletes the specified airport.
     """
     queryset = models.Airport.objects.all()
-    serializer_class = serializers.AirportDetailSerializer
+    serializer_class = serializers.AirportSerializer
     
     def list(self, request):
         # Getting only name and code, the carriers will show up only on the airport detail
         airports = models.Airport.objects.all()
         # Getting the data in the proper way -> serialized
-        data = serializers.AirportListSerializer(airports, many=True, context={'request': request}).data
+        data = self.serializer_class(airports, many=True, context={'request': request}).data
         return Response(data)
 
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
         airport = self.get_object()
-        #statistics = models.Statistics.objects.
+        statistics = models.Statistics.objects.filter(airport=airport.code)     
 
-        serializer = serializers.AirportDetailSerializer(airport, context={'request': request})
+        serializer = self.serializer_class(airport, context={'request': request})
+        data = serializer.data
 
+        data['statistics'] = statistics
         # Waiting for statistics and routes
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         
-        serializer = serializers.AirportDetailSerializer(
+        serializer = self.serializer_class(
             instance=instance,
             data=request.data,
             context={'request': request}

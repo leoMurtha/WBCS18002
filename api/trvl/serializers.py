@@ -3,21 +3,12 @@ from drf_writable_nested import WritableNestedModelSerializer
 from . import models
 
 
-class AirportListSerializer(serializers.ModelSerializer):
+class AirportSerializer(serializers.ModelSerializer):
     url = serializers.HyperlinkedIdentityField(view_name='airport-detail')
 
     class Meta:
         model = models.Airport
         fields = ('code', 'name', 'url')
-
-
-class AirportDetailSerializer(serializers.ModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='airport-detail')
-
-    class Meta:
-        model = models.Airport
-        fields = ('code', 'name', 'url')
-
 
 class CarrierListSerializer(serializers.HyperlinkedModelSerializer):
 
@@ -45,14 +36,14 @@ class FlightStatisticsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class DelayCountStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+class DelayCountStatisticsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.DelayCountStatistics
         fields = '__all__'
 
 
-class DelayTimeStatisticsSerializer(serializers.HyperlinkedModelSerializer):
+class DelayTimeStatisticsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.DelayTimeStatistics
@@ -62,9 +53,9 @@ class DelayTimeStatisticsSerializer(serializers.HyperlinkedModelSerializer):
 class StatisticsSerializer(WritableNestedModelSerializer):
     # Using nest serializer for handling get and post
     # Using serializers instead of the model fields
-    flight = FlightStatisticsSerializer(many=False)
-    delaycount = DelayCountStatisticsSerializer(many=False)
-    delaytime = DelayTimeStatisticsSerializer(many=False)
+    flight = FlightStatisticsSerializer()
+    delaycount = DelayCountStatisticsSerializer()
+    delaytime = DelayTimeStatisticsSerializer()
 
     class Meta:
         model = models.Statistics
