@@ -19,7 +19,7 @@ class CarrierSerializer(serializers.ModelSerializer):
         fields = ('code', 'name', 'url')
 
 
-#class CarrierDetailSerializer(serializers.ModelSerializer):
+# class CarrierDetailSerializer(serializers.ModelSerializer):
 #    url = serializers.HyperlinkedIdentityField(view_name='carrier-detail')
 #
 #    #airports = serializers.HyperlinkedRelatedField(
@@ -54,14 +54,41 @@ class DelayTimeStatisticsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class StatisticsSerializer(WritableNestedModelSerializer):
+class StatisticsSerializer(serializers.ModelSerializer):
     # Using nest serializer for handling get and post
     # Using serializers instead of the model fields
-    flight = FlightStatisticsSerializer()
-    delaycount = DelayCountStatisticsSerializer()
-    delaytime = DelayTimeStatisticsSerializer()
+    url = serializers.HyperlinkedIdentityField(view_name='statistics-detail')
+    flight = FlightStatisticsSerializer(allow_null=True)
+    delay_count = DelayCountStatisticsSerializer(allow_null=True)
+    delay_time = DelayTimeStatisticsSerializer(allow_null=True)
 
     class Meta:
         model = models.Statistics
-        fields = ('airport', 'carrier', 'month', 'year',
-                  'flight', 'delaytime', 'delaycount')
+        fields = ('url','airport', 'carrier', 'month', 'year',
+                  'flight', 'delay_time', 'delay_count')
+
+    def create(self, validated_data):
+        flight_statistics = models.FlightStatistics.objects.create(
+            **(validated_data.pop('flight')))
+        delay_time_statistics = models.DelayTimeStatistics.objects.create(
+            **(validated_data.pop('delay_time')))
+        delay_count_statistics = models.DelayCountStatistics.objects.create(
+            **(validated_data.pop('delay_count')))
+        print(flight_statistics)
+
+        statistics = models.Statistics.objects.create(**validated_data, flight=flight_statistics,
+                                                      delay_time=delay_time_statistics, delay_count=delay_count_statistics)
+        
+        return statistics
+
+    def update(self, instance, validated_data):
+        ingredients_data = validated_data.pop('ingredients')
+        instance.name = validated_data['name']
+        instance.description = validated_data['description']
+        instance.directions = validated_data['directions']
+
+        for ingredient in ingredients_data:
+            ingredient, created = Ingredient.objects.update_or_create(
+                name=ingredient['name'])
+            instance.ingredients.add(ingredient)
+        return instance

@@ -81,19 +81,19 @@ class DelayTimeStatistics(models.Model):
 
 class Statistics(models.Model):
     """Instance: {airport_code, carrier_code, month, year, flight, delay_count, delay_time}"""
-    airport = models.ForeignKey(Airport, on_delete=models.CASCADE)
-    carrier = models.ForeignKey(Carrier, on_delete=models.CASCADE)
+    airport = models.ForeignKey(Airport, on_delete=models.CASCADE, related_name='airport')
+    carrier = models.ForeignKey(Carrier, on_delete=models.CASCADE, related_name='carrier')
     month = models.IntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(12)])
     year = models.IntegerField(validators=[MinValueValidator(
         1900, message='Invalid year: year < 1900.')])
     # statistics linkage
     flight = models.ForeignKey(
-        FlightStatistics, on_delete=models.DO_NOTHING)
+        FlightStatistics,null=True, on_delete=models.DO_NOTHING)
     delay_count = models.ForeignKey(
-        DelayCountStatistics, on_delete=models.DO_NOTHING)
+        DelayCountStatistics,null=True, on_delete=models.DO_NOTHING)
     delay_time = models.ForeignKey(
-        DelayTimeStatistics, on_delete=models.DO_NOTHING)
+        DelayTimeStatistics,null=True, on_delete=models.DO_NOTHING)
 
     # Guaranteeing the "primary key" of the tuple
     class Meta:
