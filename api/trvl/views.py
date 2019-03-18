@@ -6,6 +6,7 @@ from . import serializers
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.decorators import action
+from drf_writable_nested import NestedCreateMixin, NestedUpdateMixin
 
 
 class AirportView(viewsets.ModelViewSet):
@@ -95,6 +96,6 @@ class CarrierView(viewsets.ModelViewSet):
 
         return Response(general_data)
 
-class StatisticsView(viewsets.ModelViewSet):
+class StatisticsView(viewsets.ModelViewSet, NestedCreateMixin, NestedUpdateMixin):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
