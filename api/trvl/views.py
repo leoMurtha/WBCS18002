@@ -161,6 +161,55 @@ class AirportView(viewsets.ModelViewSet):
         
         return Response(data)
 
+    @action(detail=True, methods=['get'])
+    def statistics(self, request, *args, **kwargs):
+        '''
+        /airport/:id/statistics?carrier=:carrier_id&type=:''
+        '''
+        # lodading airport data
+        airport_model = self.get_object()
+        airport_serializer = self.serializer_class(
+            airport_model, context={'request': request})
+        airport_data = airport_serializer.data
+
+        # extracting querys
+        carrier = self.request.query_params.get('carrier', None)
+        statistics_type = self.request.query_params.get('type', None)
+
+        if carrier:
+
+            # loading carrier data
+            carrier_model = models.Carrier.objects.get(code=carrier)
+            carrier_serializer = serializers.CarrierSerializer(
+                    carrier_model, context={'request': request})
+            carrier_data = carrier_serializer.data
+
+            # loading statistics relations between airport and carrier
+            model_data = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier)
+            #print(model_data) # DEBUG
+            
+            if statistics_type == 'flights':
+
+                # extracting flights statistics ids
+                flights_id = model_data.values('flight')
+                flights_codes = []
+                for id in flights_id: flights_codes.append(id['flight'])
+                #print(flights_codes) # DEBUG
+
+                # loading flights serializer
+                flights_model = models.FlightStatistics.objects.filter(pk__in=flights_codes)
+                #print(flights_model)
+                serializer = serializers.FlightStatisticsSerializer(
+                    flights_model,many=True, context={'request': request})
+
+                # extracting serializer data
+                statistics_data = serializer.data
+
+        
+        return Response({'airport': airport_data,
+                        'carrier': carrier_data,
+                        'statistics': statistics_data})
+
 
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
