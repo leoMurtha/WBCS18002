@@ -82,13 +82,9 @@ class StatisticsSerializer(serializers.ModelSerializer):
         return statistics
 
     def update(self, instance, validated_data):
-        ingredients_data = validated_data.pop('ingredients')
-        instance.name = validated_data['name']
-        instance.description = validated_data['description']
-        instance.directions = validated_data['directions']
-
-        for ingredient in ingredients_data:
-            ingredient, created = Ingredient.objects.update_or_create(
-                name=ingredient['name'])
-            instance.ingredients.add(ingredient)
-        return instance
+        flight, _ = models.FlightStatistics.objects.update_or_create(id=instance.flight.id, defaults=validated_data.pop('flight'))
+        delay_time, _ = models.DelayTimeStatistics.objects.update_or_create(id=instance.delay_time.id, defaults=validated_data.pop('delay_time'))
+        delay_count, _ = models.DelayCountStatistics.objects.update_or_create(id=instance.delay_count.id, defaults=validated_data.pop('delay_count'))
+        new_instance, _ = models.Statistics.objects.update_or_create(id=instance.id, defaults=validated_data)
+        
+        return new_instance
