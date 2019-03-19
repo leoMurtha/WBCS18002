@@ -48,11 +48,28 @@ class AirportView(viewsets.ModelViewSet):
 
         serializer = self.serializer_class(
             airport, context={'request': request})
-        data = serializer.data
+        general_data = serializer.data
 
-        data['statistics'] = statistics
-        # Waiting for statistics and routes
-        return Response(serializer.data)
+        # loading related carrier ids
+        airport_id = airport.code
+        carriers_id = models.Statistics.objects.filter(airport=airport_id).distinct('carrier').values('carrier')
+        #print(carriers_id) # DEBUG
+        # loading related airports data
+        carrier_code = []
+        for id in carriers_id:
+            carrier_code.append(id['carrier'])
+        #print(carrier_code) # DEBUG
+        carriers = models.Carrier.objects.filter(code__in = carrier_code)
+        #print(carriers) # DEBUG
+        carriers_serializer = serializers.CarrierSerializer(
+           carriers, many=True, context={'request': request})
+        carriers_data = carriers_serializer.data
+        
+        #print(general_data) # DEBUG
+        #print(airports_data) # DEBUG
+
+        return Response({'Airport': general_data,
+                         'Carriers': carriers_data})
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
