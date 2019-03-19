@@ -93,15 +93,26 @@ class CarrierView(viewsets.ModelViewSet):
         serializer = self.serializer_class(
             carrier, context={'request': request})
         general_data = serializer.data
-        # loading related airports data
-        carrier_id = carrier.code
-        airports = models.Statistics.objects.filter(carrier=carrier_id)
-        airports_serializer = serializers.AirportSerializer(
-            airports, many=True, context={'request': request})
-        airports_data = airports_serializer.data
-        # print(airports_data) # DEBUG
 
-        return Response(general_data)
+        # loading related airports ids
+        carrier_id = carrier.code
+        airports_id = models.Statistics.objects.filter(carrier=carrier_id).distinct('airport').values('airport')
+        #print(airports_id) # DEBUG
+        # loading related airports data
+        airport_code = []
+        for id in airports_id:
+            airport_code.append(id['airport'])
+        airports = models.Airport.objects.filter(code__in = airport_code)
+        #print(airports) # DEBUG
+        airports_serializer = serializers.AirportSerializer(
+           airports, many=True, context={'request': request})
+        airports_data = airports_serializer.data
+        
+        #print(general_data) # DEBUG
+        #print(airports_data) # DEBUG
+
+        return Response({'Carrier': general_data,
+                         'Airports': airports_data})
 
 
 class StatisticsView(viewsets.ModelViewSet):
