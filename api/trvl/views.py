@@ -1,4 +1,4 @@
-import re
+import numpy as np
 from django.shortcuts import render
 from rest_framework import viewsets
 from . import models
@@ -16,16 +16,18 @@ class CarrierView(viewsets.ModelViewSet):
 
     def get_airports(self, request, carrier_id):
         # loading carrier related airports
-        airports_models = models.Statistics.objects.filter(carrier=carrier_id).distinct('airport').values('airport')
+        airports_models = models.Statistics.objects.filter(
+            carrier=carrier_id).distinct('airport').values('airport')
         # extracting code
         codes = []
-        for item in airports_models: codes.append(item['airport'])
+        for item in airports_models:
+            codes.append(item['airport'])
         # loading data
-        airports = models.Airport.objects.filter(code__in = codes)
+        airports = models.Airport.objects.filter(code__in=codes)
         airports_serializer = serializers.AirportSerializer(
-           airports, many=True, context={'request': request})
-        
-        return airports_serializer.data     
+            airports, many=True, context={'request': request})
+
+        return airports_serializer.data
 
     def list(self, request):
         # getting carriers list from database
@@ -41,7 +43,7 @@ class CarrierView(viewsets.ModelViewSet):
         # retriving specific carrier data
         carrier = self.get_object()
         serializer = self.serializer_class(
-            carrier, context={'request': request})     
+            carrier, context={'request': request})
         carrier_data = serializer.data
 
         # loading related airports list
@@ -76,13 +78,14 @@ class AirportView(viewsets.ModelViewSet):
 
     def get_carriers(self, request, airport_id):
         # loading airport related carriers codes
-        carriers_id = models.Statistics.objects.filter(airport=airport_id).distinct('carrier').values('carrier')
+        carriers_id = models.Statistics.objects.filter(
+            airport=airport_id).distinct('carrier').values('carrier')
         # extracting codes
         carrier_code = []
         for id in carriers_id:
             carrier_code.append(id['carrier'])
         # loading carrier list
-        carriers = models.Carrier.objects.filter(code__in = carrier_code)
+        carriers = models.Carrier.objects.filter(code__in=carrier_code)
         carriers_serializer = serializers.CarrierSerializer(
             carriers, many=True, context={'request': request})
 
@@ -98,14 +101,15 @@ class AirportView(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
-        airport = self.get_object()  
+        airport = self.get_object()
         serializer = self.serializer_class(
             airport, context={'request': request})
         airport_data = serializer.data
-        #statistics = models.Statistics.objects.filter(airport=airport.code)
+        # statistics = models.Statistics.objects.filter(airport=airport.code)
 
         # loading carriers
-        carriers_data = self.get_carriers(request=request, airport_id=airport.code)
+        carriers_data = self.get_carriers(
+            request=request, airport_id=airport.code)
 
         return Response({'Airport': airport_data,
                          'Carriers': carriers_data})
@@ -134,31 +138,60 @@ class AirportView(viewsets.ModelViewSet):
         serializer = self.serializer_class(
             airport, context={'request': request})
         data = {'airport': serializer.data}
-        
+
         carriers = self.get_carriers(request, airport.code)
+        carriers_codes = set([carrier['code'] for carrier in carriers])
         destination = self.request.query_params.get('destination', None)
 
         if destination:
             destination = models.Airport.objects.get(code=destination)
-            destination_serializer = self.serializer_class(destination, context={'request': request})
-            
+            destination_serializer = self.serializer_class(
+                destination, context={'request': request})
+
             data['destination'] = destination_serializer.data
 
             carrier = self.request.query_params.get('carrier', None)
 
             if not carrier:
-                #destination_carriers = set([carrier.code for carrier self.get_carriers(request, destination.code)])
+                mutual_carriers = [carrier for carrier in self.get_carriers(
+                    request, destination.code) if carrier['code'] in carriers_codes]
+                
+            else:
+                mutual_carriers = [models.Carrier.objects.get(code=carrier).__dict__]
+                print(mutual_carriers)
 
-                statistics = [models.Statistics.objects.filter(airport=airport.code)]
+            for carrier in mutual_carriers:
+                carrier.update({'statistics': {'delay_time': {'late_aircraft': {}, 'carrier': {
+                }}, 'delay_count': {'late_aircraft': {}, 'carrier': {}}}})
+
+                statistics = models.Statistics.objects.filter(
+                    airport=airport.code, carrier=carrier['code']).values('delay_count', 'delay_time')
+
+                carrier_statistics = []
+
+                for statistic in statistics:
+                    carrier_statistics.append({'delay_time': models.DelayTimeStatistics.objects.get(
+                        id=statistic['delay_time']).__dict__, 'delay_count': models.DelayTimeStatistics.objects.get(id=statistic['delay_count']).__dict__})
+
+                for delay in ['delay_count', 'delay_time']:
+                    for delay_type in ['late_aircraft', 'carrier']:
+                        
+                        agg_statistic = np.array(
+                            [statistic[delay][delay_type] for statistic in carrier_statistics])
+
+                        carrier['statistics'][delay][delay_type].update({'mean': np.mean(
+                            agg_statistic), 'median': np.median(agg_statistic), 'standard_deviation': np.std(agg_statistic)})
+
+            data['carriers'] = mutual_carriers
         else:
-            
+
             routes = set()
             for carrier in carriers:
                 routes.update(['http://%s/api/airports/%s/routes?destination=%s' % (self.request.get_host(), airport.code, destination['code'])
                                for destination in CarrierView().get_airports(request=request, carrier_id=carrier['code']) if destination['code'] != airport.code])
-            
+
             data['routes'] = routes
-        
+
         return Response(data)
 
     @action(detail=True, methods=['get'])
