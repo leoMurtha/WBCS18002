@@ -147,10 +147,11 @@ class AirportView(viewsets.ModelViewSet):
             carrier = self.request.query_params.get('carrier', None)
 
             if not carrier:
-                statistics = [models.Statistics.objects.filter(airport=airport.code)
-        else:
-            carriers = self.get_carriers(request, airport.code)
+                #destination_carriers = set([carrier.code for carrier self.get_carriers(request, destination.code)])
 
+                statistics = [models.Statistics.objects.filter(airport=airport.code)]
+        else:
+            
             routes = set()
             for carrier in carriers:
                 routes.update(['http://%s/api/airports/%s/routes?destination=%s' % (self.request.get_host(), airport.code, destination['code'])
