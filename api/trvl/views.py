@@ -68,6 +68,21 @@ class AirportView(viewsets.ModelViewSet):
 
         return Response(serializer.data)
 
+    @action(detail=True, methods=['get'])
+    def routes(self, request, *args, **kwargs):
+        """Routes method:
+        Gets the route for the given airport.
+        A route is basically a airport <-carrier-> airport relationship
+        """
+        airport = self.get_object()
+
+        destination = self.request.query_params.get('destination', None)
+        
+        print(airport.code)
+        if destination:
+            print('Find routes between')
+
+        return Response({'params': request.query_params})
 
 class CarrierView(viewsets.ModelViewSet):
     '''
@@ -118,5 +133,3 @@ class CarrierView(viewsets.ModelViewSet):
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
-
-    
