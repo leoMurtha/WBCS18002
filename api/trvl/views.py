@@ -177,6 +177,8 @@ class AirportView(viewsets.ModelViewSet):
         serializer = self.serializer_class(
             airport, context={'request': request})
         airport_data = serializer.data
+        airport_data['routes'] = 'http://%s/api/airports/%s/routes/' % (request.get_host(), airport_data['code'])
+
         # statistics = models.Statistics.objects.filter(airport=airport.code)
 
         # loading carriers
@@ -210,12 +212,16 @@ class AirportView(viewsets.ModelViewSet):
         serializer = self.serializer_class(
             airport, context={'request': request})
         data = {'airport': serializer.data}
+        data['url'] = request.build_absolute_uri()
 
+        # Getting all carriers operating the specified airport
         carriers = self.get_carriers(request, airport.code)
+        # Using sets for hashing and unique list
         carriers_codes = set([carrier['code'] for carrier in carriers])
-        destination = self.request.query_params.get('destination', None)
 
+        destination = self.request.query_params.get('destination', None)
         if destination:
+            # Retrieving the destination from the database
             destination = models.Airport.objects.get(code=destination)
             destination_serializer = self.serializer_class(
                 destination, context={'request': request})
@@ -225,29 +231,39 @@ class AirportView(viewsets.ModelViewSet):
             carrier = self.request.query_params.get('carrier', None)
 
             if not carrier:
+                # Filtering only mutual carriers <-> route
                 mutual_carriers = [carrier for carrier in self.get_carriers(
                     request, destination.code) if carrier['code'] in carriers_codes]
-                
             else:
-                mutual_carriers = [models.Carrier.objects.get(code=carrier).__dict__]
-                print(mutual_carriers)
+                # For the sake of DRY using mutual_carriers as a list of one carrier
+                carrier = models.Carrier.objects.get(code=carrier).__dict__
+                # Removing state because of error JSON not serializable
+                carrier.pop('_state')
+                mutual_carriers = [carrier]
 
+            # For each mutual carrier get the descriptive means about the flight route
             for carrier in mutual_carriers:
-                carrier.update({'statistics': {'delay_time': {'late_aircraft': {}, 'carrier': {
-                }}, 'delay_count': {'late_aircraft': {}, 'carrier': {}}}})
+                carrier['url'] = 'http://%s/api/carriers/%s' % (
+                    request.get_host(), carrier['code'])
 
+                carrier.update({'statistics': {'route': 'http://%s/api/airports/%s/routes?destination=%s&carrier=%s' % (request.get_host(), airport.code, destination.code, carrier['code']),
+                                               'delay_time': {'late_aircraft': {}, 'carrier': {
+                                               }}, 'delay_count': {'late_aircraft': {}, 'carrier': {}}}})
+
+                # Getting all possible statistics from the mutual carrier and aiports
                 statistics = models.Statistics.objects.filter(
                     airport=airport.code, carrier=carrier['code']).values('delay_count', 'delay_time')
 
                 carrier_statistics = []
 
+                # Loading the actual carrier statistics values from the database
                 for statistic in statistics:
                     carrier_statistics.append({'delay_time': models.DelayTimeStatistics.objects.get(
                         id=statistic['delay_time']).__dict__, 'delay_count': models.DelayTimeStatistics.objects.get(id=statistic['delay_count']).__dict__})
 
+                # Calculating the descriptive means using numpy and updating the carrier data
                 for delay in ['delay_count', 'delay_time']:
                     for delay_type in ['late_aircraft', 'carrier']:
-                        
                         agg_statistic = np.array(
                             [statistic[delay][delay_type] for statistic in carrier_statistics])
 
