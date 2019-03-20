@@ -89,6 +89,7 @@ class CarrierView(viewsets.ModelViewSet):
         if not airport: 
             for item in statistics_model.values('airport'): airports.append(item['airport'])
         else: airports.append(airport)
+
         # loading airport(s) data
         airport_model = models.Airport.objects.filter(code__in=airports)
         airport_serializer = serializers.AirportSerializer(
@@ -111,7 +112,25 @@ class CarrierView(viewsets.ModelViewSet):
             
             serializer = serializers.FlightStatisticsSerializer(
                     flights_model,many=True, context={'request': request})
-            # extracting serializer data
+            
+            statistics_data = serializer.data
+        elif statistics_type == "delay":
+            # extracting flights statistics ids
+            delay_time_id = statistics_model.values('delay_time')
+            delay_time_codes = []
+            for id in delay_time_id: delay_time_codes.append(id['delay_time'])
+            
+            # loading delay_time serializer
+            delay_time_model = models.DelayTimeStatistics.objects.filter(pk__in=delay_time_codes)
+            serializer = serializers.DelayTimeStatisticsSerializer(
+                    delay_time_model,many=True, context={'request': request})
+            
+            statistics_data = serializer.data
+        else:
+            # loading all statistics data
+            statistics_type = "all"
+            serializer = serializers.StatisticsSerializer(
+                    statistics_model,many=True, context={'request': request})   
             statistics_data = serializer.data
             
         # joining statistics_data and months dates
@@ -121,6 +140,8 @@ class CarrierView(viewsets.ModelViewSet):
                         'date':{'month':months[i]['month'],'year':years[i]['year']},
                         'statistics':statistics_data[i]})
         
+        
+
         return Response({'carrier': carrier_data,
                         statistics_type+'_statistics': data})
 
