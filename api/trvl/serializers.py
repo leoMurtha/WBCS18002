@@ -34,7 +34,7 @@ class CarrierSerializer(serializers.ModelSerializer):
 
 
 class FlightStatisticsSerializer(serializers.ModelSerializer):
-
+    
     class Meta:
         model = models.FlightStatistics
         fields = '__all__'

@@ -58,7 +58,8 @@ class CarrierView(viewsets.ModelViewSet):
         /carrier/:id/statistics/
         /carrier/:id/statistics?type=:'minimal'&airport=:airport_code
         /carrier/:id/statistics?type=:'flights'&airport=:airport_code
-        /carrier/:id/statistics?type=:'delayed'&airport=:airport_code
+        /carrier/:id/statistics?type=:'delay_minutes'&airport=:airport_code
+        /carrier/:id/statistics?type=:'delay_count'&airport=:airport_code
         '''
         # loading carrier data
         carrier_model = self.get_object()
@@ -114,8 +115,8 @@ class CarrierView(viewsets.ModelViewSet):
                     flights_model,many=True, context={'request': request})
             
             statistics_data = serializer.data
-        elif statistics_type == "delay":
-            # extracting flights statistics ids
+        elif statistics_type == "delay_minutes":
+            # extracting delay minutes statistics ids
             delay_time_id = statistics_model.values('delay_time')
             delay_time_codes = []
             for id in delay_time_id: delay_time_codes.append(id['delay_time'])
@@ -126,12 +127,32 @@ class CarrierView(viewsets.ModelViewSet):
                     delay_time_model,many=True, context={'request': request})
             
             statistics_data = serializer.data
+        
+        elif statistics_type == "delay_count":
+            # extracting delay count statistics ids
+            delay_count_id = statistics_model.values('delay_count')
+            delay_count_codes = []
+            for id in delay_count_id: delay_count_codes.append(id['delay_count'])
+            
+            # loading delay_count serializer
+            delay_count_model = models.DelayCountStatistics.objects.filter(pk__in=delay_count_codes)
+            serializer = serializers.DelayCountStatisticsSerializer(
+                    delay_count_model,many=True, context={'request': request})
+            
+            statistics_data = serializer.data
         else:
             # loading all statistics data
             statistics_type = "all"
+            #statistics_model = statistics_model.values('flight')
             serializer = serializers.StatisticsSerializer(
-                    statistics_model,many=True, context={'request': request})   
+                    statistics_model,many=True, context={'request': request})
             statistics_data = serializer.data
+            # removing repeated data
+            for statistic in statistics_data:
+                statistic.pop('airport')
+                statistic.pop('carrier')
+                statistic.pop('month')
+                statistic.pop('year')
             
         # joining statistics_data and months dates
         data = []
