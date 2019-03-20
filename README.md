@@ -265,7 +265,7 @@ and implemented by each group.
           {
             "code":
             "url": "/carriers/AA?airport_id=PHL",
-            "statistics_url":"/airports/PHL?carrier=AA&statistics='flights'"
+            "statistics_url":"/airports/PHL/statistics?carrier=AA&statistics='flights'"
           },
           .
           .
@@ -306,7 +306,7 @@ and implemented by each group.
 
 * **URL**
 
-/airports/:id?carrier=:carrier_id&statistics='flights'
+/airports/:id/statistics?carrier=:carrier_id&statistics='flights'
 
 * **Method:**
   `GET`| `POST` | `DELETE` | `PUT`
