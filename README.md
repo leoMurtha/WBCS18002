@@ -306,7 +306,7 @@ and implemented by each group.
 
 * **URL**
 
-/airports/:id/statistics?carrier=:carrier_id&statistics='flights'
+/airports/:id/statistics?carrier=:carrier_id&type='flights'
 
 * **Method:**
   `GET`| `POST` | `DELETE` | `PUT`
@@ -386,12 +386,12 @@ and implemented by each group.
 
 * **Sample Call:**
 
-  ```curl -H "Accept: application/json" http://server//airports/123?carrier=1234&statistics='flights'```
+  ```curl -H "Accept: application/json" http://server//airports/123/statistics?carrier=1234&type='flights'```
   
   ```javascript
 	$.ajax({
       type: 'POST',
-      url: "/airports/123?carrier=1245&statistics='flights'",
+      url: "/airports/123/statistics?carrier=1245&type='flights'",
       data:{ 
 			     {
 			       "cancelled": 5,
@@ -406,7 +406,7 @@ and implemented by each group.
 	});
 
     $.ajax({
-      url: "/airports/123?carrier=1245&statistics='flights'",
+      url: "/airports/123/statistics?carrier=1245&type='flights'",
       type : "GET",
       dataType: "csv",
       success : function(r) {
@@ -425,7 +425,7 @@ and implemented by each group.
   Returns - as json/csv - a minimal representation of the statistics about flights of a carrier from/to a US airport for a given month or for all months available.
 
 * **URL**
-`/airports/:id?carrier=:carrier_id&statistics='flights'&minimal=true`
+`/airports/:id/statistics?carrier=:carrier_id&type='flights'&minimal=True`
 
 * **Method:**
   `GET`
@@ -468,7 +468,7 @@ and implemented by each group.
         "cancelled": 5,
         "on time": 561,
         "delayed": 186,
-	"all_statistics": "/airports/123?carrier=1245&statistics='flights'"
+	"all_statistics": "/airports/123/statistics?carrier=1245&type=flights"
 	   },
     "date": {
         "year": 2003,
@@ -740,7 +740,7 @@ or
             "url": "/carriers/124",
             "route": "/airports/125/routes?destination=125&carrier=124",
             "statistics": {
-                "url": "/airports/123?carrier=124&statistics='flights'&minimal=true",
+                "url": "/airports/123/statistics?carrier=124&type='flights'&minimal=true",
                 "# of delays": {
                     "late aircraft": {
                         "mean": 18,
