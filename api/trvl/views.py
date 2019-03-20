@@ -208,6 +208,7 @@ class AirportView(viewsets.ModelViewSet):
         # extracting querys
         carrier = self.request.query_params.get('carrier', None)
         statistics_type = self.request.query_params.get('type', None)
+        minimal = self.request.query_params.get('minimal',False)
         month = self.request.query_params.get('month',None)
         year = self.request.query_params.get('year',None)
 
@@ -229,7 +230,6 @@ class AirportView(viewsets.ModelViewSet):
             months = statistics_model.values('month')
             years = statistics_model.values('year')
 
-
             if statistics_type == 'flights':
 
                 # extracting flights statistics ids
@@ -239,10 +239,12 @@ class AirportView(viewsets.ModelViewSet):
                 #print(flights_codes) # DEBUG
 
                 # loading flights serializer
-                flights_model = models.FlightStatistics.objects.filter(pk__in=flights_codes)
+                if minimal: flights_model = models.FlightStatistics.objects.filter(pk__in=flights_codes).values('id','cancelled','on_time','delayed')
+                else: flights_model = models.FlightStatistics.objects.filter(pk__in=flights_codes)
                 #print(flights_model)
+                   
                 serializer = serializers.FlightStatisticsSerializer(
-                    flights_model,many=True, context={'request': request})
+                        flights_model,many=True, context={'request': request})
 
                 # extracting serializer data
                 statistics_data = serializer.data
