@@ -208,6 +208,8 @@ class AirportView(viewsets.ModelViewSet):
         # extracting querys
         carrier = self.request.query_params.get('carrier', None)
         statistics_type = self.request.query_params.get('type', None)
+        month = self.request.query_params.get('month',None)
+        year = self.request.query_params.get('year',None)
 
         if carrier:
 
@@ -218,12 +220,15 @@ class AirportView(viewsets.ModelViewSet):
             carrier_data = carrier_serializer.data
 
             # loading statistics relations between airport and carrier
-            statistics_model = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier)
-            #print(statistics_model) # DEBUG
+            if not month and not year:
+                statistics_model = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier)                
+            else:
+                statistics_model = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier,month=month,year=year)                           
             
             #extracting date
             months = statistics_model.values('month')
             years = statistics_model.values('year')
+
 
             if statistics_type == 'flights':
 
@@ -246,6 +251,7 @@ class AirportView(viewsets.ModelViewSet):
                 # adding dates
                 for i in range(len(statistics_data)):
                     statistics_data[i]['date'] = {'month':months[i]['month'],'year':years[i]['year']}
+
 
         
         return Response({'airport': airport_data,
