@@ -199,7 +199,7 @@ class AirportView(viewsets.ModelViewSet):
         '''
         /airport/:id/statistics?carrier=:carrier_id&type=:''
         '''
-        # lodading airport data
+        # loading airport data
         airport_model = self.get_object()
         airport_serializer = self.serializer_class(
             airport_model, context={'request': request})
@@ -218,13 +218,17 @@ class AirportView(viewsets.ModelViewSet):
             carrier_data = carrier_serializer.data
 
             # loading statistics relations between airport and carrier
-            model_data = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier)
-            #print(model_data) # DEBUG
+            statistics_model = models.Statistics.objects.filter(airport=airport_model.code,carrier=carrier)
+            #print(statistics_model) # DEBUG
             
+            #extracting date
+            months = statistics_model.values('month')
+            years = statistics_model.values('year')
+
             if statistics_type == 'flights':
 
                 # extracting flights statistics ids
-                flights_id = model_data.values('flight')
+                flights_id = statistics_model.values('flight')
                 flights_codes = []
                 for id in flights_id: flights_codes.append(id['flight'])
                 #print(flights_codes) # DEBUG
@@ -237,11 +241,16 @@ class AirportView(viewsets.ModelViewSet):
 
                 # extracting serializer data
                 statistics_data = serializer.data
+                print(months[0])
+                
+                # adding dates
+                for i in range(len(statistics_data)):
+                    statistics_data[i]['date'] = {'month':months[i]['month'],'year':years[i]['year']}
 
         
         return Response({'airport': airport_data,
                         'carrier': carrier_data,
-                        'statistics': statistics_data})
+                        statistics_type+'_statistics': statistics_data})
 
 
 class StatisticsView(viewsets.ModelViewSet):
