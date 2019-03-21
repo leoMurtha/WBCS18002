@@ -184,13 +184,13 @@ and implemented by each group.
         "carrier": {
             "code": "AA",
             "name": "American Airlines Inc.",
-		        "url": "/carriers/AA"
+	    "url": "/carriers/AA"
         },
         {
          "carrier": {
             "code": "AS",
             "name": "Alaska Airlines Inc.",
-		        "url": "/carriers/AS"
+   	    "url": "/carriers/AS"
         },
         .
         .
@@ -229,11 +229,12 @@ and implemented by each group.
 
 **Show Airport Informations**
 ----
-  Returns **all links to the carriers operating at a specific airport**, a link to the related statistics on a specific month and year and also a link to the airport routes. If case neither the year or the month are specified, the default will be the one with most recent date.
+  Returns **all links to the carriers operating at a specific airport**, a link to the related statistics for each carrier and also a link to the airport routes. 
 
 * **URL**
 
 `/airports/:id`
+
 
 * **Method:**
 
@@ -247,9 +248,6 @@ and implemented by each group.
 
    **Optional:**
  
-   `month=[integer]`
-   
-   `year=[integer]`
 
 * **Success Response:**
 
@@ -265,7 +263,7 @@ and implemented by each group.
           {
             "code":
             "url": "/carriers/AA?airport_id=PHL",
-            "statistics_url":"/airports/PHL/statistics?carrier=AA&statistics='flights'"
+            "statistics_url":"/carriers/AA/statistics?airport=PHL&statistics='minimal'"
           },
           .
           .
@@ -300,13 +298,18 @@ and implemented by each group.
   * If no date (month and year) are specified, the most recent date is used.
 
 
-**All statistics about flights of a carrier from/to a US airport for a given month or all months available.**
+**Statistics**
 ----
-  Returns json or csv all of the statistics about flights of a carrier from/to a US airport for a given month or all months available.
+  Returns json or csv all of the statistics about flights,number or minutes of delays of a carrier from/to a US airport for a given month or all months available. If no type are specified all the statistics are returned.
 
 * **URL**
 
-/airports/:id/statistics?carrier=:carrier_id&type='flights'
+`/carriers/:id/statistics`
+*list of possible querys*
+`/carriers/:id/statistics?type=:type_name`
+`/carriers/:id/statistics?airport=:airpot_id`
+`/carriers/:id/statistics?month=:mm&year=:yyyy`
+`/carriers/:id/statistics?type=:type_name&airport=:airpot_id&month=:mm&year=:yyyy`
 
 * **Method:**
   `GET`| `POST` | `DELETE` | `PUT`
@@ -317,13 +320,14 @@ and implemented by each group.
    
    `id=[string(unique)]`
    
-   `carrier_id=[string(unique)]`
-   
-   `statistics=['flights' | 'delays']` 
     
    **Optional:**
-   `month=[integer]`
-	`year=[integer]`
+   `carrier_id=[string(unique)]
+      `
+   `type_name=['flights'|'minimal'|'delay_minutes'|'delay_count']`
+
+   `mm=[integer]`
+   `yyyy=[integer]`
 
 * **Data Params**
 		
