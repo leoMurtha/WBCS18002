@@ -82,9 +82,9 @@ and implemented by each group.
 
 # API 
 
-**All airports available in the USA**
+**Airports**
 ----
-  Returns json/csv list of links to the available airports in the USA.
+  Returns json/csv list of **All airports available in the USA** codes,names and links to the available airports in the USA.
 
 * **URL**
 
@@ -93,13 +93,7 @@ and implemented by each group.
 * **Method:**
   
   `GET`
-  
-*  **URL Params**
-
-   **Required:**
-
-   **Optional:**
-     
+       
 * **Success Response:**
   
   * **Code:** 200 <br />
@@ -139,7 +133,7 @@ and implemented by each group.
 
 * **Sample Call:**
 
-  ```curl -H "Accept: application/json" 'http://server/airports?month=5&year=2008```
+  ```curl -H "Accept: application/json" 'http://server/airports```
   
   ```javascript
     $.ajax({
@@ -155,9 +149,9 @@ and implemented by each group.
 
   * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
   
-**All carriers operating in US airports**
+**Carriers**
 ----
-  Returns json/csv list of links to the available carriers operating at airports in the USA.
+  Returns json/csv list **all carriers operating in US airports** codes, names and links to the available.
 
 * **URL**
 
@@ -166,13 +160,7 @@ and implemented by each group.
 * **Method:**
   
   `GET`
-  
-*  **URL Params**
-
-   **Required:**
-
-   **Optional:**
-    
+      
 * **Success Response:**
   
   * **Code:** 200 <br />
@@ -184,13 +172,13 @@ and implemented by each group.
         "carrier": {
             "code": "AA",
             "name": "American Airlines Inc.",
-	    "url": "/carriers/AA"
+	          "url": "/carriers/AA"
         },
         {
          "carrier": {
             "code": "AS",
             "name": "Alaska Airlines Inc.",
-   	    "url": "/carriers/AS"
+   	        "url": "/carriers/AS"
         },
         .
         .
@@ -227,7 +215,7 @@ and implemented by each group.
 
 
 
-**Show Airport Informations**
+**Specific Airport Informations**
 ----
   Returns **all links to the carriers operating at a specific airport**, a link to the related statistics for each carrier and also a link to the airport routes. 
 
@@ -245,9 +233,6 @@ and implemented by each group.
    **Required:**
  
    `id=[code(ex: ATL)]`
-
-   **Optional:**
- 
 
 * **Success Response:**
 
@@ -293,14 +278,10 @@ and implemented by each group.
     });
   ```
   
-* **Notes:**
-	
-  * If no date (month and year) are specified, the most recent date is used.
-
 
 **Statistics**
 ----
-  Returns json or csv all of the statistics about flights,number or minutes of delays of a carrier from/to a US airport for a given month or all months available. If no type are specified all the statistics are returned.
+  Returns json or csv of **all statistics about flights of a carrier from/to a US airport**,**number of on-time, delayed, and cancelled flights of a carrier from/to a US airport**, **number of minutes of delay per carrier attributed to carrier-specific reasons/all reasons** for a given month or all months available. If no type are specified all the statistics are returned.
 
 * **URL**
 
@@ -322,8 +303,8 @@ and implemented by each group.
    
     
    **Optional:**
-   `carrier_id=[string(unique)]
-      `
+   `carrier_id=[string(unique)]`
+
    `type_name=['flights'|'minimal'|'delay_minutes'|'delay_count']`
 
    `mm=[integer]`
@@ -420,7 +401,7 @@ and implemented by each group.
   ```
 * **Notes:**
 
-   * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
+   * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json. 
 
 
 
