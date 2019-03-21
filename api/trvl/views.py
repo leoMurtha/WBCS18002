@@ -254,6 +254,7 @@ class AirportView(viewsets.ModelViewSet):
         serializer = self.serializer_class(
             airport, context={'request': request})
         data = {'airport': serializer.data}
+        data['airport']['routes'] = 'http://%s/api/airports/%s/routes/' % (request.get_host(), airport.code)
         data['url'] = request.build_absolute_uri()
 
         # Getting all carriers operating the specified airport
