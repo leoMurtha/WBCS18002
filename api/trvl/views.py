@@ -6,7 +6,6 @@ from . import serializers
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.decorators import action
-from drf_writable_nested import NestedCreateMixin, NestedUpdateMixin
 from rest_framework.generics import GenericAPIView
 
 
