@@ -1,6 +1,10 @@
 # WBCS18002
 Official repository for the WBCS18002 Web Engineering Project.
 
+## Report
+
+The report is the file Report.md
+
 ## Group 26
 
 # Case Study Description
@@ -340,6 +344,134 @@ and implemented by each group.
   ```
 
 
+
+**Statistics**
+----
+  Manipulates json or csv of **all statistics** in the current database.
+  **This endpoint is used to feed data to the database.**
+
+* **URL**
+
+`/statistics`
+
+* **Method:**
+  `GET`| `POST` | `DELETE` | `PUT`
+  
+*  **URL Params**
+
+   **Required for GET, DELETE, PUT:**
+   
+   `id=[string(unique)]`
+   
+
+* **Data Params**
+		
+	```javascript
+    {
+        "url": "http://localhost:8000/api/statistics/13/",
+        "airport": "SEA",
+        "carrier": "AA",
+        "month": 1,
+        "year": 2000,
+        "flight": {
+            "id": 42,
+            "cancelled": 1,
+            "on_time": 1,
+            "total": 1,
+            "delayed": 1,
+            "diverted": 1
+        },
+        "delay_time": {
+            "id": 15,
+            "late_aircraft": 1,
+            "weather": 1,
+            "security": 1,
+            "national_aviation_system": 1,
+            "carrier": 1
+        },
+        "delay_count": {
+            "id": 14,
+            "late_aircraft": 11,
+            "weather": 11,
+            "security": 11,
+            "national_aviation_system": 11,
+            "carrier": 11
+        }
+    }  
+  ```
+    
+
+* **Success Response:**
+  
+  * **Code:** 200 <br />
+    **Content:** 
+    
+    If JSON:
+	```javascript
+      {
+          "url": "http://localhost:8000/api/statistics/13/",
+          "airport": "SEA",
+          "carrier": "AA",
+          "month": 1,
+          "year": 2000,
+          "flight": {
+              "id": 42,
+              "cancelled": 1,
+              "on_time": 1,
+              "total": 1,
+              "delayed": 1,
+              "diverted": 1
+          },
+          "delay_time": {
+              "id": 15,
+              "late_aircraft": 1,
+              "weather": 1,
+              "security": 1,
+              "national_aviation_system": 1,
+              "carrier": 1
+          },
+          "delay_count": {
+              "id": 14,
+              "late_aircraft": 11,
+              "weather": 11,
+              "security": 11,
+              "national_aviation_system": 11,
+              "carrier": 11
+          }
+      }
+    ```	   
+ 
+* **Error Response:**
+  
+  * **Code:** 404 NOT FOUND  <br />
+    **Content:** `{ error : "Airport not found" }
+    { error : "Carrier not found" }`
+
+  * **Code:** 422 UNPROCESSABLE ENTRY <br />
+    **Content:** `{ error : "Invalid statistics type" }`
+	
+   * **Code:** 400 BAD REQUEST <br />
+    **Content:** `{ error : "Invalid data in POST/PUT" }`
+
+
+* **Sample Call:**
+
+  ```javascript
+    $.ajax({
+      url: "/statistics/192",
+      type : "GET",
+      dataType: "csv",
+      success : function(r) {
+        console.log(r);
+      }
+    });
+  ```
+
+* **Notes:**
+
+  The /statistics endpoint is specific for database feeding purposes if you want specific/friendly statistics about specific aiports and carriers please check the endpoint below.
+
+
 **Carrier Statistics**
 ----
   Returns json or csv of **all statistics about flights of a carrier from/to a US airport**,**number of on-time, delayed, and cancelled flights of a carrier from/to a US airport**, **number of minutes of delay per carrier attributed to carrier-specific reasons/all reasons** for a given month or all months available. If no type are specified all the statistics are returned.
@@ -370,20 +502,6 @@ and implemented by each group.
 
    `mm=[integer]`
    `yyyy=[integer]`
-
-* **Data Params**
-		
-	```javascript
-    {
-	    {
-	        "cancelled": [integer],
-	        "on time": [integer],
-	        "total": [integer],
-	        "delayed": [integer],
-	        "diverted": [integer]
-	    }
-	}
-    ```
     
 
 * **Success Response:**
@@ -426,9 +544,6 @@ and implemented by each group.
 
   * **Code:** 422 UNPROCESSABLE ENTRY <br />
     **Content:** `{ error : "Invalid statistics type" }`
-	
-   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ error : "Invalid data in POST/PUT" }`
 
 
 * **Sample Call:**
@@ -437,29 +552,11 @@ and implemented by each group.
   
   ```javascript
 	$.ajax({
-      type: 'POST',
-      url: "/airports/123/statistics?carrier=1245&type='flights'",
-      data:{ 
-			     {
-			       "cancelled": 5,
-		           "on time": 561,
-			       "total": 752,
-			       "delayed": 186,
-	             "diverted": 0
-		        }  
-		      }   
+      type: 'GET',
+      url: "/carriers/:id/statistics?airport=PHL&month=6&year=2003",
       dataType: "json",
-      success: function(resultData) { alert("Post Complete") }
+      success: function(resultData) {}
 	});
-
-    $.ajax({
-      url: "/airports/123/statistics?carrier=1245&type='flights'",
-      type : "GET",
-      dataType: "csv",
-      success : function(r) {
-        console.log(r);
-      }
-    });
   ```
 * **Notes:**
 
