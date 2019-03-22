@@ -106,7 +106,8 @@ class CarrierView(viewsets.ModelViewSet):
         # extracting date(s)
         months = statistics_model.values('month')
         years = statistics_model.values('year')
-
+        ids = statistics_model.values('id')
+        
         if statistics_type == 'flights' or statistics_type == 'minimal':
             # extracting flights statistics ids
             flights_id = statistics_model.values('flight')
@@ -169,13 +170,20 @@ class CarrierView(viewsets.ModelViewSet):
                 statistic.pop('month')
                 statistic.pop('year')
 
-        
+        # Bug Fix: find the right id
+        for id_queryset, statistic in zip(ids, statistics_data):
+            statistic['url'] = 'http://%s/api/statistics/%s/' % (request.get_host(), id_queryset['id'])
+                    
         
         # joining statistics_data and months dates
         data = []
         for i in range(len(airports_data)):
-            # if statistics_type == 'minimal':
-            #     url = 'http://%s/carriers/%s/statistics?type=minimal&airport=%s'
+            if statistics_type == 'minimal':
+                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
+                statistics_data[i]['flights_statistics'] = url
+            elif statistics_type == 'flights':
+                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
+                statistics_data[i]['minimal_statistics'] = url
         
             data.append({'airport': airports_data[i],
                          'date': {'month': months[i]['month'], 'year': years[i]['year']},
