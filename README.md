@@ -3,7 +3,7 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 ## Report
 
-The report is the file Report.md
+The report is the file Report.md with the overview of the Web app.
 
 ## Useful Links:
 Here's a list of useful links regarding the API so far.
