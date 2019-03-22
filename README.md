@@ -375,7 +375,6 @@ and implemented by each group.
 		
 	```javascript
     {
-        "url": "http://localhost:8000/api/statistics/13/",
         "airport": "SEA",
         "carrier": "AA",
         "month": 1,
