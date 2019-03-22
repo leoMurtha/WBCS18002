@@ -5,6 +5,13 @@ Official repository for the WBCS18002 Web Engineering Project.
 
 The report is the file Report.md
 
+## Useful Links:
+Here's a list of useful links regarding the API so far.
+
+[Interactive API Docs](http://trvl.hopto.org:8000/docs/)
+
+[DRF Browsable API](http://trvl.hopto.org:8000/api/)
+
 ## Group 26
 
 # Case Study Description
