@@ -1,0 +1,28 @@
+database:
+    restart: always
+    image: postgres:latest
+    volumes:
+        - pgdata:/var/lib/postgresql/data/
+    environment:
+        - POSTGRES_USER=django
+        - POSTGRES_PASSWORD=django
+        - POSTGRES_DB=django
+
+restapi:
+    image: api:latest
+    command: >
+      sh -c "python api/manage.py makemigrations &&
+             python api/manage.py migrate &&
+             python api/manage.py runserver 0.0.0.0:8000"
+    volumes:
+        - .:/django
+    ports:
+        - "8000:8000"
+    links:
+        - database
+    environment:
+        DEBUG: "true"
+        DATABASE_NAME: django 
+        DATABASE_USER: django
+        DATABASE_PASSWORD: django
+        DATABASE_SERVICE_HOST: database

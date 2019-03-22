@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ded5dq9lt5uhe6',
-        'USER': 'uquzlxmuczbysy',
-        'PASSWORD': '413fd036310b580f67e95f78f0e59b8019a8b911c61eefb9c1edd9f879e3b86a',
-        'HOST': 'ec2-54-246-92-116.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432'
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.getenv('DATABASE_NAME', 'db'),
+        'USER': os.getenv('DATABASE_USER', 'user'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
+        'HOST': os.getenv('DATABASE_SERVICE_HOST', 'database'),
+        'PORT': os.getenv('DATABASE_SERVICE_PORT', 5432)
     }
 }
 
