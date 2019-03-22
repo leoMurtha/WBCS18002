@@ -5,7 +5,8 @@ import pandas as pd
 import requests
 import multiprocessing as mp
 
-def feed_api(entries):
+
+def feed_api(entries, host='http://127.0.0.1:8000'):
     print('PROCESS %s"' %
           (mp.process.current_process()))
 
@@ -14,21 +15,41 @@ def feed_api(entries):
     for entry in entries:
         print('=====================================================================================\n[PROCESS %s]: Fed %s of %s' %
               (mp.process.current_process(), count, total))
-        for carrier in entry['carriers']:
-            post = requests.post(url='http://127.0.0.1:8000/api/carriers/', data=entry['carrier'])
-            print('POST Return: %s' % post.text)
-        
-        r = requests.post('http://localhost:8000/api/airports/', data=data)
-        if r.status_code != 200:
-            requests.put('http://localhost:8000/api/airports/%s/' % entry, data=data)
-        
-        print('Airport Return: %s' % r.text)
-        
+
+        post = requests.post(
+            url='%s/api/carriers/' % (host), data=entry['carrier'])
+        print('POST Carrier Return: %s' % post.text)
+
+        post = requests.post(
+            url='%s/api/airports/' % (host), data=entry['airport'])
+        print('POST Airport Return: %s' % post.text)
+
+        # Getting the right date
+        time = entry.pop('time')
+        entry['month'] = time['month']
+        entry['year'] = time['year']
+
+        # Linking airport and carrier
+        entry['airport'] = entry['airport']['code']
+        entry['carrier'] = entry['carrier']['code']
+
+        # Unesting the statistics and renaming the key
+        statistics = entry.pop('statistics')
+        entry['flight'] = statistics.pop('flights')
+        entry['delay_time'] = statistics.pop('minutes delayed')
+        entry['delay_count'] = statistics.pop('# of delays')
+
+        #entry = json.dumps(entry)
+
+        post = requests.post(
+            url='%s/api/statistics/' % (host), json=entry)
+        print('POST Statistic Return: %s' % post.text)
 
         count += 1
         print('=====================================================================================')
 
-def feed_parallel(data, nproc=6):
+
+def feed_parallel(data, host='http://127.0.0.1:8000', nproc=6):
     """
     """
 
@@ -50,7 +71,7 @@ def feed_parallel(data, nproc=6):
                 process_data = data[i*work: work + i*work]
 
             process = mp.Process(target=feed_api, name=i, args=(
-                process_data,))
+                process_data, host))
             process.start()
             PROCESS.append(process)
 
@@ -67,16 +88,8 @@ if __name__ == "__main__":
     keys = entries[0].keys()
     print('Number of entries %d\nKeys of the json entries %s' %
           (len(entries), keys))
-    
-    data = {}
-    for entry in entries:
-        airport = entry['airport']
-            
-        if airport['code'] in data:
-            data[airport['code']]['carriers'].append(entry['carrier'])
-        else:
-            airport.update({'carriers': [entry['carrier']]})
-            data.update({airport['code']: airport})
 
     # Feed to the db
-    feed_parallel(data)
+    host = sys.argv[2]
+    print(host)
+    feed_parallel(entries, host=host)
