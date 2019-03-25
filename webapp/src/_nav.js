@@ -1,12 +1,30 @@
 export default {
   items: [
     {
-      name: 'Dashboard',
-      url: '/dashboard',
+      name: 'Airports',
+      url: '/airports',
       icon: 'icon-speedometer',
       badge: {
         variant: 'info',
-        text: 'NEW',
+        text: 'API',
+      },
+    },
+    {
+      name: 'Carriers',
+      url: '/carriers',
+      icon: 'icon-speedometer',
+      badge: {
+        variant: 'info',
+        text: 'API',
+      },
+    },
+    {
+      name: 'Routes',
+      url: '/routes',
+      icon: 'icon-speedometer',
+      badge: {
+        variant: 'info',
+        text: 'API',
       },
     },
     {
