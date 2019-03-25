@@ -36,12 +36,13 @@ const Widgets = React.lazy(() => import('./views/Widgets/Widgets'));
 const Users = React.lazy(() => import('./views/Users/Users'));
 const User = React.lazy(() => import('./views/Users/User'));
 const FindAirports = React.lazy(() => import('./views/Airports/FindAirports'));
+const Routes = React.lazy(() => import('./views/Routes/Routes'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  /*{ path: '/routes', name: 'Routes', component: Routes },*/
+  { path: '/routes', name: 'Routes', component: Routes },
   
   { path: '/find-airports', exact: true, name: 'FindAirports', component: FindAirports   },
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
