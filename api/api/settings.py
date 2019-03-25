@@ -25,6 +25,8 @@ SECRET_KEY = 'jio^c2p8$*b+(#0@#g(jl9qu#=wk3y!zx8zrw62l(^vq!x71je'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -39,7 +41,8 @@ INSTALLED_APPS = [
     'trvl',
     'rest_framework',
     'coreapi',
-    'django_filters'
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'api.urls'
