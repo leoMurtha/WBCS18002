@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-import Center from 'react-center';
+import {Link} from "react-router-dom";
 
 
 class FindAirports extends Component {
@@ -30,12 +30,21 @@ class FindAirports extends Component {
   }
 
   handleClickDeparture(event) {
-    this.setState({departureName: event.target.value});
+    this.setState({departureName: event.target.name});
+     
+    
+
+    this.setState({ departureCode: event.target.value});
+    
+
     event.preventDefault();
   }
 
   handleClickDestination(event) {
-    this.setState({destinationName: event.target.value});
+    this.setState({
+      destinationName: event.target.name,
+      destinationCode: event.target.value,
+    });
     event.preventDefault();
   }
 
@@ -60,8 +69,8 @@ class FindAirports extends Component {
                   <div id="departure-dropdown">
                   <DropdownMenu right>
                   <ul>
-                            <li><Button color="link"  block value="Philadelphia, PA: Philadelphia International" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
-                            <li><Button color="link"  block value=" American Hour Rapid" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
+                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
+                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
                           </ul> 
                   </DropdownMenu>
                   </div>
@@ -72,8 +81,8 @@ class FindAirports extends Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                           <ul>
-                            <li><Button color="link"  block value="Philadelphia, PA: Philadelphia International" onClick={this.handleClickDestination}>Philadelphia, PA: Philadelphia International</Button></li>  
-                            <li><Button color="link"  block value=" American Hour Rapid" onClick={this.handleClickDestination}> American Hour Rapid </Button></li>                            
+                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDestination}>Philadelphia, PA: Philadelphia International</Button></li>  
+                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDestination}> American Hour Rapid </Button></li>                            
                            </ul>  
                   </DropdownMenu>
                 </ButtonDropdown>
@@ -90,10 +99,18 @@ class FindAirports extends Component {
                 <i className="fa fa-plane"></i><strong>Airport for Departure</strong>
               </CardHeader>
               <CardBody>
+               
                <div>Name: {this.state.departureName}</div>
                <div>Code: {this.state.departureCode} </div> 
-
+               <Col sm={{ size: 6, order: 2, offset: 10 }}> 
+               <div className="departure-button">
+                <Link to='/#/carriers'>
+                  <Button color="warning">Carriers</Button>
+                </Link>    
+               </div>
+               </Col>
               </CardBody>
+              
             </Card> 
            </Col>
            <Col sm={{ size: '6', offset: 1 }}> 
@@ -104,7 +121,13 @@ class FindAirports extends Component {
               <CardBody>
               <div>Name: {this.state.destinationName}</div>
               <div>Code: {this.state.destinationCode} </div> 
-
+              <Col sm={{ size: 6, order: 2, offset: 10 }}> 
+                <div className="destination-button">
+                  <Link to='/#/carriers'>
+                    <Button color="warning">Carriers</Button>
+                  </Link> 
+                </div>
+              </Col>
               </CardBody>
             </Card> 
             </Col> 
