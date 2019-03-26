@@ -6,13 +6,8 @@ export default {
     },
     {
       name: 'Airports',
-<<<<<<< HEAD
-      url: '/airports',
-      icon: 'icon-layers',
-=======
       url: '/find-airports',
       icon: 'icon-speedometer',
->>>>>>> 9275a74393b2073e8ea2686e748bbcc2b52d5cd0
       badge: {
         variant: 'info',
         text: 'API',
