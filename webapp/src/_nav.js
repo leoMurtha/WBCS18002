@@ -2,7 +2,7 @@ export default {
   items: [
     {
       name: 'Airports',
-      url: '/airports',
+      url: '/find-airports',
       icon: 'icon-speedometer',
       badge: {
         variant: 'info',

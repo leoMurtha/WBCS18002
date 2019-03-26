@@ -30,6 +30,7 @@
     "query-string": "^6.4.0",
     "react": "^16.8.5",
     "react-app-polyfill": "^0.2.2",
+    "react-center": "^1.1.1",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.8.5",
     "react-router-config": "^4.4.0-beta.8",
