@@ -14,8 +14,7 @@ class Tables extends Component {
     const params = qs.parse(this.props.location.search);
     console.log(params);
 
-
-    axios.get(`http://trvl.hopto.org:8000/api/airports/${params.airport}/routes`)
+    fetch(`http://trvl.hopto.org:8000/api/airports/${params.airport}/routes`)
       .then(res => {
         console.log(res);
       });
