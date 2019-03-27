@@ -8,7 +8,7 @@ class Cors:
         # the view (and later middleware) are called.
 
         response = self.get_response(request)
-        response["Access-Control-Allow-Origin"] = ["*", 'localhost:3000']
+        response["Access-Control-Allow-Origin"] = ['*']
         
         response['Access-Control-Allow-Credentials'] = 'false'
 
