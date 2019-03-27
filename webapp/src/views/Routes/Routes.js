@@ -24,14 +24,16 @@ class Routes extends Component {
   }
   componentDidMount() {
     this._isMounted = true;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/airports';
 
-    let url = `airports/${this.props.match.params.id}/routes`;
+    let url = ``;
 
-    axios.get(url)
+    axios.options(url)
       .then(res => {
         if (this._isMounted) {
+          console.log(res);
           this.setState(res.data);
-          this.setState({ id: res.id })
+          //this.setState({ id: res.id })
         }
       })
       .catch((err) => {

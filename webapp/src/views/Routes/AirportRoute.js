@@ -16,14 +16,14 @@ class AirportRoute extends Component {
 
   componentWillMount() {
     this._isMounted = false;
-    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/';
     //axios.defaults.timeout = 1500;
     //console.log('WILL');
   }
 
   componentDidMount() {
     this._isMounted = true;
-    let url = `airports/${this.props.match.params.id}/routes?destination=${this.props.match.params.destination}`;
+    let url = `api/airports/${this.props.match.params.id}/routes?destination=${this.props.match.params.destination}`;
     axios.get(url)
       .catch((err) => {
         console.error(err);
