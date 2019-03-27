@@ -18,7 +18,7 @@ class AirportRoute extends Component {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
     //axios.defaults.timeout = 1500;
-    console.log('WILL');
+    //console.log('WILL');
   }
 
   componentDidMount() {
