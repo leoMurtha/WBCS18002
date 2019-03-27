@@ -5,7 +5,7 @@ const User = React.lazy(() => import('./views/Users/User'));
 const FindAirports = React.lazy(() => import('./views/Airports/FindAirports'));
 const Routes = React.lazy(() => import('./views/Routes/Routes'));
 const AirportRoute = React.lazy(() => import('./views/Routes/AirportRoute'));
-
+const SelectDate = React.lazy(() => import('./views/Calendar/SelectDate'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -19,6 +19,11 @@ const routes = [
   { path: '/find-airports', exact: true, name: 'FindAirports', component: FindAirports   },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
+
+  // route date selection
+  { path: '/date', name: 'SelectDate', component: SelectDate },
+
+
 ];
 
 export default routes;
