@@ -28,7 +28,7 @@ class AirportRoute extends Component {
     this.setState(mock);
     console.log(this.props.match.params);
     console.log(this.props.match);
-
+  }
   componentWillMount() {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
