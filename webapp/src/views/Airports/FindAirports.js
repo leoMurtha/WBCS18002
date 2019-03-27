@@ -14,7 +14,7 @@ class FindAirports extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: new Array(2).fill(false),
-      dropdownContent: new Array(2).fill(
+      dropdownContent: new Array(1000).fill(
         {
           name: "",
           code:"",
@@ -59,9 +59,7 @@ class FindAirports extends Component {
 
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
-    const ContentArray = this.state.dropdownContent.map((index) => { return (index === i)? 
-      [{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null},{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null}]
-      : {name:"", code:"",url:null} ; });
+    const ContentArray = [{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null},{name:"American Hour Rapid", code:"AHR", url:null}];
 
 
     this.setState({
@@ -92,6 +90,17 @@ class FindAirports extends Component {
   
   
    render() {
+    const items = []
+    const items2 = []
+    for (var index=0; index<2; index++)
+       {
+      items.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value="PHL" onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)  
+      items2.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value="PHL" onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)  
+      
+    }
+
+
+
       return (
           <div className="airports">
          
@@ -109,10 +118,9 @@ class FindAirports extends Component {
                   </DropdownToggle>
                   <div id="departure-dropdown">
                   <DropdownMenu right>
-                  <ul>
-                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>{this.state.dropdownContent.name}</Button></li>  
-                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
-                          </ul> 
+                          <ul>
+                            {items}
+                          </ul> `
                   </DropdownMenu>
                   </div>
                 </ButtonDropdown>
@@ -122,9 +130,8 @@ class FindAirports extends Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                           <ul>
-                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDestination}>Philadelphia, PA: Philadelphia International</Button></li>  
-                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDestination}> American Hour Rapid </Button></li>                            
-                           </ul>  
+                            {items2}                       
+                          </ul> 
                   </DropdownMenu>
                 </ButtonDropdown>
                
