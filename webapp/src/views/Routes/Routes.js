@@ -25,13 +25,14 @@ class Routes extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    let url = `airports/${this.props.match.params.id}/routes`;
+    let url = `airports/${this.props.match.params.id}/routes/`;
 
-    axios.get(url, {crossDomain:true, crossorigin:true})
+    axios.get(url)
       .then(res => {
-        if (this._isMounted) {
-          this.setState(res.data);
-        }
+        console.log(res);
+        //if (this._isMounted) {
+        //  this.setState(res.data);
+        //}
       })
       .catch((err) => {
         console.error(err);
