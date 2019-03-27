@@ -55,7 +55,17 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_REGEX_WHITELIST = (r'.*', )
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = False
+
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
 
 ROOT_URLCONF = 'api.urls'
 
