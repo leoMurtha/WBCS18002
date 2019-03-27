@@ -4,10 +4,12 @@ import { ListGroup, ListGroupItem } from 'reactstrap';
 import axios from 'axios';
 import qs from 'query-string';
 
+
 class Routes extends Component {
   _isMounted = false;
   constructor(props) {
     super(props);
+
     this.state = {
       airport: {},
       url: null,
@@ -17,7 +19,8 @@ class Routes extends Component {
   componentWillMount() {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
-    //axios.defaults.timeout = 1500;
+
+
   }
   componentDidMount() {
     this._isMounted = true;
@@ -25,14 +28,14 @@ class Routes extends Component {
     let url = `airports/${this.props.match.params.id}/routes`;
 
     axios.get(url)
-      .catch((err) => {
-        console.error(err);
-      })
       .then(res => {
         if (this._isMounted) {
           this.setState(res.data);
-          this.setState({id: res.id})
+          this.setState({ id: res.id })
         }
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }
 

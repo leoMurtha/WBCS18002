@@ -44,9 +44,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -55,11 +55,7 @@ MIDDLEWARE = [
     #'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8000',
-    'localhost:3000',
-    'localhost'
-)
+APPEND_SLASH=False
 
 CORS_ORIGIN_ALLOW_ALL = True
 
