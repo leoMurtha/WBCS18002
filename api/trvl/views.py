@@ -237,7 +237,7 @@ class AirportView(viewsets.ModelViewSet):
         # Getting the data in the proper way -> serialized
         data = self.serializer_class(airports, many=True, context={
                                      'request': request}).data
-        return Response(data)
+        return Response(data, headers={'Access-Control-Allow-Origin': '*'})
 
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
