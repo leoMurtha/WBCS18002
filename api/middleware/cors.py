@@ -9,7 +9,6 @@ class Cors:
 
         response = self.get_response(request)
         response["Access-Control-Allow-Origin"] = '*'
-
         response['Access-Control-Allow-Credentials'] = 'false'
 
         # Code to be executed for each request/response after
