@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import {Link} from "react-router-dom";
-
+import axios from 'axios';
+import qs from 'query-string';
 
 class FindAirports extends Component {
   
@@ -13,21 +14,59 @@ class FindAirports extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: new Array(2).fill(false),
+      dropdownContent: new Array(2).fill(
+        {
+          name: "",
+          code:"",
+          url: null
+        }),
       destinationName: "",
       destinationCode: "",
+      destinationUrl: null,
       departureName: "",
       departureCode: "",
-      
+      departureurl: null,
 
      
     };
   }
 
+  componentWillMount() {
+    this._isMounted = false;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    //axios.defaults.timeout = 1500;
+  }
+
+  toggleDeparture(i) {
+    const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
+
+    this._isMounted = true;
+    let url = `airports`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({
+            dropdownOpen: newArray,
+      
+          });
+        console.log(res.data);
+        }
+      });
+  }    
+
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
+    const ContentArray = this.state.dropdownContent.map((index) => { return (index === i)? 
+      [{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null},{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null}]
+      : {name:"", code:"",url:null} ; });
+
+
     this.setState({
       dropdownOpen: newArray,
-
+      dropdownContent: ContentArray,
     });
   }
 
@@ -71,7 +110,7 @@ class FindAirports extends Component {
                   <div id="departure-dropdown">
                   <DropdownMenu right>
                   <ul>
-                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
+                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>{this.state.dropdownContent.name}</Button></li>  
                             <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
                           </ul> 
                   </DropdownMenu>
@@ -106,8 +145,8 @@ class FindAirports extends Component {
                <div>Code: {this.state.departureCode} </div> 
                <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                <div className="departure-button">
-                <Link to='/carriers'>
-                  <Button color="warning">Carriers</Button>
+                <Link to='/airports/'>
+                  <Button color="warning">Details</Button>
                 </Link>  
                                 
                </div>
