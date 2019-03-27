@@ -238,8 +238,7 @@ class AirportView(viewsets.ModelViewSet):
         data = self.serializer_class(airports, many=True, context={
                                      'request': request}).data
         response = Response(data, headers={'Access-Control-Allow-Origin': '*'})
-        print(response)
-
+        
         return response
      
     def retrieve(self, request, *args, **kwargs):
@@ -262,7 +261,7 @@ class AirportView(viewsets.ModelViewSet):
                 request.get_host(), carrier['code'], airport_data['code'])
 
         return Response({'Airport': airport_data,
-                         'Carriers': carriers_data})
+                         'Carriers': carriers_data}, headers={'Access-Control-Allow-Origin': '*'})
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -276,7 +275,7 @@ class AirportView(viewsets.ModelViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save(carriers=carriers)
 
-        return Response(serializer.data)
+        return Response(serializer.data, headers={'Access-Control-Allow-Origin': '*'})
 
     @action(detail=True, methods=['get'])
     def routes(self, request, *args, **kwargs):
