@@ -9,6 +9,7 @@ class Cors:
 
         response = self.get_response(request)
         response["Access-Control-Allow-Origin"] = "*"
+        
         # Code to be executed for each request/response after
         # the view is called.
 

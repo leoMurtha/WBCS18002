@@ -357,7 +357,7 @@ class AirportView(viewsets.ModelViewSet):
 
             data['routes'] = routes
 
-        return Response(data)
+        return Response(data, headers={'Access-Control-Allow-Origin': '*'})
 
 
 class StatisticsView(viewsets.ModelViewSet):
