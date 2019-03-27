@@ -17,6 +17,20 @@ class AirportRoute extends Component {
   componentDidMount() {
     // const params = qs.parse(this.props.location.search);
     // console.log(params);
+    let url = 'http://trvl.hopto.org:8000/api/airports/MSP/routes';
+
+    axios.get(url, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      }
+      })
+      .catch((err, response) => {
+        console.error(err);
+        console.log(response);
+      })
+      .then((response, ) => {
+        console.log(response);
+      });
 
     // fetch(`http://trvl.hopto.org:8000/api/airports/${params.airport}/routes`, {
     // })
@@ -55,11 +69,11 @@ class AirportRoute extends Component {
                       <td>{carrier.code}</td>
                       <td>{carrier.statistics.delay_time.carrier.mean}</td>
                       <td>{carrier.statistics.delay_count.carrier.mean}</td>
-                      
+
                       <td>
                         <Badge color="success">Active</Badge>
                       </td>
-                  </tr>)    
+                    </tr>)
                 })}
 
               </tbody>

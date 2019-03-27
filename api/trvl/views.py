@@ -190,7 +190,7 @@ class CarrierView(viewsets.ModelViewSet):
                          'statistics': statistics_data[i]})
 
         return Response({'carrier': carrier_data,
-                         statistics_type+'_statistics': data})
+                         statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})
 
 
 class AirportView(viewsets.ModelViewSet):
