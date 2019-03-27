@@ -49,7 +49,7 @@ def feed_api(entries, host='http://127.0.0.1:8000'):
         print('=====================================================================================')
 
 
-def feed_parallel(data, host='http://127.0.0.1:8000', nproc=6):
+def feed_parallel(data, host='http://127.0.0.1:8000', nproc=12):
     """
     """
 

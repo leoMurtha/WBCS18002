@@ -14,6 +14,7 @@ class AirportRoute extends Component {
     }
   }
 
+
   componentDidMount() {
     // const params = qs.parse(this.props.location.search);
     // console.log(params);
@@ -27,10 +28,29 @@ class AirportRoute extends Component {
     this.setState(mock);
     console.log(this.props.match.params);
     console.log(this.props.match);
+
+  componentWillMount() {
+    this._isMounted = false;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    //axios.defaults.timeout = 1500;
+    //console.log('WILL');
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    let url = `airports/${this.props.match.params.id}/routes?destination=${this.props.match.params.destination}`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState(res.data);
+        }
+      });
   }
 
   render() {
-    //console.log(this.state);
     return (
       <div className="animated fadeIn">
         <Card>
