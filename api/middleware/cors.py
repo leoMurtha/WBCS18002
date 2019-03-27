@@ -14,3 +14,7 @@ class Cors:
         # the view is called.
 
         return response
+
+    def process_response(self, req, response):
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
