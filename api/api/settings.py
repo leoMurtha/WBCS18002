@@ -91,16 +91,16 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql_psycopg2'),
-#         'NAME': os.getenv('DATABASE_NAME', 'db'),
-#         'USER': os.getenv('DATABASE_USER', 'user'),
-#         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
-#         'HOST': os.getenv('DATABASE_SERVICE_HOST', 'database'),
-#         'PORT': os.getenv('DATABASE_SERVICE_PORT', 5432)
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': os.getenv('DATABASE_ENGINE', 'django.db.backends.postgresql_psycopg2'),
+        'NAME': os.getenv('DATABASE_NAME', 'db'),
+        'USER': os.getenv('DATABASE_USER', 'user'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'password'),
+        'HOST': os.getenv('DATABASE_SERVICE_HOST', 'database'),
+        'PORT': os.getenv('DATABASE_SERVICE_PORT', 5432)
+    }
+}
 
 
 # Password validation
