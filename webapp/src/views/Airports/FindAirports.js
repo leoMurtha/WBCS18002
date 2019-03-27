@@ -16,9 +16,10 @@ class FindAirports extends Component {
       dropdownOpen: new Array(2).fill(false),
       dropdownContent: new Array(1000).fill(
         {
-          name: "",
+         
           code:"",
-          url: null
+          name: "",
+          url: null,
         }),
       destinationName: "",
       destinationCode: "",
@@ -35,6 +36,20 @@ class FindAirports extends Component {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
     //axios.defaults.timeout = 1500;
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    let url = `/airports/`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState( {dropdownContent: res.data});
+        }
+      });
   }
 
   toggleDeparture(i) {
@@ -59,12 +74,12 @@ class FindAirports extends Component {
 
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
-    const ContentArray = [{name:"Philadelphia, PA: Philadelphia International", code:"PI", url:null},{name:"American Hour Rapid", code:"AHR", url:null}];
-
+   // const ContentArray = [{name:"Philadelphia, PA: Philadelphia International", code:"PHL", url:null},{name:"American Hour Rapid", code:"AHR", url:null}];
+   
 
     this.setState({
       dropdownOpen: newArray,
-      dropdownContent: ContentArray,
+     // dropdownContent: ContentArray,
     });
   }
 
@@ -92,10 +107,10 @@ class FindAirports extends Component {
    render() {
     const items = []
     const items2 = []
-    for (var index=0; index<2; index++)
+    for (var index=0; index<this.state.dropdownContent.length; index++)
        {
-      items.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value="PHL" onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)  
-      items2.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value="PHL" onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)  
+      items.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)  
+      items2.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)  
       
     }
 
@@ -119,8 +134,8 @@ class FindAirports extends Component {
                   <div id="departure-dropdown">
                   <DropdownMenu right>
                           <ul>
-                            {items}
-                          </ul> `
+                          {items}
+                          </ul> 
                   </DropdownMenu>
                   </div>
                 </ButtonDropdown>
@@ -131,7 +146,7 @@ class FindAirports extends Component {
                   <DropdownMenu right>
                           <ul>
                             {items2}                       
-                          </ul> 
+                           </ul> 
                   </DropdownMenu>
                 </ButtonDropdown>
                
