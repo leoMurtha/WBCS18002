@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-import {Link} from "react-router-dom";
-
+import axios from 'axios';
+import qs from 'query-string';
 
 class SelectDate extends Component {
 
+  
     
   constructor(props){
     super(props);
@@ -22,6 +23,29 @@ class SelectDate extends Component {
       departureCode: "",
      
     };
+  }
+
+  componentWillMount() {
+    this._isMounted = false;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    //axios.defaults.timeout = 1500;
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    let url = `airports/${this.props.match.params.id}/routes`;
+
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState(res.data);
+          this.setState({id: res.id})
+        }
+      });
   }
 
   toggle(i) {
@@ -89,13 +113,7 @@ class SelectDate extends Component {
                             </DropdownToggle>
 
                             <DropdownMenu right>
-                              {this.state.routes.map((route) => {
-                                let string = qs.parseUrl(route);
-                                  return (
-                                    <NavLink to={`${this.props.match.url}/${string.query.destination}`}>
-                                      <ListGroupItem key={`${string.query.destination}`} tag='button' action>{`${string.query.destination}`}</ListGroupItem>
-                                    </NavLink>) 
-                              })}
+                              
                             </DropdownMenu>
                         </ButtonDropdown>
 

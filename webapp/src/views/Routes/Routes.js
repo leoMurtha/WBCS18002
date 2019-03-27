@@ -31,6 +31,7 @@ class Routes extends Component {
       .then(res => {
         if (this._isMounted) {
           this.setState(res.data);
+          this.setState({id: res.id})
         }
       });
   }

@@ -19,9 +19,7 @@ const routes = [
   { path: '/find-airports', exact: true, name: 'FindAirports', component: FindAirports   },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
-
-  // route date selection
-  { path: '/date', name: 'SelectDate', component: SelectDate },
+  { path: '/date',exact: true, name: 'SelectDate', component: SelectDate },
 
 
 ];
