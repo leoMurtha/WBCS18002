@@ -24,7 +24,6 @@ class AirportRoute extends Component {
   componentDidMount() {
     this._isMounted = true;
     let url = `airports/${this.props.match.params.id}/routes?destination=${this.props.match.params.destination}`;
-    console.log('DID');
     axios.get(url)
       .catch((err) => {
         console.error(err);
@@ -34,13 +33,9 @@ class AirportRoute extends Component {
           this.setState(res.data);
         }
       });
-
-    //const mock = { "airport": { "code": "JFK", "name": "New York, NY: John F. Kennedy International", "url": "http://trvl.hopto.org:8000/api/airports/JFK/?format=json", "routes": "http://trvl.hopto.org:8000/api/airports/JFK/routes/" }, "url": "http://trvl.hopto.org:8000/api/airports/JFK/routes/?destination=SFO&carrier=OH&format=json", "destination": { "code": "SFO", "name": "San Francisco, CA: San Francisco International", "url": "http://trvl.hopto.org:8000/api/airports/SFO/?format=json" }, "carriers": [{ "code": "OH", "name": "Comair Inc.", "url": "http://trvl.hopto.org:8000/api/carriers/OH", "statistics": { "route": "http://trvl.hopto.org:8000/api/airports/JFK/routes?destination=SFO&carrier=OH", "delay_time": { "late_aircraft": { "mean": 0.0, "median": 0.0, "standard_deviation": 0.0 }, "carrier": { "mean": 7751.452380952381, "median": 7062.5, "standard_deviation": 4242.386509425028 } }, "delay_count": { "late_aircraft": { "mean": 0.0, "median": 0.0, "standard_deviation": 0.0 }, "carrier": { "mean": 6482.940476190476, "median": 5232.0, "standard_deviation": 4806.739515541324 } } } }] }// this.setState(mock);
-
   }
 
   render() {
-    //console.log(this.state);
     return (
       <div className="animated fadeIn">
         <Card>
