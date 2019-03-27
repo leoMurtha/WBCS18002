@@ -13,6 +13,7 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
 
   { path: '/routes', name: 'Routes', component: Routes },
+
   { path: '/airports/:id/routes', exact:true , name: 'Routes', component: Routes },
   { path: '/airports/:id/routes/:destination', name: 'AirportRoute', component: AirportRoute },
   { path: '/carriers', exact: true, name: 'Carriers', component: Carriers  },
