@@ -29,10 +29,9 @@ class Routes extends Component {
 
     axios.get(url)
       .then(res => {
-        console.log(res);
-        //if (this._isMounted) {
-        //  this.setState(res.data);
-        //}
+        if (this._isMounted) {
+          this.setState(res.data);
+        }
       })
       .catch((err) => {
         console.error(err);
@@ -40,7 +39,6 @@ class Routes extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <div className="animated fadeIn">
         <ListGroup flush>
