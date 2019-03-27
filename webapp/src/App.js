@@ -16,7 +16,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <HashRouter>
           <React.Suspense fallback={loading()}>
             <Switch>
               <Route exact path="/404" name="Page 404" render={props => <Page404 {...props}/>} />
@@ -25,7 +25,7 @@ class App extends Component {
               
             </Switch>
           </React.Suspense>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
