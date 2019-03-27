@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import {Link} from "react-router-dom";
 
 
@@ -17,6 +17,8 @@ class FindAirports extends Component {
       destinationCode: "",
       departureName: "",
       departureCode: "",
+      
+
      
     };
   }
@@ -104,11 +106,13 @@ class FindAirports extends Component {
                <div>Code: {this.state.departureCode} </div> 
                <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                <div className="departure-button">
-                <Link to='/#/carriers'>
+                <Link to='/carriers'>
                   <Button color="warning">Carriers</Button>
-                </Link>    
+                </Link>  
+                                
                </div>
                </Col>
+               
               </CardBody>
               
             </Card> 
@@ -123,9 +127,10 @@ class FindAirports extends Component {
               <div>Code: {this.state.destinationCode} </div> 
               <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                 <div className="destination-button">
-                  <Link to='/#/carriers'>
+                  <Link to='/carriers'>
                     <Button color="warning">Carriers</Button>
-                  </Link> 
+                  </Link>
+                 
                 </div>
               </Col>
               </CardBody>
