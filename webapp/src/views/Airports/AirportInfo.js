@@ -69,31 +69,7 @@ class AirportInfo extends Component {
 
     const items = []
 
-    for (var index=0; index<this.state.dropdownContent.length; index++)
-        {
-      items.push(
-      <li><Button color="link"  block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>
-            <CardHeader id="headingOne">
-              <Button block color="link" className="text-left m-0 p-0" onClick={() => this.toggleAccordion(0)} aria-expanded={this.state.accordion[0]} aria-controls="collapseOne">
-                  <h5 className="m-0 p-0">Collapsible Group Item #1</h5>
-              </Button>
-            </CardHeader>
-                    <Collapse isOpen={this.state.accordion[0]} data-parent="#accordion" id="collapseOne" aria-labelledby="headingOne">
-                      <CardBody>
-                        1. Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-                        cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-                        on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-                        nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft
-                        beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                      </CardBody>
-                      <Col sm={{ size: '2', offset: 10 }}>
-                      <Link to='/carriers'>
-                        <Button color="info">Statistics</Button>
-                      </Link>  
-                      </Col>
-                    </Collapse>
-      )  
-      } 
+    
 
 
       return (
