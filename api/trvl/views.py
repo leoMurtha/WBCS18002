@@ -207,7 +207,7 @@ class CarrierView(viewsets.ModelViewSet):
         for i in range(len(statistics_data)):
             data.append({'airport': statistics_obj[i].airport.code,
                          'date': {'month':  statistics_obj[i].month, 'year':  statistics_obj[i].year},
-                         'statistics': statistics_data[i]})
+                         'statistics': statistics_data[i], 'id': statistics_obj[i].id})
 
         return Response({'carrier': carrier_data,
                          statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})
