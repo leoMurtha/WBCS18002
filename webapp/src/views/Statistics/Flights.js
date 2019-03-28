@@ -6,12 +6,6 @@ import axios from 'axios';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 
-const select_options = [
-	{ value: 'chocolate', label: 'Chocolate' },
-	{ value: 'strawberry', label: 'Strawberry' },
-	{ value: 'vanilla', label: 'Vanilla' }
-];
-
 
 const options = {
 	tooltips: {
@@ -75,9 +69,7 @@ class Flights extends Component {
 					years = years.map(year => ({'value': year, 'label':year}));
 					
 					this.setState({'years': years})
-					console.log(this.state);
 					
-					console.log(this.state.years);
 				}
 			})
 			.catch((err) => {
@@ -86,11 +78,10 @@ class Flights extends Component {
 	}
 
 	render() {
-		//this.setState(this.state); 
 		return (
 			<div className="animated fadeIn">
 				<Select
-					value={this.state.selectedOption}
+					value={this._year}
 					onChange={this.handleChange}
 					options={this.state.years}
 				/>
