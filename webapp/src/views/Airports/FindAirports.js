@@ -182,10 +182,12 @@ class FindAirports extends Component {
             </Card> 
             </Col> 
           </Row>
-          <Route path="/airports/:id" component={this.state.departureCode}></Route>
-            <Link to={`airports/${this.state.departureCode}/routes/${this.state.destinationCode}`}>
-              <Button outline color="danger" size="lg" block disabled={!this.state.departureName}>Find Route</Button>
-            </Link>  
+          
+            
+            
+            //<Link to={`airports/${this.state.departureCode}/routes/${this.state.destinationCode}`}>
+            //  <Button outline color="danger" size="lg" block disabled={!this.state.departureName}>Find Route</Button>
+            //</Link>  
           </Card>
 
           </div>

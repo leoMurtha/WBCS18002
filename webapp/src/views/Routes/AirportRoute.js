@@ -13,6 +13,7 @@ class AirportRoute extends Component {
       destination: {},
       carriers: [],
     }
+    console.log(window.location.href);
     //this.routeChange = this.routeChange.bind(this);
   }
 
@@ -43,6 +44,10 @@ class AirportRoute extends Component {
   }
 
   render() {
+
+
+
+
     return (
       <div className="animated fadeIn">
         <Card>
@@ -57,6 +62,8 @@ class AirportRoute extends Component {
                   <th>Code</th>
                   <th>Carrier Mean Time Delay</th>
                   <th>Carrier Mean Number of Delays</th>
+                  <th> </th>
+                  <th> </th>
                 </tr>
               </thead>
               <tbody>
@@ -70,6 +77,12 @@ class AirportRoute extends Component {
 
                       <td>
                         <Badge color="success">Active</Badge>
+                      </td>
+                      <td>
+                      <Link to={`/carrier/${carrier.code}`}>                        
+                        <Button >{carrier.code}</Button>
+                      </Link>
+
                       </td>
                     </tr>)
                 })}
