@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
+import { ListGroup, ListGroupItem } from 'reactstrap';
 import axios from 'axios';
 import qs from 'query-string';
+import Select from 'react-select';
+
+const CALENDAR_MONTHS = {
+  January: "Jan",
+  February: "Feb",
+  March: "Mar",
+  April: "Apr",
+  May: "May",
+  June: "Jun",
+  July: "Jul",
+  August: "Aug",
+  September: "Sep",
+  October: "Oct",
+  November: "Nov",
+  December: "Dec"
+}
 
 class SelectDate extends Component {
 
@@ -11,17 +28,19 @@ class SelectDate extends Component {
     super(props);
 
     // handle date (month,year)
-    this.handleClickDeparture = this.handleClickDeparture.bind(this);
-    this.handleClickDestination = this.handleClickDestination.bind(this);
+    //this.handleClickDeparture = this.handleClickDeparture.bind(this);
+    //this.handleClickDestination = this.handleClickDestination.bind(this);
    
-    this.toggle = this.toggle.bind(this);
+    //this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: new Array(2).fill(false),
       destinationName: "",
       destinationCode: "",
       departureName: "",
       departureCode: "",
-     
+      airport: {},
+      url: null,
+      routes: [],
     };
   }
 
@@ -34,7 +53,7 @@ class SelectDate extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    let url = `airports/${this.props.match.params.id}/routes`;
+    let url = `carriers/${this.props.match.params.id}/statistics`;
 
     axios.get(url)
       .catch((err) => {
@@ -98,10 +117,7 @@ class SelectDate extends Component {
                             
                             <div id="departure-dropdown">
                                 <DropdownMenu right>
-                                    <ul>
-                                        <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
-                                        <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
-                                    </ul> 
+                                    
                                 </DropdownMenu>
                             </div>
                         </ButtonDropdown>
@@ -113,7 +129,13 @@ class SelectDate extends Component {
                             </DropdownToggle>
 
                             <DropdownMenu right>
-                              
+                              {this.state.routes.map((route) => {
+                                let string = qs.parseUrl(route);
+                                  return (
+                                    <ListGroupItem tag='button' action>{`${string.query.destination}`}</ListGroupItem>
+                                    )
+                                }
+                              )}
                             </DropdownMenu>
                         </ButtonDropdown>
 
