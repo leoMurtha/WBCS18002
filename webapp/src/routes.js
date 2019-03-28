@@ -18,6 +18,7 @@ const routes = [
   { path: '/airports/:id', exact: true, name: 'AirportInfo', component: AirportInfo },
   { path: '/airports/:id/routes', exact: true, name: 'Routes', component: Routes },
   { path: '/airports/:id/routes/:destination', exact: true, name: 'AirportRoute', component: AirportRoute },
+<<<<<<< HEAD
   { path: '/carriers', exact: true, name: 'Carriers', component: Carriers },
   { path: '/airports', exact: true, name: 'FindAirports', component: FindAirports },
   { path: '/users', exact: true, name: 'Users', component: Users },
@@ -25,6 +26,14 @@ const routes = [
   { path: '/date', exact: true, name: 'SelectDate', component: SelectDate },
   { path: '/carriers/:carrier', exact: true, name: 'Carrier', component: Carrier },
   { path: '/statistics/flights/:airport-:carrier', exact: true, name: 'Flights', component: Flights },
+=======
+  { path: '/airports/:id/routes/:destination/carrier/:carrier', exact: true, name: 'SelectDate', component: SelectDate },
+  { path: '/carriers', exact: true, name: 'Carriers', component: Carriers  },
+  { path: '/airports', exact: true, name: 'FindAirports', component: FindAirports   },
+  { path: '/users', exact: true,  name: 'Users', component: Users },
+  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  {path: '/carriers/:carrier', exact:true, name: 'Carrier', component: Carrier},
+>>>>>>> d15f4cfd6d0a6fea64472e9d6998419ba6d6c21b
 ];
 
 export default routes;

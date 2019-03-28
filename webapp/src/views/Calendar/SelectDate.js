@@ -1,124 +1,131 @@
 import React, { Component } from 'react';
-import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import axios from 'axios';
-import qs from 'query-string';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  FormGroup,
+  Input,
+  Label,
+  Row,
+} from 'reactstrap';
+
+//import Select from 'react-select';
+
+var canlendar_months = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec"
+]
+
+var years = ["2000","2001","2002","2003"]
 
 class SelectDate extends Component {
-
+  
   
     
   constructor(props){
     super(props);
 
-    // handle date (month,year)
-    this.handleClickDeparture = this.handleClickDeparture.bind(this);
-    this.handleClickDestination = this.handleClickDestination.bind(this);
-   
-    this.toggle = this.toggle.bind(this);
     this.state = {
-      dropdownOpen: new Array(2).fill(false),
-      destinationName: "",
-      destinationCode: "",
-      departureName: "",
-      departureCode: "",
-     
+      airports: [], 
+      carrier: null,
+      url_departure: null,
+      url_destination: null,
+      months: [],
+      years: [],
     };
   }
 
   componentWillMount() {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
-    //axios.defaults.timeout = 1500;
   }
 
   componentDidMount() {
     this._isMounted = true;
 
-    let url = `airports/${this.props.match.params.id}/routes`;
-
-    axios.get(url)
+    let url_departure = `carriers/${this.props.match.params.carrier}/statistics?type=minimal&aiport=${this.props.match.params.id}`;
+    //let url_destination = `carriers/${this.props.match.params.carrier}/statistics?type=minimal&aiport=${this.props.match.params.destination}`;
+    
+    axios.get(url_departure)
       .catch((err) => {
         console.error(err);
       })
       .then(res => {
         if (this._isMounted) {
           this.setState(res.data);
-          this.setState({id: res.id})
         }
       });
+    
+    console.log(this.state);
   }
 
-  toggle(i) {
-    const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
-    this.setState({
-      dropdownOpen: newArray,
-
-    });
-  }
-
-  handleClickDeparture(event) {
-
-    //this.setState({departureName: event.target.name});
-    //this.setState({ departureCode: event.target.value});
-    this.setState({
-        departureName: event.target.name,
-        departureCode: event.target.value,
-    });
-    event.preventDefault();
-  }
-
-  handleClickDestination(event) {
-    this.setState({
-      destinationName: event.target.name,
-      destinationCode: event.target.value,
-    });
-    event.preventDefault();
-  }
-
+//  triggerDropdown(){
+//
+//    var already = {};
+//    var sel = document.getElementById('years_listing');
+//
+//    for (var i = 0; i < years.length; i++) 
+//    {
+//      var val = years[i];
+//
+//      if (! already[val]) 
+//      {
+//        var opt = document.createElement('option');
+//        opt.innerHTML = val;
+//        opt.value = val;
+//        sel.appendChild(opt);
+//
+//        already[val] = true;
+//      }
+//    }
+//};
   
   
-   render() {
+render() {
+
       return (
-            <div className="airports">
-            <Card>
-                <Col>
-                    
-                    <CardHeader>
-                        <i className="fa fa-align-justify"></i><strong>Travel Date</strong>
-                    </CardHeader>
-            
-                    <CardBody >
-                        <p>Select the date, month and year, of your travel</p>
-                        
-                        <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[0]} toggle={() => { this.toggle(0); }} >
-                        
-                            <DropdownToggle  sm={{ size: '6', offset: 1 }} caret color="primary">
-                                Month
-                            </DropdownToggle>
-                            
-                            <div id="departure-dropdown">
-                                <DropdownMenu right>
-                                    <ul>
-                                        <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
-                                        <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
-                                    </ul> 
-                                </DropdownMenu>
-                            </div>
-                        </ButtonDropdown>
-                        
-                        <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[1]} toggle={() => { this.toggle(1); }}>
-                            
-                            <DropdownToggle  sm={{ size: '6', offset: 1 }} caret color="success">
-                                Year
-                            </DropdownToggle>
-
-                            <DropdownMenu right>
-                              
-                            </DropdownMenu>
-                        </ButtonDropdown>
-
-                    </CardBody>
-                </Col>
+        <div className="airports">
+          <Card>
+            <CardHeader>
+              <strong>Fred Card</strong>
+              <small> Form</small>
+            </CardHeader>
+          <CardBody>
+            <Row>
+              <Col xs="4">
+                <FormGroup>
+                  <Label htmlFor="ccmonth">Month</Label>
+                      <Input type="select" name="ccmonth" id="ccmonth">
+                        {canlendar_months.map(canlendar_months => (
+                            <option>{canlendar_months}</option>
+                        ))}
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                  <Col xs="4">
+                    <FormGroup>
+                      <Label htmlFor="ccyear">Year</Label>
+                      <Input type="select" name="ccyear" id="ccyear">
+                        {years.map(years => (
+                            <option>{years}</option>
+                        ))}
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
+              </CardBody>
             </Card>
         </div>
       );
