@@ -7,11 +7,8 @@ const Routes = React.lazy(() => import('./views/Routes/Routes'));
 const AirportRoute = React.lazy(() => import('./views/Routes/AirportRoute'));
 const SelectDate = React.lazy(() => import('./views/Calendar/SelectDate'));
 const Carriers= React.lazy(() => import('./views/Carriers/Carriers'));
-<<<<<<< HEAD
 const Carrier= React.lazy(() => import('./views/Carriers/Carrier'));
-=======
 const AirportInfo =  React.lazy(() => import('./views/Airports/AirportInfo'));
->>>>>>> 11fa3f7aad810a06a5c8a04d85f797f2779824e8
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
