@@ -205,7 +205,7 @@ class CarrierView(viewsets.ModelViewSet):
         #        statistics_data[i]['minimal_statistics'] = url
 
         for i in range(len(statistics_data)):
-            data.append({'airport': statistics_obj[i].airport,
+            data.append({'airport': statistics_obj[i].airport.code,
                          'date': {'month':  statistics_obj[i].month, 'year':  statistics_obj[i].year},
                          'statistics': statistics_data[i]})
 
