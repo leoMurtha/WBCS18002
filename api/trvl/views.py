@@ -92,9 +92,11 @@ class CarrierView(viewsets.ModelViewSet):
         # loading airports codes
         airports = []
         if not airport:
-            for item in statistics_model.values('airport'):
+            airport_codes = statistics_model.values('airport')
+            for item in airport_codes:
                 airports.append(item['airport'])
         else:
+            airport_codes = [airport]
             airports.append(airport)
 
         # loading airport(s) data
@@ -188,9 +190,9 @@ class CarrierView(viewsets.ModelViewSet):
         
         
         for i in range(len(statistics_data)):
-            data.append({'''airport: airports_data,'''
-                         'date': {'month': months[i]['month'], 'year': years[i]['year']},
-                         'statistics': statistics_data[i]})
+            data.append({'airport': airport_codes[i],
+                        'date': {'month': months[i]['month'], 'year': years[i]['year']},
+                        'statistics': statistics_data[i]})
 
         return Response({'carrier': carrier_data,
                          statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})
