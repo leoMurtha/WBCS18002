@@ -107,7 +107,7 @@ class CarrierView(viewsets.ModelViewSet):
         # extracting date(s)
         #months = statistics_obj.values('month')
         #years = statistics_obj.values('year')
-        #ids = statistics_obj.values('id')
+        
 
         if statistics_type == 'flights' or statistics_type == 'minimal':
             # extracting flights statistics ids
@@ -189,10 +189,10 @@ class CarrierView(viewsets.ModelViewSet):
             #    statistic.pop('year')
             table_id = None
 
-        # Bug Fix: find the right id
-        for id_queryset, statistic in zip(ids, statistics_data):
-            statistic['url'] = 'http://%s/api/statistics/%s/' % (
-                request.get_host(), id_queryset['id'])
+        # # Bug Fix: find the right id
+        # for id_queryset, statistic in zip(ids, statistics_data):
+        #     statistic['url'] = 'http://%s/api/statistics/%s/' % (
+        #         request.get_host(), id_queryset['id'])
 
         # joining statistics_data and months dates
         data = []
