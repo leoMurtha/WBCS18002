@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 import { Badge, Card, CardHeader, CardBody, Table, Pagination, PaginationItem, PaginationLink, NavLink, Button } from 'reactstrap';
 import axios from 'axios';
 
@@ -12,8 +12,9 @@ class AirportRoute extends Component {
       url: null,
       destination: {},
       carriers: [],
+      urlcurr: this.props.location.pathname
     }
-    console.log(window.location.href);
+ 
     //this.routeChange = this.routeChange.bind(this);
   }
 
@@ -40,7 +41,7 @@ class AirportRoute extends Component {
         }
       });
 
-      console.log(this.state);
+      //console.log(this.props.location.pathname);
   }
 
   render() {
@@ -79,8 +80,8 @@ class AirportRoute extends Component {
                         <Badge color="success">Active</Badge>
                       </td>
                       <td>
-                      <Link to={`/carrier/${carrier.code}`}>                        
-                        <Button >{carrier.code}</Button>
+                      <Link to={`${this.state.urlcurr}/carrier/${carrier.code}`} >                        
+                        <Button outline color="danger" size="lg" block >Select Date</Button>
                       </Link>
 
                       </td>
