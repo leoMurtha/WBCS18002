@@ -90,7 +90,7 @@ class SelectDate extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    let url_departure = `carriers/${this.props.match.params.carrier}/statistics/?type=minimal&aiport=${this.props.match.params.id}`;
+    let url_departure = `carriers/${this.props.match.params.carrier}/statistics/?type=minimal&airport=${this.props.match.params.id}`;
     //let url_destination = `carriers/${this.props.match.params.carrier}/statistics?type=minimal&aiport=${this.props.match.params.destination}`;
     console.log(url_departure)
     axios.get(url_departure)
