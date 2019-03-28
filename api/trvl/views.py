@@ -133,13 +133,13 @@ class CarrierView(viewsets.ModelViewSet):
                  # # loading flights serializer
                 if statistics_type == 'minimal':
                     flights_model = models.FlightStatistics.objects.filter(
-                        pk__in=flights_codes).values('id', 'cancelled', 'on_time', 'delayed')
+                        id=obj['id']).values('id', 'cancelled', 'on_time', 'delayed')
                 else:
                     flights_model = models.FlightStatistics.objects.filter(
-                        pk__in=flights_codes)
+                        id=obj['id'])
 
                 serializer = serializers.FlightStatisticsSerializer(
-                    flights_model, many=True, context={'request': request})
+                    flights_model, context={'request': request})
                 
                 statistics_data.append(serializer.data)
 
