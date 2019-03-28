@@ -178,7 +178,7 @@ class CarrierView(viewsets.ModelViewSet):
         # joining statistics_data and months dates
         data = []
         
-        for i in range(len(statistics_data)):
+        for i in range(len(airports_data)):
             if statistics_type == 'minimal':
                 url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
                 statistics_data[i]['flights_statistics'] = url
@@ -186,6 +186,7 @@ class CarrierView(viewsets.ModelViewSet):
                 url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
                 statistics_data[i]['minimal_statistics'] = url
         
+        for i in range(len(statistics_data)):
             data.append({'airport': airports_data[i],
                          'date': {'month': months[i]['month'], 'year': years[i]['year']},
                          'statistics': statistics_data[i]})
