@@ -206,7 +206,7 @@ class CarrierView(viewsets.ModelViewSet):
         if not statistics_type: statistics_type_dest = "minimal"
         elif statistics_type == "minimal": statistics_type_dest = "flights"
         elif statistics_type == "flights": statistics_type_dest = "minimal"
-        else statistics_type == "flights": statistics_type_dest = "all"
+        else: statistics_type_dest = "all"
         
         for i, obj in enumerate(statistics_obj):
             url = 'http://%s/api/carriers/%s/statistics?type=%s&airport=%s&month=%s&' % (
