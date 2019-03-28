@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
-import {Link} from "react-router-dom";
+import { Route , Link} from "react-router-dom";
 import axios from 'axios';
 import qs from 'query-string';
 
@@ -170,9 +170,12 @@ class FindAirports extends Component {
               <div>Code: {this.state.destinationCode} </div> 
               <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                 <div className="destination-button">
+                <Route path="/airports/:id" component={this.state.destinationCode}> 
                   <Link to={`airports/${this.state.destinationCode}`}>
                     <Button color="warning">Carriers</Button>
+              
                   </Link>
+                </Route> 
                  
                 </div>
               </Col>

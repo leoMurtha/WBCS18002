@@ -11,6 +11,7 @@ class AirportInfo extends Component {
     
     this.toggleCustom = this.toggleAccordion.bind(this);
     
+   
     this.state = {
         collapse: false,
         accordion: [true, false, false],
@@ -18,8 +19,29 @@ class AirportInfo extends Component {
         status: 'Closed',
         fadeIn: true,
         timeout: 300,
+        id: this.props.match.params.id,
      
     };
+  }
+
+  componentWillMount() {
+    this._isMounted = false;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    //axios.defaults.timeout = 1500;
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    let url = `/airports/${this.state.id}`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState( {dropdownContent: res.data});
+        }
+      });
   }
 
   toggleAccordion(tab) {
@@ -37,7 +59,7 @@ class AirportInfo extends Component {
         <div className="airport">
             <Card>
             <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Carrier of this specific Airport</strong>
+                <i className="fa fa-align-justify"></i><strong>Information of {this.state.id} </strong>
               </CardHeader>
                 <CardBody>
                 <div id="accordion">
