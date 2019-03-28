@@ -51,6 +51,10 @@ class SelectDate extends Component {
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
   }
 
+  sortNumber(a,b) {
+    return a - b;
+  }
+
   componentDidMount() {
     this._isMounted = true;
 
@@ -75,11 +79,11 @@ class SelectDate extends Component {
               years.push(statistic.date.year)
             }
           });
-          this.setState({months: months.sort()})
-          this.setState({years: years.sort()})
+          this.setState({months: months.sort(this.sortNumber)})
+          this.setState({years: years.sort(this.sortNumber)})
           
-          console.warn(this.state.months);
-          console.warn(this.state.years);
+          //console.warn(this.state.months);
+          //console.warn(this.state.years);
         }
       });
 
@@ -87,30 +91,8 @@ class SelectDate extends Component {
   }
 
 
-  //  triggerDropdown(){
-  //
-  //    var already = {};
-  //    var sel = document.getElementById('years_listing');
-  //
-  //    for (var i = 0; i < years.length; i++) 
-  //    {
-  //      var val = years[i];
-  //
-  //      if (! already[val]) 
-  //      {
-  //        var opt = document.createElement('option');
-  //        opt.innerHTML = val;
-  //        opt.value = val;
-  //        sel.appendChild(opt);
-  //
-  //        already[val] = true;
-  //      }
-  //    }
-  //};
-
-
   render() {
-    console.log(this.state.years);
+    
 
     return (
       <div className="airports">
