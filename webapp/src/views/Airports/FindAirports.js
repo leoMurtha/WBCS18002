@@ -54,7 +54,7 @@ class FindAirports extends Component {
         for (var index = 0; index < this.state.dropdownContent.length; index++) {
           console.log(this.state.dropdownContent[index].name);
           this.items.push(<li key={this.state.dropdownContent[index].code}><Button color="link" block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)
-          this.items2.push(<li key={this.state.dropdownContent[index].code}><Button color="link" block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)
+         // this.items2.push(<li key={this.state.dropdownContent[index].code}><Button color="link" block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)
         }
       });
 
@@ -75,7 +75,21 @@ class FindAirports extends Component {
   handleClickDeparture(event) {
     this.setState({ departureCode: event.target.value })
     this.setState({ departureName: event.target.name });
-
+    let url = `/airports/${this.state.departureCode}`;
+      axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({ dropdownContent: res.data });
+        }
+        for (var index = 0; index < this.state.dropdownContent.length; index++) {
+         // console.log(this.state.dropdownContent[index].name);
+        //  this.items.push(<li key={this.state.dropdownContent[index].code}><Button color="link" block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)
+         this.items2.push(<li key={this.state.dropdownContent[index].code}><Button color="link" block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)
+        }
+      });
 
     event.preventDefault();
 
@@ -115,11 +129,11 @@ class FindAirports extends Component {
                   </DropdownMenu>
                 </div>
               </ButtonDropdown>
-              <ButtonDropdown className="mr-1" isOpen={this.state.dropdownOpen[1]} toggle={() => { this.toggle(1); }}>
-                <DropdownToggle sm={{ size: '6', offset: 1 }} caret color="success">
+              <ButtonDropdown className="mr-1"   isOpen={this.state.dropdownOpen[1]} toggle={() => { this.toggle(1); }}>
+                <DropdownToggle sm={{ size: '6', offset: 1 }} caret color="success" disabled={this.state.departureName === null? true:false}>
                   Destination
                   </DropdownToggle>
-                <DropdownMenu right style={{ overflowY: 'scroll', maxHeight: (window.innerHeight - (this.myRef ? (this.myRef.getBoundingClientRect().top + this.myRef.getBoundingClientRect().height + 100) : 200)) }}>
+                <DropdownMenu right  style={{ overflowY: 'scroll', maxHeight: (window.innerHeight - (this.myRef ? (this.myRef.getBoundingClientRect().top + this.myRef.getBoundingClientRect().height + 100) : 200)) }}>
                   <ul>
                     {this.items2}
                   </ul>
