@@ -22,8 +22,6 @@ const routes = [
   { path: '/airports', exact: true, name: 'FindAirports', component: FindAirports   },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
-
-  { path: '/date',exact: true, name: 'SelectDate', component: SelectDate },
   {path: '/carriers/:carrier', exact:true, name: 'Carrier', component: Carrier},
 ];
 
