@@ -128,7 +128,8 @@ class CarrierView(viewsets.ModelViewSet):
                 flights_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
-            table_id = flights_id
+            
+            table_id = flights_codes
 
         elif statistics_type == "delay_minutes":
             # extracting delay minutes statistics ids
@@ -144,7 +145,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_time_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
-            table_id = delay_time_id
+            table_id = delay_time_codes
 
         elif statistics_type == "delay_count":
             # extracting delay count statistics ids
@@ -160,7 +161,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_count_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
-            table_id = delay_count_id
+            table_id = delay_count_codes
         else:
             # loading all statistics data
             statistics_type = "all"
