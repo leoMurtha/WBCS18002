@@ -179,12 +179,13 @@ class CarrierView(viewsets.ModelViewSet):
         # joining statistics_data and months dates
         data = []
         
-        for i in range(len(airports)):
+    
+        for i in range(len(airport_codes)):
             if statistics_type == 'minimal':
-                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i])
                 statistics_data[i]['flights_statistics'] = url
             elif statistics_type == 'flights':
-                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i])
                 statistics_data[i]['minimal_statistics'] = url
         
         
