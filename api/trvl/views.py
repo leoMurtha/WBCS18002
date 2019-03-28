@@ -127,21 +127,18 @@ class CarrierView(viewsets.ModelViewSet):
             # serializer = serializers.FlightStatisticsSerializer(
             #     flights_model, many=True, context={'request': request})
 
-            statistics_data = []
 
-            for obj in statistics_obj:
-                 # # loading flights serializer
-                if statistics_type == 'minimal':
-                    flights_model = models.FlightStatistics.objects.filter(
-                        id=obj.flight.id).values('id', 'cancelled', 'on_time', 'delayed')
-                else:
-                    flights_model = models.FlightStatistics.objects.filter(
-                        id=obj.flight.id)
+            if statistics_type == 'minimal':
+                flights_model = models.FlightStatistics.objects.filter(
+                    pk__in=[obj.flight.id for obj in statistics_obj]).values('id', 'cancelled', 'on_time', 'delayed')
+            else:
+                flights_model = models.FlightStatistics.objects.filter(
+                    pk__in=[obj.flight.id for obj in statistics_obj])
 
-                serializer = serializers.FlightStatisticsSerializer(
-                    flights_model, context={'request': request})
+            serializer = serializers.FlightStatisticsSerializer(
+                flights_model, many=True, context={'request': request})
                 
-                statistics_data.append(serializer.data)
+            statistics_data.append(serializer.data)
 
         elif statistics_type == "delay_minutes":
             # extracting delay minutes statistics ids
