@@ -100,7 +100,7 @@ class CarrierView(viewsets.ModelViewSet):
 
         # loading airport(s) data
         #airport_model = models.Airport.objects.filter(code__in=airports)
-        #airport_serializer = serializers.AirportSerializer(
+        # airport_serializer = serializers.AirportSerializer(
         #    airport_model, many=True, context={'request': request})
         #airports_data = airport_serializer.data
 
@@ -108,26 +108,41 @@ class CarrierView(viewsets.ModelViewSet):
         months = statistics_model.values('month')
         years = statistics_model.values('year')
         ids = statistics_model.values('id')
-        
+
         if statistics_type == 'flights' or statistics_type == 'minimal':
             # extracting flights statistics ids
-            flights_id = statistics_model.values('flight')
-            flights_codes = []
-            for id in flights_id:
-                flights_codes.append(id['flight'])
+            # flights_id = statistics_model.values('flight')
+            # flights_codes = []
+            # for id in flights_id:
+            #     flights_codes.append(id['flight'])
 
-            # loading flights serializer
-            if statistics_type == 'minimal':
-                flights_model = models.FlightStatistics.objects.filter(
-                    pk__in=flights_codes).values('id', 'cancelled', 'on_time', 'delayed')
-            else:
-                flights_model = models.FlightStatistics.objects.filter(
-                    pk__in=flights_codes)
+            # # loading flights serializer
+            # if statistics_type == 'minimal':
+            #     flights_model = models.FlightStatistics.objects.filter(
+            #         pk__in=flights_codes).values('id', 'cancelled', 'on_time', 'delayed')
+            # else:
+            #     flights_model = models.FlightStatistics.objects.filter(
+            #         pk__in=flights_codes)
 
-            serializer = serializers.FlightStatisticsSerializer(
-                flights_model, many=True, context={'request': request})
+            # serializer = serializers.FlightStatisticsSerializer(
+            #     flights_model, many=True, context={'request': request})
 
-            statistics_data = serializer.data
+            statistics_data = []
+
+            for obj in statistics_model:
+                 # # loading flights serializer
+                if statistics_type == 'minimal':
+                    flights_model = models.FlightStatistics.objects.filter(
+                        id=obj.flight.id).values('id', 'cancelled', 'on_time', 'delayed')
+                else:
+                    flights_model = models.FlightStatistics.objects.filter(
+                        id=obj.flight.id)
+
+                serializer = serializers.FlightStatisticsSerializer(
+                    flights_model, context={'request': request})
+                
+                statistics_data.append(serializer.data)
+
         elif statistics_type == "delay_minutes":
             # extracting delay minutes statistics ids
             delay_time_id = statistics_model.values('delay_time')
@@ -142,6 +157,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_time_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
+            table_id = delay_time_codes
 
         elif statistics_type == "delay_count":
             # extracting delay count statistics ids
@@ -157,6 +173,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_count_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
+            table_id = delay_count_codes
         else:
             # loading all statistics data
             statistics_type = "all"
@@ -165,33 +182,35 @@ class CarrierView(viewsets.ModelViewSet):
                 statistics_model, many=True, context={'request': request})
             statistics_data = serializer.data
             # removing repeated data
-            #for statistic in statistics_data:
+            # for statistic in statistics_data:
             #    statistic.pop('airport')
             #    statistic.pop('carrier')
             #    statistic.pop('month')
             #    statistic.pop('year')
+            table_id = None
 
         # Bug Fix: find the right id
         for id_queryset, statistic in zip(ids, statistics_data):
-            statistic['url'] = 'http://%s/api/statistics/%s/' % (request.get_host(), id_queryset['id'])
-                    
-        
+            statistic['url'] = 'http://%s/api/statistics/%s/' % (
+                request.get_host(), id_queryset['id'])
+
         # joining statistics_data and months dates
         data = []
-        
-        for i in range(len(airports)):
+
+        for i in range(len(airport_codes)):
             if statistics_type == 'minimal':
-                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (
+                    request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
                 statistics_data[i]['flights_statistics'] = url
             elif statistics_type == 'flights':
-                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
+                    request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
                 statistics_data[i]['minimal_statistics'] = url
-        
-        
+
         for i in range(len(statistics_data)):
             data.append({'airport': airport_codes[i]["airport"],
-                        'date': {'month': months[i]['month'], 'year': years[i]['year']},
-                        'statistics': statistics_data[i]})
+                         'date': {'month': months[i]['month'], 'year': years[i]['year']},
+                         'statistics': statistics_data[i]})
 
         return Response({'carrier': carrier_data,
                          statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})
@@ -242,9 +261,9 @@ class AirportView(viewsets.ModelViewSet):
         data = self.serializer_class(airports, many=True, context={
                                      'request': request}).data
         response = Response(data, headers={'Access-Control-Allow-Origin': '*'})
-        
+
         return response
-     
+
     def retrieve(self, request, *args, **kwargs):
         # Get the instance of the given airport by its code
         airport = self.get_object()
@@ -368,7 +387,6 @@ class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
 
-
     def list(self, request):
         # Getting only name and code, the carriers will show up only on the airport detail
         statistics = models.Statistics.objects.all()[:100]
@@ -376,5 +394,5 @@ class StatisticsView(viewsets.ModelViewSet):
         data = self.serializer_class(statistics, many=True, context={
                                      'request': request}).data
         response = Response(data, headers={'Access-Control-Allow-Origin': '*'})
-        
+
         return response

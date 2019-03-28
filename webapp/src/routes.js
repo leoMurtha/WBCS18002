@@ -24,7 +24,7 @@ const routes = [
   { path: '/users', exact: true, name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/carriers/:carrier', exact: true, name: 'Carrier', component: Carrier },
-  { path: '/statistics/flights/:airport-:carrier', exact: true, name: 'Flights', component: Flights },
+  { path: '/statistics/flights/:airport&:carrier', exact: true, name: 'Flights', component: Flights },
 ];
 
 export default routes;

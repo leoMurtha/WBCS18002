@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
-import { ListGroup, ListGroupItem } from 'reactstrap';
+import { Link } from "react-router-dom";
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
 import axios from 'axios';
 import qs from 'query-string';
 
@@ -20,7 +20,6 @@ class Routes extends Component {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
     //axios.defaults.timeout = 3500;
-
   }
   componentDidMount() {
     this._isMounted = true;
@@ -43,11 +42,12 @@ class Routes extends Component {
       <div className="animated fadeIn">
         <ListGroup flush>
           {this.state.routes.map((route) => {
+            console.log(this.props.match);
             let string = qs.parseUrl(route);
             return (
-              <NavLink key={`${string.query.destination}`} to={`routes/${string.query.destination}`}>
-                <ListGroupItem tag='button' action>{`${string.query.destination}`}</ListGroupItem>
-              </NavLink>)
+              <ListGroupItem key={`${string.query.destination}`} tag='button' action>
+                <Button outline color="primary" tag={Link} to={`${this.props.match.url}${string.query.destination}`}>{string.query.destination}</Button>
+              </ListGroupItem>)
           })}
         </ListGroup>
       </div>
