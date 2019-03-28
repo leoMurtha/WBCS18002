@@ -51,8 +51,8 @@ class CarrierView(viewsets.ModelViewSet):
         # loading related airports list
         airports_data = self.get_airports(request, carrier.code)
 
-        return Response({'Carrier': carrier_data,
-                         'Airports': airports_data})
+        return Response({'carrier': carrier_data,
+                         'airports': airports_data})
 
     @action(detail=True, methods=['get'])
     def statistics(self, request, *args, **kwargs):
@@ -177,7 +177,8 @@ class CarrierView(viewsets.ModelViewSet):
         
         # joining statistics_data and months dates
         data = []
-        for i in range(len(airports_data)):
+        
+        for i in range(len(statistics_data)):
             if statistics_type == 'minimal':
                 url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
                 statistics_data[i]['flights_statistics'] = url
@@ -260,8 +261,8 @@ class AirportView(viewsets.ModelViewSet):
             carrier['statistics'] = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
                 request.get_host(), carrier['code'], airport_data['code'])
 
-        return Response({'Airport': airport_data,
-                         'Carriers': carriers_data}, headers={'Access-Control-Allow-Origin': '*'})
+        return Response({'airport': airport_data,
+                         'carriers': carriers_data}, headers={'Access-Control-Allow-Origin': '*'})
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -363,3 +364,14 @@ class AirportView(viewsets.ModelViewSet):
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
+
+
+    def list(self, request):
+        # Getting only name and code, the carriers will show up only on the airport detail
+        statistics = models.Statistics.objects.all()[:100]
+        # Getting the data in the proper way -> serialized
+        data = self.serializer_class(statistics, many=True, context={
+                                     'request': request}).data
+        response = Response(data, headers={'Access-Control-Allow-Origin': '*'})
+        
+        return response
