@@ -182,10 +182,10 @@ class CarrierView(viewsets.ModelViewSet):
     
         for i in range(len(airport_codes)):
             if statistics_type == 'minimal':
-                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
                 statistics_data[i]['flights_statistics'] = url
             elif statistics_type == 'flights':
-                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i])
+                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
                 statistics_data[i]['minimal_statistics'] = url
         
         
