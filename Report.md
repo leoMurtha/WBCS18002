@@ -1,11 +1,11 @@
 ﻿# Report (Interim)
 
-##Introduction
+## Introduction
 The main objective of this project was to develop a application of airports and carriers in the USA by applying methods and Web principles discussed during the course of Web Engineering (WBCS18002.2018-2019.2A). The dataset was provided by CORGIS dataset project.
 By understanding the concepts of Front-end and Back-end, it was possible to deliver a functional and simple demo that allows the user to find general or specific information of airports, routes,statistics and carriers. It also extends the possibility of implementing future features.
  
 
-##Requirements to Run
+## Requirements to Run
 * Docker installed
 
 
