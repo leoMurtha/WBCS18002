@@ -363,3 +363,14 @@ class AirportView(viewsets.ModelViewSet):
 class StatisticsView(viewsets.ModelViewSet):
     queryset = models.Statistics.objects.all()
     serializer_class = serializers.StatisticsSerializer
+
+
+    def list(self, request):
+        # Getting only name and code, the carriers will show up only on the airport detail
+        statistics = models.Statistics.objects.all()[:100]
+        # Getting the data in the proper way -> serialized
+        data = self.serializer_class(statistics, many=True, context={
+                                     'request': request}).data
+        response = Response(data, headers={'Access-Control-Allow-Origin': '*'})
+        
+        return response
