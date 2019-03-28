@@ -6,7 +6,7 @@ export default {
     },
     {
       name: 'Airports',
-      url: '/find-airports',
+      url: '/airports',
       icon: 'icon-speedometer',
       badge: {
         variant: 'info',
