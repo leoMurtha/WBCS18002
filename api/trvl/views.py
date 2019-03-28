@@ -67,7 +67,7 @@ class CarrierView(viewsets.ModelViewSet):
         carrier_obj = self.get_object()
         carrier_serializer = self.serializer_class(
             carrier_obj, context={'request': request})
-        carrier_obj = carrier_serializer.data
+        carrier_data = carrier_serializer.data
 
         # extracting querys
         statistics_type = self.request.query_params.get('type', None)
@@ -78,16 +78,16 @@ class CarrierView(viewsets.ModelViewSet):
         # loading statistics relations between airport(s) and carrier based on dates(month,year)
         if not month and not year and not airport:
             statistics_obj = models.Statistics.objects.filter(
-                carrier=carrier_obj['code'])
+                carrier=carrier_data['code'])
         elif not month and not year:
             statistics_obj = models.Statistics.objects.filter(
-                airport=airport, carrier=carrier_obj['code'])
+                airport=airport, carrier=carrier_data['code'])
         elif not airport:
             statistics_obj = models.Statistics.objects.filter(
-                carrier=carrier_obj['code'], month=month, year=year)
+                carrier=carrier_data['code'], month=month, year=year)
         else:
             statistics_obj = models.Statistics.objects.filter(
-                airport=airport, carrier=carrier_obj['code'], month=month, year=year)
+                airport=airport, carrier=carrier_data['code'], month=month, year=year)
 
         # loading airports codes
         #airports = []
@@ -197,15 +197,15 @@ class CarrierView(viewsets.ModelViewSet):
         # joining statistics_data and months dates
         data = []
 
-        for i in range(len(airport_codes)):
-            if statistics_type == 'minimal':
-                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (
-                    request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
-                statistics_data[i]['flights_statistics'] = url
-            elif statistics_type == 'flights':
-                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
-                    request.get_host(), carrier_data['code'], airport_codes[i]['airport'])
-                statistics_data[i]['minimal_statistics'] = url
+        #for i in range(len(statistics_obj[i])):
+        #    if statistics_type == 'minimal':
+        #        url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (
+        #            request.get_host(), carrier_data['code'], astatistics_obj[i].airport)
+        #        statistics_data[i]['flights_statistics'] = url
+        #    elif statistics_type == 'flights':
+        #        url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
+        #            request.get_host(), carrier_data['code'], statistics_obj[i].airport)
+        #        statistics_data[i]['minimal_statistics'] = url
 
         for i in range(len(statistics_data)):
             data.append({'airport': statistics_obj[i].airport,
