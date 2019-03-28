@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Button, ButtonDropdown, Card, CardBody, CardHeader, Col, DropdownMenu, DropdownToggle, Row } from 'reactstrap';
 import {Link} from "react-router-dom";
-
+import axios from 'axios';
+import qs from 'query-string';
 
 class FindAirports extends Component {
   
@@ -13,21 +14,72 @@ class FindAirports extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       dropdownOpen: new Array(2).fill(false),
+      dropdownContent: new Array(1000).fill(
+        {
+         
+          code:"",
+          name: "",
+          url: null,
+        }),
       destinationName: "",
       destinationCode: "",
+      destinationUrl: null,
       departureName: "",
       departureCode: "",
-      
+      departureurl: null,
 
      
     };
   }
 
+  componentWillMount() {
+    this._isMounted = false;
+    axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
+    //axios.defaults.timeout = 1500;
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+    let url = `/airports/`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState( {dropdownContent: res.data});
+        }
+      });
+  }
+
+  toggleDeparture(i) {
+    const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
+
+    this._isMounted = true;
+    let url = `airports`;
+    axios.get(url)
+      .catch((err) => {
+        console.error(err);
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({
+            dropdownOpen: newArray,
+      
+          });
+        console.log(res.data);
+        }
+      });
+  }    
+
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
+   // const ContentArray = [{name:"Philadelphia, PA: Philadelphia International", code:"PHL", url:null},{name:"American Hour Rapid", code:"AHR", url:null}];
+   
+
     this.setState({
       dropdownOpen: newArray,
-
+     // dropdownContent: ContentArray,
     });
   }
 
@@ -53,6 +105,17 @@ class FindAirports extends Component {
   
   
    render() {
+    const items = []
+    const items2 = []
+    for (var index=0; index<this.state.dropdownContent.length; index++)
+       {
+      items.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDeparture}>{this.state.dropdownContent[index].name}</Button></li>)  
+      items2.push(<li><Button color="link"  block name={this.state.dropdownContent[index].name} value={this.state.dropdownContent[index].code} onClick={this.handleClickDestination}>{this.state.dropdownContent[index].name}</Button></li>)  
+      
+    }
+
+
+
       return (
           <div className="airports">
          
@@ -70,9 +133,8 @@ class FindAirports extends Component {
                   </DropdownToggle>
                   <div id="departure-dropdown">
                   <DropdownMenu right>
-                  <ul>
-                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDeparture}>Philadelphia, PA: Philadelphia International</Button></li>  
-                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDeparture}> American Hour Rapid </Button></li>                            
+                          <ul>
+                          {items}
                           </ul> 
                   </DropdownMenu>
                   </div>
@@ -83,9 +145,8 @@ class FindAirports extends Component {
                   </DropdownToggle>
                   <DropdownMenu right>
                           <ul>
-                            <li><Button color="link"  block name="Philadelphia, PA: Philadelphia International" value="PHL" onClick={this.handleClickDestination}>Philadelphia, PA: Philadelphia International</Button></li>  
-                            <li><Button color="link"  block name=" American Hour Rapid" value="AA" onClick={this.handleClickDestination}> American Hour Rapid </Button></li>                            
-                           </ul>  
+                            {items2}                       
+                           </ul> 
                   </DropdownMenu>
                 </ButtonDropdown>
                
@@ -106,8 +167,8 @@ class FindAirports extends Component {
                <div>Code: {this.state.departureCode} </div> 
                <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                <div className="departure-button">
-                <Link to='/carriers'>
-                  <Button color="warning">Carriers</Button>
+                <Link to='/airports/'>
+                  <Button color="warning">Details</Button>
                 </Link>  
                                 
                </div>

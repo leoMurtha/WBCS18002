@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Badge, Card, CardHeader, CardBody, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { Badge, Card, CardHeader, CardBody, Table, Pagination, PaginationItem, PaginationLink, NavLink, Button } from 'reactstrap';
 import axios from 'axios';
 
 class AirportRoute extends Component {
@@ -12,13 +13,17 @@ class AirportRoute extends Component {
       destination: {},
       carriers: [],
     }
+    //this.routeChange = this.routeChange.bind(this);
   }
+
+  // routeChange(path) {
+  //   this.props.history.push(path);
+  // }
+
 
   componentWillMount() {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
-    //axios.defaults.timeout = 1500;
-    //console.log('WILL');
   }
 
   componentDidMount() {
@@ -33,6 +38,8 @@ class AirportRoute extends Component {
           this.setState(res.data);
         }
       });
+
+      console.log(this.state);
   }
 
   render() {
@@ -57,7 +64,7 @@ class AirportRoute extends Component {
                   return (
                     <tr key={id}>
                       <td>{carrier.name}</td>
-                      <td>{carrier.code}</td>
+                      <td><Button tag={Link} to={`/${carrier.code}`}>{carrier.code}</Button></td>
                       <td>{carrier.statistics.delay_time.carrier.mean}</td>
                       <td>{carrier.statistics.delay_count.carrier.mean}</td>
 
