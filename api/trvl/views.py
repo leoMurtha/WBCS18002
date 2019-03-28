@@ -91,17 +91,18 @@ class CarrierView(viewsets.ModelViewSet):
 
         # loading airports codes
         airports = []
+        airport_codes = statistics_model.values('airport')
         if not airport:
-            for item in statistics_model.values('airport'):
+            for item in airport_codes:
                 airports.append(item['airport'])
         else:
             airports.append(airport)
 
         # loading airport(s) data
-        airport_model = models.Airport.objects.filter(code__in=airports)
-        airport_serializer = serializers.AirportSerializer(
-            airport_model, many=True, context={'request': request})
-        airports_data = airport_serializer.data
+        #airport_model = models.Airport.objects.filter(code__in=airports)
+        #airport_serializer = serializers.AirportSerializer(
+        #    airport_model, many=True, context={'request': request})
+        #airports_data = airport_serializer.data
 
         # extracting date(s)
         months = statistics_model.values('month')
@@ -164,11 +165,11 @@ class CarrierView(viewsets.ModelViewSet):
                 statistics_model, many=True, context={'request': request})
             statistics_data = serializer.data
             # removing repeated data
-            for statistic in statistics_data:
-                statistic.pop('airport')
-                statistic.pop('carrier')
-                statistic.pop('month')
-                statistic.pop('year')
+            #for statistic in statistics_data:
+            #    statistic.pop('airport')
+            #    statistic.pop('carrier')
+            #    statistic.pop('month')
+            #    statistic.pop('year')
 
         # Bug Fix: find the right id
         for id_queryset, statistic in zip(ids, statistics_data):
@@ -178,17 +179,19 @@ class CarrierView(viewsets.ModelViewSet):
         # joining statistics_data and months dates
         data = []
         
-        for i in range(len(statistics_data)):
+        for i in range(len(airports)):
             if statistics_type == 'minimal':
-                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
+                url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
                 statistics_data[i]['flights_statistics'] = url
             elif statistics_type == 'flights':
-                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports_data[i]['code'])
+                url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (request.get_host(), carrier_data['code'], airports[i])
                 statistics_data[i]['minimal_statistics'] = url
         
-            data.append({'airport': airports_data[i],
-                         'date': {'month': months[i]['month'], 'year': years[i]['year']},
-                         'statistics': statistics_data[i]})
+        
+        for i in range(len(statistics_data)):
+            data.append({'airport': airport_codes[i]["airport"],
+                        'date': {'month': months[i]['month'], 'year': years[i]['year']},
+                        'statistics': statistics_data[i]})
 
         return Response({'carrier': carrier_data,
                          statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})

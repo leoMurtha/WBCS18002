@@ -1,35 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import axios from 'axios';
-import qs from 'query-string';
 
-
-class Routes extends Component {
+class Flights extends Component {
   _isMounted = false;
   constructor(props) {
     super(props);
 
     this.state = {
-      airport: {},
-      url: null,
-      routes: [],
+      carriers: [],
     }
   }
   componentWillMount() {
     this._isMounted = false;
     axios.defaults.baseURL = 'http://trvl.hopto.org:8000/api/';
-    //axios.defaults.timeout = 3500;
+
   }
   componentDidMount() {
     this._isMounted = true;
 
-    let url = `airports/${this.props.match.params.id}/routes/`;
+    let url = `carriers/`;
 
     axios.get(url)
       .then(res => {
         if (this._isMounted) {
-          this.setState(res.data);
+          this.setState({'carriers': res.data});
+
         }
       })
       .catch((err) => {
@@ -38,15 +35,16 @@ class Routes extends Component {
   }
 
   render() {
+    console.log(this.props.match);
     return (
       <div className="animated fadeIn">
         <ListGroup flush>
-          {this.state.routes.map((route) => {
-            let string = qs.parseUrl(route);
+          {this.state.carriers.map((carrier) => {
             return (
-              <ListGroupItem key={`${string.query.destination}`} tag='button' action>
-                <Button outline color="primary" tag={Link} to={`/${string.query.destination}`}>{string.query.destination}</Button>
-              </ListGroupItem>)
+              <ListGroupItem key={carrier.code} tag='button' action>
+                <Button outline color="primary" tag={Link} to={`/carriers/${carrier.code}`}>{carrier.code}</Button>
+              </ListGroupItem>
+            )
           })}
         </ListGroup>
       </div>
@@ -54,4 +52,4 @@ class Routes extends Component {
   }
 }
 
-export default Routes;
+export default Flights;
