@@ -203,6 +203,17 @@ class CarrierView(viewsets.ModelViewSet):
         #        url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
         #            request.get_host(), carrier_data['code'], statistics_obj[i].airport)
         #        statistics_data[i]['minimal_statistics'] = url
+        if not statistics_type: statistics_type_dest = "minimal"
+        elif statistics_type == "minimal": statistics_type_dest = "flights"
+        elif statistics_type == "flights": statistics_type_dest = "minimal"
+        else statistics_type == "flights": statistics_type_dest = "all"
+        
+        for i, obj in enumerate(statistics_obj):
+            url = 'http://%s/api/carriers/%s/statistics?type=%s&airport=%s&month=%s&' % (
+                    request.get_host(), carrier_data['code'],statistics_type_dest,
+                    obj.airport.code,obj.month,obj.year)
+                statistics_data[i]['url_next'] = url
+
 
         for i in range(len(statistics_data)):
             data.append({'airport': statistics_obj[i].airport.code,
