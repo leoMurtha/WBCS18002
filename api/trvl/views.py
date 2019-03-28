@@ -111,24 +111,37 @@ class CarrierView(viewsets.ModelViewSet):
 
         if statistics_type == 'flights' or statistics_type == 'minimal':
             # extracting flights statistics ids
-            flights_id = statistics_model.values('flight')
-            flights_codes = []
-            for id in flights_id:
-                flights_codes.append(id['flight'])
+            # flights_id = statistics_model.values('flight')
+            # flights_codes = []
+            # for id in flights_id:
+            #     flights_codes.append(id['flight'])
 
-            # loading flights serializer
-            if statistics_type == 'minimal':
-                flights_model = models.FlightStatistics.objects.filter(
-                    pk__in=flights_codes).values('id', 'cancelled', 'on_time', 'delayed')
-            else:
-                flights_model = models.FlightStatistics.objects.filter(
-                    pk__in=flights_codes)
+            # # loading flights serializer
+            # if statistics_type == 'minimal':
+            #     flights_model = models.FlightStatistics.objects.filter(
+            #         pk__in=flights_codes).values('id', 'cancelled', 'on_time', 'delayed')
+            # else:
+            #     flights_model = models.FlightStatistics.objects.filter(
+            #         pk__in=flights_codes)
 
-            serializer = serializers.FlightStatisticsSerializer(
-                flights_model, many=True, context={'request': request})
+            # serializer = serializers.FlightStatisticsSerializer(
+            #     flights_model, many=True, context={'request': request})
 
-            statistics_data = serializer.data
-            table_id = flights_id
+            statistics_data = []
+
+            for obj in statistics_model:
+                 # # loading flights serializer
+                if statistics_type == 'minimal':
+                    flights_model = models.FlightStatistics.objects.filter(
+                        id=obj.flight.id).values('id', 'cancelled', 'on_time', 'delayed')
+                else:
+                    flights_model = models.FlightStatistics.objects.filter(
+                        id=obj.flight.id)
+
+                serializer = serializers.FlightStatisticsSerializer(
+                    flights_model, context={'request': request})
+                
+                statistics_data.append(serializer.data)
 
         elif statistics_type == "delay_minutes":
             # extracting delay minutes statistics ids
@@ -144,7 +157,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_time_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
-            table_id = delay_time_id
+            table_id = delay_time_codes
 
         elif statistics_type == "delay_count":
             # extracting delay count statistics ids
@@ -160,7 +173,7 @@ class CarrierView(viewsets.ModelViewSet):
                 delay_count_model, many=True, context={'request': request})
 
             statistics_data = serializer.data
-            table_id = delay_count_id
+            table_id = delay_count_codes
         else:
             # loading all statistics data
             statistics_type = "all"
@@ -197,7 +210,7 @@ class CarrierView(viewsets.ModelViewSet):
         for i in range(len(statistics_data)):
             data.append({'airport': airport_codes[i]["airport"],
                          'date': {'month': months[i]['month'], 'year': years[i]['year']},
-                         'statistics': statistics_data[table_id[i]] if table_id else statistics_data[i]})
+                         'statistics': statistics_data[i]})
 
         return Response({'carrier': carrier_data,
                          statistics_type+'_statistics': data}, headers={'Access-Control-Allow-Origin': '*'})
