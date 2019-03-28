@@ -78,16 +78,16 @@ class CarrierView(viewsets.ModelViewSet):
         # loading statistics relations between airport(s) and carrier based on dates(month,year)
         if not month and not year and not airport:
             statistics_obj = models.Statistics.objects.filter(
-                carrier=carrier_model.code)
+                carrier=carrier_obj.code)
         elif not month and not year:
             statistics_obj = models.Statistics.objects.filter(
-                airport=airport, carrier=carrier_model.code)
+                airport=airport, carrier=carrier_obj.code)
         elif not airport:
             statistics_obj = models.Statistics.objects.filter(
-                carrier=carrier_model.code, month=month, year=year)
+                carrier=carrier_obj.code, month=month, year=year)
         else:
             statistics_obj = models.Statistics.objects.filter(
-                airport=airport, carrier=carrier_model.code, month=month, year=year)
+                airport=airport, carrier=carrier_obj.code, month=month, year=year)
 
         # loading airports codes
         #airports = []
