@@ -185,23 +185,15 @@ class CarrierView(viewsets.ModelViewSet):
             table_id = None
 
         # # Bug Fix: find the right id
-        # for id_queryset, statistic in zip(ids, statistics_data):
+        #for id_queryset, statistic in zip(ids, statistics_data):
         #     statistic['url'] = 'http://%s/api/statistics/%s/' % (
         #         request.get_host(), id_queryset['id'])
-
+        
+            
         # joining statistics_data and months dates
         data = []
 
-        # for i in range(len(statistics_obj[i])):
-        #    if statistics_type == 'minimal':
-        #        url = 'http://%s/api/carriers/%s/statistics?type=flights&airport=%s' % (
-        #            request.get_host(), carrier_data['code'], astatistics_obj[i].airport)
-        #        statistics_data[i]['flights_statistics'] = url
-        #    elif statistics_type == 'flights':
-        #        url = 'http://%s/api/carriers/%s/statistics?type=minimal&airport=%s' % (
-        #            request.get_host(), carrier_data['code'], statistics_obj[i].airport)
-        #        statistics_data[i]['minimal_statistics'] = url
-        if not statistics_type:
+        if not statistics_type or statistics_type == "all":
             statistics_type_dest = "minimal"
         elif statistics_type == "minimal":
             statistics_type_dest = "flights"
@@ -210,12 +202,18 @@ class CarrierView(viewsets.ModelViewSet):
         else:
             statistics_type_dest = "all"
 
+        # extracting and adding urls
         for i, obj in enumerate(statistics_obj):
+            url = 'http://%s/api/statistics/%s/' % (
+                    request.get_host(), obj.id)
+            statistics_data[i]['url'] = url
+
             url = 'http://%s/api/carriers/%s/statistics?type=%s&airport=%s&month=%s&year=%s' % (
                 request.get_host(), carrier_data['code'], statistics_type_dest,
                 obj.airport.code, obj.month, obj.year)
             statistics_data[i]['url_next'] = url
 
+        # composing final response
         for i in range(len(statistics_data)):
             data.append({'airport': statistics_obj[i].airport.code,
                          'date': {'month':  statistics_obj[i].month, 'year':  statistics_obj[i].year},
