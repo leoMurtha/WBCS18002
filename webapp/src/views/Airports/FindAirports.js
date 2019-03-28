@@ -52,25 +52,7 @@ class FindAirports extends Component {
       });
   }
 
-  toggleDeparture(i) {
-    const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
-
-    this._isMounted = true;
-    let url = `airports`;
-    axios.get(url)
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(res => {
-        if (this._isMounted) {
-          this.setState({
-            dropdownOpen: newArray,
-      
-          });
-        console.log(res.data);
-        }
-      });
-  }    
+  
 
   toggle(i) {
     const newArray = this.state.dropdownOpen.map((element, index) => { return (index === i)? !element : false ; });
@@ -132,7 +114,7 @@ class FindAirports extends Component {
                     Departure
                   </DropdownToggle>
                   <div id="departure-dropdown">
-                  <DropdownMenu right>
+                  <DropdownMenu right style={{overflowY: 'scroll', maxHeight: (window.innerHeight - (this.myRef ? (this.myRef.getBoundingClientRect().top + this.myRef.getBoundingClientRect().height + 100) : 200))}}>
                           <ul>
                           {items}
                           </ul> 
@@ -143,7 +125,7 @@ class FindAirports extends Component {
                   <DropdownToggle  sm={{ size: '6', offset: 1 }} caret color="success">
                     Destination
                   </DropdownToggle>
-                  <DropdownMenu right>
+                  <DropdownMenu right style={{overflowY: 'scroll', maxHeight: (window.innerHeight - (this.myRef ? (this.myRef.getBoundingClientRect().top + this.myRef.getBoundingClientRect().height + 100) : 200))}}>
                           <ul>
                             {items2}                       
                            </ul> 
@@ -167,7 +149,7 @@ class FindAirports extends Component {
                <div>Code: {this.state.departureCode} </div> 
                <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                <div className="departure-button">
-                <Link to='/airports/'>
+                <Link to={`airports/${this.state.departureCode}`}>
                   <Button color="warning">Details</Button>
                 </Link>  
                                 
@@ -188,7 +170,7 @@ class FindAirports extends Component {
               <div>Code: {this.state.destinationCode} </div> 
               <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                 <div className="destination-button">
-                  <Link to='/carriers'>
+                  <Link to={`airports/${this.state.destinationCode}`}>
                     <Button color="warning">Carriers</Button>
                   </Link>
                  
