@@ -197,8 +197,6 @@ class CarrierView(viewsets.ModelViewSet):
             statistics_type_dest = "minimal"
         elif statistics_type == "minimal":
             statistics_type_dest = "flights"
-        elif statistics_type == "flights":
-            statistics_type_dest = "minimal"
         else:
             statistics_type_dest = "all"
 
