@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Badge, Button, Card, CardBody, CardFooter, CardHeader, Col, Collapse, Fade, Row  } from 'reactstrap';
 import {Link} from "react-router-dom";
-
+import axios from 'axios';
+import qs from 'query-string';
 
 
 class AirportInfo extends Component {
@@ -20,6 +21,16 @@ class AirportInfo extends Component {
         fadeIn: true,
         timeout: 300,
         id: this.props.match.params.id,
+        data:{
+          airport: {
+            code: "",
+            name: "",
+            url: null,
+            routes: null,
+            },
+          carriers: []  
+
+        }
      
     };
   }
@@ -39,7 +50,7 @@ class AirportInfo extends Component {
       })
       .then(res => {
         if (this._isMounted) {
-          this.setState( {dropdownContent: res.data});
+          this.setState( {data: res.data});
         }
       });
   }
@@ -62,6 +73,8 @@ class AirportInfo extends Component {
                 <i className="fa fa-align-justify"></i><strong>Information of {this.state.id} </strong>
               </CardHeader>
                 <CardBody>
+                <div>Name: {this.state.airport.name}</div>
+                <div>Code: {this.state.airport.code} </div> 
                 <div id="accordion">
                   <Card className="mb-0">
                     <CardHeader id="headingOne">
