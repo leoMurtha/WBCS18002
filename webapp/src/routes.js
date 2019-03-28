@@ -7,6 +7,7 @@ const Routes = React.lazy(() => import('./views/Routes/Routes'));
 const AirportRoute = React.lazy(() => import('./views/Routes/AirportRoute'));
 const SelectDate = React.lazy(() => import('./views/Calendar/SelectDate'));
 const Carriers= React.lazy(() => import('./views/Carriers/Carriers'));
+const Carrier= React.lazy(() => import('./views/Carriers/Carrier'));
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
   { path: '/date',exact: true, name: 'SelectDate', component: SelectDate },
-
+  {path: '/carriers/:carrier', exact:true, name: 'Carrier', component: Carrier},
 ];
 
 export default routes;
