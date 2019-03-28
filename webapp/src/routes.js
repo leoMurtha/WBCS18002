@@ -13,11 +13,11 @@ const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/airports/:id/routes', exact: true, name: 'Routes', component: Routes },
   { path: '/airports/:id/routes/:destination', exact: true, name: 'AirportRoute', component: AirportRoute },
+  { path: '/airports/:id/routes/:destination/carrier/:carrier', exact: true, name: 'SelectDate', component: SelectDate },
   { path: '/carriers', exact: true, name: 'Carriers', component: Carriers  },
   { path: '/find-airports', exact: true, name: 'FindAirports', component: FindAirports   },
   { path: '/users', exact: true,  name: 'Users', component: Users },
   { path: '/users/:id', exact: true, name: 'User Details', component: User },
-  { path: '/date',exact: true, name: 'SelectDate', component: SelectDate },
 
 ];
 
