@@ -17,14 +17,14 @@ class FindAirports extends Component {
       dropdownContent: new Array(1000).fill(
         {
          
-          code:"",
-          name: "",
+          code:null,
+          name: null,
           url: null,
         }),
-      destinationName: "",
+      destinationName: null,
       destinationCode: "",
       destinationUrl: null,
-      departureName: "",
+      departureName: null,
       departureCode: "",
       departureurl: null,
 
@@ -66,14 +66,13 @@ class FindAirports extends Component {
   }
 
   handleClickDeparture(event) {
+    this.setState({ departureCode: event.target.value})
     this.setState({departureName: event.target.name});
-     
-    
+   
+  
+      event.preventDefault();  
 
-    this.setState({ departureCode: event.target.value});
-    
-
-    event.preventDefault();
+   
   }
 
   handleClickDestination(event) {
@@ -150,7 +149,7 @@ class FindAirports extends Component {
                <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                <div className="departure-button">
                 <Link to={`airports/${this.state.departureCode}`}>
-                  <Button color="warning">Details</Button>
+                  <Button color="warning" disabled={!this.state.departureName}>Details</Button>
                 </Link>  
                                 
                </div>
@@ -170,12 +169,12 @@ class FindAirports extends Component {
               <div>Code: {this.state.destinationCode} </div> 
               <Col sm={{ size: 6, order: 2, offset: 10 }}> 
                 <div className="destination-button">
-                <Route path="/airports/:id" component={this.state.destinationCode}> 
+               
                   <Link to={`airports/${this.state.destinationCode}`}>
-                    <Button color="warning">Carriers</Button>
+                    <Button color="warning" disabled={!this.state.destinationName}>Details</Button>
               
                   </Link>
-                </Route> 
+                
                  
                 </div>
               </Col>
@@ -183,9 +182,10 @@ class FindAirports extends Component {
             </Card> 
             </Col> 
           </Row>
-          
-          <Button outline color="danger" size="lg" block>Find Route</Button>
-            
+          <Route path="/airports/:id" component={this.state.departureCode}></Route>
+            <Link to={`airports/${this.state.departureCode}/routes/${this.state.destinationCode}`}>
+              <Button outline color="danger" size="lg" block disabled={!this.state.departureName}>Find Route</Button>
+            </Link>  
           </Card>
 
           </div>

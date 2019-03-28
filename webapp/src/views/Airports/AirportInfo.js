@@ -22,8 +22,8 @@ class AirportInfo extends Component {
         id: this.props.match.params.id,
         data:{
           airport: {
-            code: "",
-            name: "",
+            code: null,
+            name: null,
             url: null,
             routes: null,
             },
@@ -82,7 +82,7 @@ class AirportInfo extends Component {
                       <div>routes: {this.state.data.carriers[index].routes} </div> 
                       </CardBody>
                       <Col sm={{ size: '2', offset: 10 }}>
-                      <Link to='/carriers'>
+                      <Link to='/'>
                         <Button color="info">Statistics</Button>
                       </Link>  
                       </Col>
@@ -98,11 +98,14 @@ class AirportInfo extends Component {
             <CardHeader>
                 <i className="fa fa-align-justify"></i><strong>Information of {this.state.id} </strong>
               </CardHeader>
+                
                 <CardBody>
-                <div>Name: {this.state.data.airport.name}</div>
-                <div>Code: {this.state.data.airport.code} </div> 
+                <h4>Name: {this.state.data.airport.name}</h4>
+                <h4>Code: {this.state.data.airport.code} </h4>
+                <h4>List of Carriers:</h4>
                 <div id="accordion">
                   <Card className="mb-0">
+                  
                   <ul>
                       {items}
                   </ul> 
