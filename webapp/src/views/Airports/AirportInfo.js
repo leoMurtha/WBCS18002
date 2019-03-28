@@ -76,13 +76,13 @@ class AirportInfo extends Component {
             </CardHeader>
                    
                       <CardBody>
-                      <div>Carrier: {this.state.data.carriers[index].name}</div>
+                      <div>Carrier: {this.state.data.c}</div>
                       <div>Code: {this.state.data.carriers[index].code} </div>
                       <div>Url: {this.state.data.carriers[index].url}</div>
                       <div>routes: {this.state.data.carriers[index].routes} </div> 
                       </CardBody>
                       <Col sm={{ size: '2', offset: 10 }}>
-                      <Link to='/'>
+                      <Link to={`/statistics/flights/${this.state.data.airport.code}&${this.state.data.carriers[index].code}`}>
                         <Button color="info">Statistics</Button>
                       </Link>  
                       </Col>
