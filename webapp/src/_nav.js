@@ -32,15 +32,6 @@ export default {
       },
     },
     {
-      name: 'Date',
-      url: '/date',
-      icon: 'icon-speedometer',
-      badge: {
-        variant: 'info',
-        text: 'API',
-      },
-    },
-    {
       name: 'Download CoreUI',
       url: 'https://coreui.io/react/',
       icon: 'icon-cloud-download',

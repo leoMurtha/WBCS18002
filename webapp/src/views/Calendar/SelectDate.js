@@ -38,10 +38,10 @@ class SelectDate extends Component {
     super(props);
 
     this.state = {
-      airports: [], 
-      carrier: null,
       url_departure: null,
       url_destination: null,
+      carrier: {},   
+      minimal_statistics: [],
       months: [],
       years: [],
     };
@@ -65,11 +65,24 @@ class SelectDate extends Component {
       .then(res => {
         if (this._isMounted) {
           this.setState(res.data);
+
+          res.data.minimal_statistics.forEach(statistic => {
+              //if(! this.state.months.includes(statistic.date.month)){ 
+              //  this.state.months.push(statistic.date.month)
+              //} 
+              if(! this.state.years.includes(statistic.date.year)){ 
+                this.state.years.push(statistic.date.year)
+              } 
+          });
+
+          //console.log(this.state.months);
+          console.log(this.state.years);
         }
       });
     
-    console.log(this.state);
+    //console.log(this.state);
   }
+
 
 //  triggerDropdown(){
 //
@@ -108,8 +121,8 @@ render() {
                 <FormGroup>
                   <Label htmlFor="ccmonth">Month</Label>
                       <Input type="select" name="ccmonth" id="ccmonth">
-                        {canlendar_months.map(canlendar_months => (
-                            <option>{canlendar_months}</option>
+                        {this.state.months.map(months => (
+                            <option>{months}</option>
                         ))}
                       </Input>
                     </FormGroup>
@@ -118,7 +131,7 @@ render() {
                     <FormGroup>
                       <Label htmlFor="ccyear">Year</Label>
                       <Input type="select" name="ccyear" id="ccyear">
-                        {years.map(years => (
+                        {this.state.years.map(years => (
                             <option>{years}</option>
                         ))}
                       </Input>
