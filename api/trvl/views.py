@@ -138,7 +138,7 @@ class CarrierView(viewsets.ModelViewSet):
             serializer = serializers.FlightStatisticsSerializer(
                 flights_model, many=True, context={'request': request})
                 
-            statistics_data.append(serializer.data)
+            statistics_data = serializer.data
 
         elif statistics_type == "delay_minutes":
             # extracting delay minutes statistics ids
