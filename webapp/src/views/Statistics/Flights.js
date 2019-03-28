@@ -9,7 +9,8 @@ class Flights extends Component {
     super(props);
 
     this.state = {
-      carriers: [],
+      carriers: {},
+      flights_statistics : [],
     }
   }
   componentWillMount() {
@@ -20,12 +21,14 @@ class Flights extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    let url = `carriers/`;
+    console.log(this.props.match);
+
+    let url = `carriers/${this.props.match.params.carrier}/statistics/?type=flights&airport=${this.props.match.params.airport}`;
 
     axios.get(url)
       .then(res => {
         if (this._isMounted) {
-          this.setState({'carriers': res.data});
+          this.setState(res.data);
 
         }
       })
@@ -39,10 +42,10 @@ class Flights extends Component {
     return (
       <div className="animated fadeIn">
         <ListGroup flush>
-          {this.state.carriers.map((carrier) => {
+          {this.state.flights_statistics.map((fs) => {
             return (
-              <ListGroupItem key={carrier.code} tag='button' action>
-                <Button outline color="primary" tag={Link} to={`/carriers/${carrier.code}`}>{carrier.code}</Button>
+              <ListGroupItem key={`${fs.date.month}-${fs.date.year}`} tag='button' action>
+                <Button outline color="primary" tag={Link} to={`/airports/${fs.airport}`}>{`${fs.statistics.id}-${fs.date.month}-${fs.date.year}`}</Button>
               </ListGroupItem>
             )
           })}

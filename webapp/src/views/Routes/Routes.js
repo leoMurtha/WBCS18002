@@ -42,10 +42,11 @@ class Routes extends Component {
       <div className="animated fadeIn">
         <ListGroup flush>
           {this.state.routes.map((route) => {
+            console.log(this.props.match);
             let string = qs.parseUrl(route);
             return (
               <ListGroupItem key={`${string.query.destination}`} tag='button' action>
-                <Button outline color="primary" tag={Link} to={`/${string.query.destination}`}>{string.query.destination}</Button>
+                <Button outline color="primary" tag={Link} to={`${this.props.match.url}${string.query.destination}`}>{string.query.destination}</Button>
               </ListGroupItem>)
           })}
         </ListGroup>
