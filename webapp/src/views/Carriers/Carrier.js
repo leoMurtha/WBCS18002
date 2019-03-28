@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { ListGroup, ListGroupItem, Button} from 'reactstrap';
+import { ListGroup, ListGroupItem, Button, ButtonGroup } from 'reactstrap';
 import axios from 'axios';
 import qs from 'query-string';
 
@@ -38,15 +38,18 @@ class Carrier extends Component {
     }
 
     render() {
-        console.log(this.state);
+        console.log(this.props.match);
         return (
             <div className="animated fadeIn">
                 <ListGroup flush>
                     {this.state.airports.map((airport) => {
-                        console.log(airport);
                         return (
-                            <ListGroupItem tag='button' action>{`${airport.code}`}
-                                <Button tag={Link} to={`/${airport.name}`}>{airport.name}</Button>
+                            <ListGroupItem key={airport.code} tag='button' action>
+                                <ButtonGroup >
+                                    <Button outline color="primary" tag={Link} to={`/airports/${airport.code}`}>{airport.code}</Button>
+
+                                    <Button outline color="danger" tag={Link} to={`${this.props.match.url}/statistics?type=minimal&airport=${airport.code}`}>Statistics</Button>
+                                </ButtonGroup>
                             </ListGroupItem>
                         )
                     })}
