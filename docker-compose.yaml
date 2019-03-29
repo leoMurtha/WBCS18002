@@ -3,7 +3,7 @@ version: '3'
 services:
     webapp:
         restart: always
-        image: node:11
+        image: node:10
         volumes:
             - ./webapp:/webapp/
         working_dir: /webapp
