@@ -12,6 +12,8 @@ Here's a list of useful links regarding the API so far.
 
 [DRF Browsable API](http://trvl.hopto.org:8000/api/)
 
+Web App is Local
+
 ## Group 26
 
 # Case Study Description
