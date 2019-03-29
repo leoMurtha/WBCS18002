@@ -20,7 +20,7 @@ class DefaultHeader extends Component {
     return (
       <React.Fragment>
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 40, alt: 'CoreUI Logo' }}
+          full={{ src: logo, width: 60, height: 40, alt: 'CoreUI Logo' }}
           minimized={{ src: sygnet, width: 30, height: 40, alt: 'CoreUI Logo' }}
         />
         
