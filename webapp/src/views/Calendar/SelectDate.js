@@ -174,8 +174,11 @@ class SelectDate extends Component {
 
   destinationBarChart = (date) => {
     var obj_dest = this.state.destination_data.find(obj => obj.date.month == date.month && obj.date.year == date.year)
-    var data_dest = [obj_dest.statistics.cancelled, obj_dest.statistics.on_time, obj_dest.statistics.delayed]
-
+    if (obj_dest == undefined){
+      var data_dest = [0,0,0]
+    }else{
+      var data_dest = [obj_dest.statistics.cancelled, obj_dest.statistics.on_time, obj_dest.statistics.delayed]
+    }
     const new_bar = this.jsonCopy(this.bar)
     new_bar.datasets[0].data = data_dest
     console.log(data_dest)
