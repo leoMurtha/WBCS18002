@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardHeader, CardBody, Table, Jumbotron, Button, Container, Row, Col, CardFooter } from 'reactstrap';
+import { Card, CardHeader, CardBody, Jumbotron, Button, Container, Row, Col, CardFooter } from 'reactstrap';
 import axios from 'axios';
 
 class Route extends Component {
@@ -50,7 +50,7 @@ class Route extends Component {
                 <hr></hr>
                 <Row>
                   <Col>
-                    <Card className="text-white bg-primary">
+                    <Card key={`card${this.state.airport.code}`} className="text-white bg-primary">
                       <CardHeader>
                         {this.state.airport.name}
                       </CardHeader>
@@ -60,7 +60,7 @@ class Route extends Component {
                     </Card>
                   </Col>
                   <Col>
-                    <Card className="text-white bg-danger">
+                    <Card key={`card${this.state.destination.code}`} className="text-white bg-danger">
                       <CardHeader>
                         {this.state.destination.name}
                       </CardHeader>
