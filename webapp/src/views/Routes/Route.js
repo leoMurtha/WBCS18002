@@ -85,7 +85,7 @@ class Route extends Component {
                               <p><strong>Carrier Mean Number of Delays:</strong> {carrier.statistics.delay_count.carrier.mean}</p>
                             </CardBody>
                             <CardFooter className='text-center'>
-                              <Button className="mr-5" outline color="danger" tag={Link} to={`/carriers/${carrier.code}`} size="md">Carrier Details</Button>
+                              {/* <Button className="mr-5" outline color="danger" tag={Link} to={`/carriers/${carrier.code}`} size="md">Carrier Details</Button> */}
                               <Button outline color="danger" tag={Link} to={`${this.props.match.url}/carrier/${carrier.code}`} size="md">Statistics</Button>
                             </CardFooter>
                           </Card>
