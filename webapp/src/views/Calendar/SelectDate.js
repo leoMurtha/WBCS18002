@@ -51,7 +51,7 @@ class SelectDate extends Component {
 
       departure_bar: [],
       destination_bar: [],
-    
+
       carrier: {},
       months: [],
       years: [],
@@ -59,8 +59,8 @@ class SelectDate extends Component {
       selected_year: null,
     };
 
-    
-    
+
+
 
     //this.setState({ departure_bar: bar });
     //this.setState({ destination_bar: bar });
@@ -80,7 +80,7 @@ class SelectDate extends Component {
     this._isMounted = true;
 
     let departure_url = `carriers/${this.props.match.params.carrier}/statistics/?type=minimal&airport=${this.props.match.params.id}`;
-    
+
     axios.get(departure_url)
       .catch((err) => {
         console.error(err);
@@ -105,22 +105,27 @@ class SelectDate extends Component {
           this.setState({ selected_year: years[0] })
 
           this.calculateMonths(years[0].value)
+
+          let destination_url = `carriers/${this.props.match.params.carrier}/statistics?type=minimal&airport=${this.props.match.params.destination}`;
+
+          axios.get(destination_url)
+            .catch((err) => {
+              console.error(err);
+            })
+            .then(res_d => {
+              if (this._isMounted) {
+                this.setState({ destination_data: res_d.data.minimal_statistics });
+
+
+              }
+            });
+
+          this.calculateBarChart()
         }
       });
 
-    let destination_url = `carriers/${this.props.match.params.carrier}/statistics?type=minimal&airport=${this.props.match.params.destination}`;
 
-    axios.get(destination_url)
-      .catch((err) => {
-        console.error(err);
-      })
-      .then(res_d => {
-        if (this._isMounted) {
-          this.setState({ destination_data: res_d.data.minimal_statistics });
 
-          //this.calculateBarChart()
-        }
-      });
 
     //console.log(this.state);
   }
@@ -130,7 +135,7 @@ class SelectDate extends Component {
     //console.log(this.state.selected_month);
   }
 
-  calculateMonths = (year) =>{
+  calculateMonths = (year) => {
     var list = this.state.departure_data.filter(obj => obj.date.year == year)
     console.log(list)
     var months = list.map(obj => obj.date.month)
@@ -145,21 +150,18 @@ class SelectDate extends Component {
     //console.log(this.state.selected_year);
 
     this.calculateMonths(selected_year.value)
-    
+
   }
 
 
-  jsonCopy = (src) =>{
+  jsonCopy = (src) => {
     return JSON.parse(JSON.stringify(src));
   }
 
   departureBarChart = (date) => {
     var obj = this.state.departure_data.find(obj => obj.date.month == date.month && obj.date.year == date.year)
     var data = [obj.statistics.cancelled, obj.statistics.on_time, obj.statistics.delayed]
-    //var new_bar = {}
-    //Object.assign(new_bar,this.state.destination_bar)
-    //console.log(new_bar)
-    //new_bar["datasets"][0]["data"] = data
+
     const new_bar = this.jsonCopy(this.bar)
     new_bar.datasets[0].data = data
     console.log(data)
@@ -173,7 +175,7 @@ class SelectDate extends Component {
   destinationBarChart = (date) => {
     var obj_dest = this.state.destination_data.find(obj => obj.date.month == date.month && obj.date.year == date.year)
     var data_dest = [obj_dest.statistics.cancelled, obj_dest.statistics.on_time, obj_dest.statistics.delayed]
-    
+
     const new_bar = this.jsonCopy(this.bar)
     new_bar.datasets[0].data = data_dest
     console.log(data_dest)
@@ -193,7 +195,7 @@ class SelectDate extends Component {
 
 
     // loading selected dates from selects
-    
+
 
   }
 
@@ -215,6 +217,7 @@ class SelectDate extends Component {
                   value={this.state.selected_year}
                   options={this.state.years}
                   onChange={this.changeYear}
+                  placeholder="Choose a Year..."
                 />
               </Col>
               <Col xs='4'>
@@ -222,9 +225,10 @@ class SelectDate extends Component {
                   value={this.state.selected_month}
                   options={this.state.months}
                   onChange={this.changeMonth}
+                  placeholder="Choose a Month..."
                 />
               </Col>
-              
+
               <Col col="4" sm="4" md="2" xl className="mb-3 mb-xl-0">
                 <Button block color="ghost-primary" onClick={this.calculateBarChart}>Confirm</Button>
               </Col>
@@ -232,43 +236,31 @@ class SelectDate extends Component {
           </CardBody>
         </Card>
 
-        <Row>
-          <Col xs='10'>
-            <div className="animated fadeIn">
-              <CardColumns className="cols-2">
-                <Card>
-                  <CardHeader>
-                    {this.props.match.params.id}
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-wrapper">
-                      <Bar data={this.state.departure_bar} options={options} />
-                    </div>
-                  </CardBody>
-                </Card>
-              </CardColumns>
-            </div>
-          </Col>
-          <Col xs='10'>
-            <div className="animated fadeIn">
-              <CardColumns className="cols-2">
-                <Card>
-                  <CardHeader>
-                    {this.props.match.params.destination}
-                  </CardHeader>
-                  <CardBody>
-                    <div className="chart-wrapper">
-                      <Bar data={this.state.destination_bar} options={options} />
-                    </div>
-                  </CardBody>
-                </Card>
-              </CardColumns>
-            </div>
-          </Col>
-        </Row>
+        <CardColumns className="cols-2">
+          <Card>
+            <CardHeader>
+              {this.props.match.params.id}
+            </CardHeader>
+            <CardBody>
+              <div className="chart-wrapper">
+                <Bar data={this.state.departure_bar} options={options} />
+              </div>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              {this.props.match.params.destination}
+            </CardHeader>
+            <CardBody>
+              <div className="chart-wrapper">
+                <Bar data={this.state.destination_bar} options={options} />
+              </div>
+            </CardBody>
+          </Card>
+        </CardColumns>
 
       </div>
-
     );
   }
 }
@@ -278,23 +270,23 @@ export default SelectDate;
 
 
 /*<Col xs="4">
-    <FormGroup>
-      <Label htmlFor="ccmonth">Month</Label>
-      <Input type="select" name="ccmonth" id="ccmonth">
-        {console.log(this.state.months)}
-        {this.state.months.map(month => (
-          <option>{month}</option>
-        ))}
-      </Input>
-    </FormGroup>
-  </Col>
-  <Col xs="4">
-    <FormGroup>
-      <Label htmlFor="ccyear">Year</Label>
-      <Input type="select" name="ccyear" id="ccyear">
-        {this.state.years.map(year => (
-          <option>{year}</option>
-        ))}
-      </Input>
-    </FormGroup>
-  </Col>*/
+          <FormGroup>
+            <Label htmlFor="ccmonth">Month</Label>
+            <Input type="select" name="ccmonth" id="ccmonth">
+              {console.log(this.state.months)}
+              {this.state.months.map(month => (
+                <option>{month}</option>
+              ))}
+            </Input>
+          </FormGroup>
+        </Col>
+        <Col xs="4">
+          <FormGroup>
+            <Label htmlFor="ccyear">Year</Label>
+            <Input type="select" name="ccyear" id="ccyear">
+              {this.state.years.map(year => (
+                <option>{year}</option>
+              ))}
+            </Input>
+          </FormGroup>
+        </Col>*/
