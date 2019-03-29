@@ -1,757 +1,177 @@
-# WBCS18002
-Official repository for the WBCS18002 Web Engineering Project.
-
-## Report
-
-The report is the file Report.md with the overview of the Web app.
-
-## Useful Links:
-Here's a list of useful links regarding the API so far.
-
-[Interactive API Docs](http://trvl.hopto.org:8000/docs/)
-
-[DRF Browsable API](http://trvl.hopto.org:8000/api/)
-
-Web App is Local.
-
-## Group 26
-
-# Case Study Description
-The Web app to be developed helps users to decide which carriers (airlines) and
-which airports to use in the USA for their air travel needs. It builds on the
-Airline delays dataset made available by the CORGIS dataset project, itself a
-curated version of the data published by the Bureau of Transporation Statistics
-of the US Government. Both a JSON and a CSV version of the dataset are
-available. It contains statistics for all reported delays per carrier per airport per month in the USA from 2003 to 2016
-The goal of this project is to deliver to users both basic and advanced features
-based on this dataset as a Web app. It comes with a minimum set of
-requirements on what features are to be delivered, and fosters creativity on the
-app developer side by allowing for identification of further features proposed
-and implemented by each group.
-
-# API Documentation
-
-# Introduction
- This documentation describes each API call possibilities following the template bellow (author: https://gist.github.com/iros/3426278).
-
-## Template
-
-**Title**
-----
-  <_Additional information about your API call. Try to use verbs that match both request type (fetching vs modifying) and plurality (one vs multiple)._>
-
-* **URL**
-
-  <_The URL Structure (path only, no root url)_>
-
-* **Method:**
-  
-  <_The request type_>
-
-  `GET` | `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
-
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._> 
-
-   **Required:**
- 
-   `id=[string(unique)]`
-
-   **Optional:**
- 
-   `photo_id=[alphanumeric]`
-
-* **Data Params**
-
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
-
-* **Success Response:**
-  
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
-
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
- 
-* **Error Response:**
-
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
-
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
-
-  OR
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
-
-* **Sample Call:**
-
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._> 
-
-* **Notes:**
-
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._> 
-
-# API 
-
-**Airports**
-----
-  Returns json/csv list of **All airports available in the USA** codes,names and links to the available airports in the USA.
-
-* **URL**
-
-  `/airports`
-
-* **Method:**
-  
-  `GET`
-       
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-      
-      ```javascript
-        [
-          {
-              "airport": {
-                  "code": "PHL",
-                  "name": "Philadelphia, PA: Philadelphia International",
-                  "url": "/airports/PHL"
-              },
-          {
-              "airport": {
-                  "code": "AHR",
-                  "name": "American Hour Rapid",
-                  "url": "/airports/AHR"
-          }
-          .
-          .
-          .
-        ]
-    ```
-   
- 
-* **Error Response:**
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Invalid date" }`
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid date format" }`
-  
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
-  
-
-* **Sample Call:**
-
-  ```curl -H "Accept: application/json" 'http://server/airports```
-  
-  ```javascript
-    $.ajax({
-      url: "/airports",
-      type : "GET",
-      dataType: "csv",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-* **Notes:**
-
-  * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
-  
-**Carriers**
-----
-  Returns json/csv list **all carriers operating in US airports** codes, names and links to the available.
-
-* **URL**
-
-  `/carriers`
-
-* **Method:**
-  
-  `GET`
-      
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-      
-      ```javascript
-      [
-        {
-        "carrier": {
-            "code": "AA",
-            "name": "American Airlines Inc.",
-	          "url": "/carriers/AA"
-        },
-        {
-         "carrier": {
-            "code": "AS",
-            "name": "Alaska Airlines Inc.",
-   	        "url": "/carriers/AS"
-        },
-        .
-        .
-        .
-      ]
-    ```
-    
-
-* **Error Response:**
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Invalid date" }`
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid date format" }`
-  
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
-  
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/carriers",
-      type : "GET",
-      dataType: 'csv'
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-* **Notes:**
-  * User should also use the Accept header for specifying the extension of the response (json or csv). The default is json.
-
-
-
-**Specific Airport Informations**
-----
-  Returns **all links to the carriers operating at a specific airport**, a link to the related statistics for each carrier and also a link to the airport routes. 
-
-* **URL**
-
-`/airports/:id`
-
-
-* **Method:**
-
-`GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `id=[code(ex: ATL)]`
-
-* **Success Response:**
-
-  ```javascript
-  {
-      "airport": {
-        "code": "PHL",
-        "name": "Philadelphia, PA: Philadelphia International",
-        "url": "/airports/PHL"
-      },
-      "routes_link": "/airports/PHL/routes",
-      "carriers": [
-          {
-            "code":
-            "url": "/carriers/AA?airport_id=PHL",
-            "statistics_url":"/carriers/AA/statistics?airport=PHL&statistics='minimal'"
-          },
-          .
-          .
-          .
-        ]
-  }
-  ```
-
-
-* **Error Response:**
-
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Invalid id" }`
-
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/airports/:id",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
-
- **Specific Carrier Information**
-----
-  Returns **all links to the airports operating at a specific cairrier**, a link to the related statistics for each airport. 
-
-
-* **URL**
-
-  `/carriers/:id`
-
-* **Method:**
-  
-  `GET`
-  
-*  **URL Params**
-
-   **Required:** 
-   
-   `id=[string(unique)]`
-    
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-    
-
- If JSON  
- ```javascript
-
-  {
-    "carrier": {
-      "code": "AR",
-      "name": "American Airlines Inc.",
-      "url": "/carriers/AR",
-    }
-  }  
+[![@coreui coreui](https://img.shields.io/badge/@coreui%20-coreui-lightgrey.svg?style=flat-square)](https://github.com/coreui/coreui)
+[![npm package][npm-coreui-badge]][npm-coreui]
+[![NPM downloads][npm-coreui-download]][npm-coreui]  
+[![@coreui react](https://img.shields.io/badge/@coreui%20-react-lightgrey.svg?style=flat-square)](https://github.com/coreui/react)
+[![npm package][npm-coreui-react-badge]][npm-coreui-react]
+[![NPM downloads][npm-coreui-react-download]][npm-coreui-react]
+
+[npm-coreui]: https://www.npmjs.com/package/@coreui/coreui
+[npm-coreui-badge]: https://img.shields.io/npm/v/@coreui/coreui.png?style=flat-square
+[npm-coreui-download]: https://img.shields.io/npm/dm/@coreui/coreui.svg?style=flat-square
+[npm-coreui-react]: https://www.npmjs.com/package/@coreui/react
+[npm-coreui-react-badge]: https://img.shields.io/npm/v/@coreui/react.png?style=flat-square
+[npm-coreui-react-download]: https://img.shields.io/npm/dm/@coreui/react.svg?style=flat-square
+
+# CoreUI Free React Admin Template v2 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?text=CoreUI%20-%20Free%20React%20Admin%20Template%20&url=https://coreui.io/react/&hashtags=bootstrap,admin,template,dashboard,panel,free,angular,react,vue)
+
+Please help us on [Product Hunt](https://www.producthunt.com/posts/coreui-open-source-bootstrap-4-admin-template-with-angular-2-react-js-vue-js-support) and [Designer News](https://www.designernews.co/stories/81127). Thanks in advance!
+
+Curious why I decided to create CoreUI? Please read this article: [Jack of all trades, master of none. Why Bootstrap Admin Templates suck.](https://medium.com/@lukaszholeczek/jack-of-all-trades-master-of-none-5ea53ef8a1f#.7eqx1bcd8)
+
+CoreUI is an Open Source Bootstrap Admin Template. But CoreUI is not just another Admin Template. It goes way beyond hitherto admin templates thanks to transparent code and file structure. And if that's not enough, let’s just add that CoreUI consists bunch of unique features and over 1000 high quality icons.
+
+CoreUI is based on Bootstrap 4 and offers 6 versions: [HTML5 AJAX](https://github.com/coreui/free-bootstrap-admin-template-ajax), [HTML5](https://github.com/coreui/free-angular-admin-template), [Angular 2+](https://github.com/coreui/free-angular-admin-template), [React.js](https://github.com/coreui/free-react-admin-template) & [Vue.js](https://github.com/coreui/free-vue-admin-template), [.NET Core 2](https://github.com/coreui/free-dotnet-admin-template).
+
+CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of redundant components, so the app is light enough to offer ultimate user experience. This means mobile devices also, where the navigation is just as easy and intuitive as on a desktop or laptop. The CoreUI Layout API lets you customize your project for almost any device – be it Mobile, Web or WebApp – CoreUI covers them all!
+
+## Table of Contents
+
+* [Versions](#versions)
+* [CoreUI Pro](#coreui-pro)
+* [Admin Templates built on top of CoreUI Pro](#admin-templates-built-on-top-of-coreui-pro)
+* [Installation](#installation)
+* [Usage](#usage)
+* [What's included](#whats-included)
+* [Documentation](#documentation)
+* [Contributing](#contributing)
+* [Versioning](#versioning)
+* [Creators](#creators)
+* [Community](#community)
+* [Community Projects](#community-projects)
+* [License](#license)
+* [Support CoreUI Development](#support-coreui-development)
+
+## Versions
+
+* [CoreUI Free Bootstrap Admin Template](https://github.com/coreui/coreui-free-bootstrap-admin-template)
+* [CoreUI Free Bootstrap Admin Template (Ajax)](https://github.com/coreui/coreui-free-bootstrap-admin-template-ajax)
+* [CoreUI Free Angular 2+ Admin Template](https://github.com/coreui/coreui-free-angular-admin-template)
+* 🚧 CoreUI Free .NET Core 2 Admin Template (Available Soon)
+* [CoreUI Free React.js Admin Template](https://github.com/coreui/coreui-free-react-admin-template)
+* [CoreUI Free Vue.js Admin Template](https://github.com/coreui/coreui-free-vue-admin-template)
+
+## CoreUI Pro
+
+* 💪  [CoreUI Pro Bootstrap Admin Template](https://coreui.io/pro/)
+* 💪  [CoreUI Pro Bootstrap Admin Template (Ajax)](https://coreui.io/pro/)
+* 💪  [CoreUI Pro Angular Admin Template](https://coreui.io/pro/angular)
+* 💪  [CoreUI Pro React Admin Template](https://coreui.io/pro/react)
+* 💪  [CoreUI Pro Vue Admin Template](https://coreui.io/pro/vue)
+
+## Admin Templates built on top of CoreUI Pro
+
+| CoreUI Pro | Prime | Root | Alba | Leaf |
+| --- | --- | --- | --- | --- |
+| [![CoreUI Pro React Admin Template](https://coreui.io/assets/img/example-coureui.jpg)](https://coreui.io/pro/react/) | [![Prime React Admin Template](https://genesisui.com/assets/img/templates/prime1280.jpg)](https://genesisui.com/admin-templates/reactjs/prime/?support=1) | [![Root React Admin Template](https://genesisui.com/assets/img/templates/root1280.jpg)](https://genesisui.com/admin-templates/reactjs/root/?support=1) | [![Alba React Admin Template](https://genesisui.com/assets/img/templates/alba1280.jpg)](https://genesisui.com/admin-templates/reactjs/alba/?support=1) | [![Leaf React Admin Template](https://genesisui.com/assets/img/templates/leaf1280.jpg)](https://genesisui.com/admin-templates/reactjs/leaf/?support=1)
+
+## Installation
+
+``` bash
+# clone the repo
+$ git clone https://github.com/coreui/coreui-free-react-admin-template.git my-project
+
+# go into app's directory
+$ cd my-project
+
+# install app's dependencies
+$ npm install
 ```
 
-* **Error Response:**
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Invalid date" } { error : "Airport not found"}`
+## Create React App
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid date format" }`
-  
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
-  
+see also:
+[User Guide](CRA.md)
 
-* **Sample Call:**
+### Basic usage
 
-  ```javascript
-    $.ajax({
-      url: "/carriers/:id",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
-
-
-**Statistics**
-----
-  Manipulates json or csv of **all statistics** in the current database.
-  **This endpoint is used to feed data to the database.**
-
-* **URL**
-
-`/statistics`
-
-* **Method:**
-  `GET`| `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
-
-   **Required for GET, DELETE, PUT:**
-   
-   `id=[string(unique)]`
-   
-
-* **Data Params**
-		
-	```javascript
-    {
-        "airport": "SEA",
-        "carrier": "AA",
-        "month": 1,
-        "year": 2000,
-        "flight": {
-            "id": 42,
-            "cancelled": 1,
-            "on_time": 1,
-            "total": 1,
-            "delayed": 1,
-            "diverted": 1
-        },
-        "delay_time": {
-            "id": 15,
-            "late_aircraft": 1,
-            "weather": 1,
-            "security": 1,
-            "national_aviation_system": 1,
-            "carrier": 1
-        },
-        "delay_count": {
-            "id": 14,
-            "late_aircraft": 11,
-            "weather": 11,
-            "security": 11,
-            "national_aviation_system": 11,
-            "carrier": 11
-        }
-    }  
-  ```
-    
-
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-    
-    If JSON:
-	```javascript
-      {
-          "url": "http://localhost:8000/api/statistics/13/",
-          "airport": "SEA",
-          "carrier": "AA",
-          "month": 1,
-          "year": 2000,
-          "flight": {
-              "id": 42,
-              "cancelled": 1,
-              "on_time": 1,
-              "total": 1,
-              "delayed": 1,
-              "diverted": 1
-          },
-          "delay_time": {
-              "id": 15,
-              "late_aircraft": 1,
-              "weather": 1,
-              "security": 1,
-              "national_aviation_system": 1,
-              "carrier": 1
-          },
-          "delay_count": {
-              "id": 14,
-              "late_aircraft": 11,
-              "weather": 11,
-              "security": 11,
-              "national_aviation_system": 11,
-              "carrier": 11
-          }
-      }
-    ```	   
- 
-* **Error Response:**
-  
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Airport not found" }
-    { error : "Carrier not found" }`
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid statistics type" }`
-	
-   * **Code:** 400 BAD REQUEST <br />
-    **Content:** `{ error : "Invalid data in POST/PUT" }`
-
-
-* **Sample Call:**
-
-  ```javascript
-    $.ajax({
-      url: "/statistics/192",
-      type : "GET",
-      dataType: "csv",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-
-* **Notes:**
-
-  The /statistics endpoint is specific for database feeding purposes if you want specific/friendly statistics about specific aiports and carriers please check the endpoint below.
-
-
-**Carrier Statistics**
-----
-  Returns json or csv of **all statistics about flights of a carrier from/to a US airport**,**number of on-time, delayed, and cancelled flights of a carrier from/to a US airport**, **number of minutes of delay per carrier attributed to carrier-specific reasons/all reasons** for a given month or all months available. If no type are specified all the statistics are returned.
-
-* **URL**
-
-`/carriers/:id/statistics`
-*list of possible querys*
-`/carriers/:id/statistics?type=:type_name`
-`/carriers/:id/statistics?airport=:airpot_id`
-`/carriers/:id/statistics?month=:mm&year=:yyyy`
-`/carriers/:id/statistics?type=:type_name&airport=:airpot_id&month=:mm&year=:yyyy`
-
-* **Method:**
-  `GET`| `POST` | `DELETE` | `PUT`
-  
-*  **URL Params**
-
-   **Required:**
-   
-   `id=[string(unique)]`
-   
-    
-   **Optional:**
-   `carrier_id=[string(unique)]`
-
-   `type_name=['flights'|'minimal'|'delay_minutes'|'delay_count']`
-
-   `mm=[integer]`
-   `yyyy=[integer]`
-    
-
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-    
-    If JSON:
-	```javascript
-    "airport": {
-        "code": "PHL",
-        "name": "Philadelphia, PA: Philadelphia International",
-        "url": "/airports/PHL"
-    },
-    "carrier": {
-        "code": "AA",
-        "name": "American Airlines Inc.",
-        "id": 124,
-        "url": "/carriers/124",
-    },
-    "flights_statistics": {
-        "cancelled": 5,
-        "on time": 561,
-        "total": 752,
-        "delayed": 186,
-        "diverted": 0
-        "url": "/carriers/:id/statistics?airport=PHL&month=6&year=2003"
-    },
-    "date": {
-        "year": 2003,
-        "month": 6
-    }
-    ```	   
- 
-* **Error Response:**
-  
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Airport not found" }
-    { error : "Carrier not found" }`
-
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid statistics type" }`
-
-
-* **Sample Call:**
-
-  ```curl -H "Accept: application/json" http://server//airports/123/statistics?carrier=1234&type='flights'```
-  
-  ```javascript
-	$.ajax({
-      type: 'GET',
-      url: "/carriers/:id/statistics?airport=PHL&month=6&year=2003",
-      dataType: "json",
-      success: function(resultData) {}
-	});
-  ```
-* **Notes:**
-
-     If the user wishes to retrieve data from a specific airport or on specific month or attributed to carrier-specific reasons then he should pass the optional parameter data in the valid format.
-  In this case, there would be a query on the URL such as the example below:
-
-  ```/carriers/AR/statistics?airport_id=PHL&month=6&year=2003&reasons=all```
-
-
-
-**Show airport routes.**
-----
-  Returns a json/csv response containing links to the routes that the specified airport does.
-
-* **URL**
-`/airports/:id/routes`
-
-* **Method:**
-  `GET`
-  
-*  **URL Params**
-
-   **Required:**
-   
-   `id=[string(unique)]`
-    
-   **Optional:**
-   
-   `from=[month/year]`
-   
-   `to=[month/year]`  
-
-* **Success Response:**
-  
-  * **Code:** 200 <br />
-    **Content:** 
-    
-  
-	```javascript
-    "airport": {
-        "code": "PHL",
-        "name": "Philadelphia, PA: Philadelphia International",
-        "id": 123,
-        "url": "/airports/123"
-    },
-    "routes": [{
-          "code": "AHR",
-	        "name": "American Hour Rapid",
-	        "destination_url": "/airports/133",
-	        "route": "/airports/123/routes?destination=133&from=from&to=to"
-        },
-	],
-    ```   
- 
-* **Error Response:**
-  
-  * **Code:** 404 NOT FOUND  <br />
-    **Content:** `{ error : "Airport not found"}` 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Invalid date" }`
-
-* **Sample Call:**
-
-  ```curl -H "Accept: application/json" http://server//airports/123/routes```
-  
-  ```javascript
-      $.ajax({
-      	url: "/airports/123/routes,
-      	type : "GET",
-      	dataType: "csv",
-      	success : function(r) {
-        	console.log(r);
-      	}
-    	});
-  ```
-* **Notes:**
-
-   * User also should use the Accept header for specifying the extension of the response (json or csv) the default is json.
-   
- 
-
-**Show route between two airports**
-----
-  Returns **descriptive statistics (mean, median, standard deviation) for carrier-specific delays (as above) for a flight between any two airports in the USA for a specific carrier or for all carriers serving this route**.
-  
-* **URL**
-
-`/airports/:id/routes?destination=:airport_id`
-or
-`/airports/:id/routes?destination=:airport_id&carrier=:carrier_id`
-
-* **Method:**
-
-`GET`
-  
-*  **URL Params**
-
-   **Required:**
- 
-   `id=[string(unique)]`
-   
-    `airport_id=[string(unique)]`
-
-   **Optional:**
- 
-   `carrier_id=[string(unique)]`
-
-* **Success Response:**
-  
-  If JSON and All Carriers:
-      
-```javascript  
-{
-    "airport": {
-        "code": "PHL",
-        "name": "Philadelphia, PA: Philadelphia International",
-        "id": 123,
-        "link": "/airports/123"
-    },
-    "destination": {
-        "code": "AHR",
-        "name": "American Hour Rapid",
-        "id": 125,
-        "url": "/airports/125"
-    },
-    "route": "/airports/125/routes?destination=125",
-    "root_url": "/airports/123/routes",
-    "carriers": [{
-            "code": "AA",
-            "name": "American Airlines Inc.",
-            "id": 124,
-            "url": "/carriers/124",
-            "route": "/airports/125/routes?destination=125&carrier=124",
-            "statistics": {
-                "url": "/airports/123/statistics?carrier=124&type='flights'&minimal=true",
-                "# of delays": {
-                    "late aircraft": {
-                        "mean": 18,
-                        "median": 17,
-                        "standard_deviation": 3
-                    },
-                    "carrier": {
-                        "mean": 34,
-                        "median": 32,
-                        "standard_deviation": 5
-                    }
-                },
-                "minutes delayed": {
-                    "late aircraft": {
-                        "mean": 1269,
-                        "median": 1200,
-                        "standard_deviation": 100
-                    },
-                    "carrier": {
-                        "mean": 1367,
-                        "median": 1300,
-                        "standard_deviation": 150
-                    }
-                },
-            }
-        },
-        .
-        .
-        .
-    ]
-}
+``` bash
+# dev server  with hot reload at http://localhost:3000
+$ npm start
 ```
 
-* **Error Response:**
+Navigate to [http://localhost:3000](http://localhost:3000). The app will automatically reload if you change any of the source files.
 
-  * **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Invalid id" }`
+### Build
 
-  * **Code:** 405 METHOD NOT ALLOWED <br />
-    **Content:** `{ error : "Invalid method" }`
+Run `build` to build the project. The build artifacts will be stored in the `build/` directory.
 
-* **Sample Call:**
+```bash
+# build for production with minification
+$ npm run build
+```
 
-  ```javascript
-    $.ajax({
-      url: "/airports/:id/routes?destination=:airport_id&carrier=:carrier_id",
-      dataType: "json",
-      type : "GET",
-      success : function(r) {
-        console.log(r);
-      }
-    });
-  ```
-* **Notes:**
-	* If no carrier is specified then the information about all carriers related to the routes are returned else only information about the specific carrier are returned.
+## What's included
+
+Within the download you'll find the following directories and files, logically grouping common assets and providing both compiled and minified variations. You'll see something like this:
+
+```
+CoreUI-React#v2.0.0
+├── public/          #static files
+│   ├── assets/      #assets
+│   └── index.html   #html temlpate
+│
+├── src/             #project root
+│   ├── containers/  #container source
+│   ├── scss/        #user scss/css source
+│   ├── views/       #views source
+│   ├── App.js
+│   ├── App.test.js
+│   ├── index.js
+│   ├── _nav.js      #sidebar config
+│   └── routes.js    #routes config
+│
+└── package.json
+```
+
+## Documentation
+
+The documentation for the CoreUI  Admin Template is hosted at our website [CoreUI for React](https://coreui.io/react/)
+
+
+## Contributing
+
+Please read through our [contributing guidelines](https://github.com/coreui/coreui-free-react-admin-template/blob/master/CONTRIBUTING.md). Included are directions for opening issues, coding standards, and notes on development.
+
+Editor preferences are available in the [editor config](https://github.com/coreui/coreui-free-react-admin-template/blob/master/.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
+
+## Versioning
+
+For transparency into our release cycle and in striving to maintain backward compatibility, CoreUI Free Admin Template is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+
+See [the Releases section of our project](https://github.com/coreui/coreui-free-react-admin-template/releases) for changelogs for each release version.
+
+## Creators
+
+**Łukasz Holeczek**
+* <https://twitter.com/lukaszholeczek>
+* <https://github.com/mrholek>
+
+**Andrzej Kopański**
+* <https://github.com/xidedix>
+
+## Community
+
+Get updates on CoreUI's development and chat with the project maintainers and community members.
+
+- Follow [@core_ui on Twitter](https://twitter.com/core_ui).
+- Read and subscribe to [CoreUI Blog](https://coreui.ui/blog/).
+
+### Community Projects
+
+Some of projects created by community but not maintained by CoreUI team.
+
+* [NuxtJS + Vue CoreUI](https://github.com/muhibbudins/nuxt-coreui)
+* [Colmena](https://github.com/colmena/colmena)
+* [mvelosop/AspNetCore2CoreUI](https://github.com/mvelosop/AspNetCore2CoreUI)
+
+## Copyright and license
+
+copyright 2018 creativeLabs Łukasz Holeczek. Code released under [the MIT license](LICENSE).
+There is only one limitation you can't can’t re-distribute the CoreUI as stock. You can’t do this if you modify the CoreUI. In past we faced some problems with persons who tried to sell CoreUI based templates.
+
+## Support CoreUI Development
+
+CoreUI is an MIT licensed open source project and completely free to use. However, the amount of effort needed to maintain and develop new features for the project is not sustainable without proper financial backing. You can support development by donating on [PayPal](https://www.paypal.me/holeczek), buying [CoreUI Pro Version](https://coreui.io/pro) or buying one of our [premium admin templates](https://genesisui.com/?support=1).
+
+As of now I am exploring the possibility of working on CoreUI fulltime - if you are a business that is building core products using CoreUI, I am also open to conversations regarding custom sponsorship / consulting arrangements. Get in touch on [Twitter](https://twitter.com/lukaszholeczek).
