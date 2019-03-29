@@ -2,12 +2,12 @@
 
 ## Introduction
 The main objective of this project was to develop a application of airports and carriers in the USA by applying methods and Web principles discussed during the course of Web Engineering (WBCS18002.2018-2019.2A). The dataset was provided by CORGIS dataset project.
-By understanding the concepts of Front-end and Back-end, it was possible to deliver a functional and simple demo that allows the user to find general or specific information of airports, routes,statistics and carriers. It also extends the possibility of implementing future features.
+By understanding the concepts of Front-end and Back-end, it was possible to deliver a functional and simple demo that allows the user to find general or specific information of airports, routes, statistics and carriers. It also extends the possibility of implementing future features.
  
 
 ##  Requirements to Run
-* Docker installed
-
+* Docker
+* Docker Compose
 
 
 ## Overview of the Web app architecture.
@@ -19,6 +19,7 @@ By understanding the concepts of Front-end and Back-end, it was possible to deli
 * The database was populated using the API itself by POST requests.
 * The front-end was built using Facebook's React framework which efficiently update and render components and has a very simple design views.
 * The integration between the different codebase (Python and JavaScript) was done using the library Axios, a promise based HTTP client for the browser and node.js with supports http requests and intercepts request and response.
+* The API connects to a PostgreSQL database and the Web App uses the API to get data.
 
 ## Useful Links:
 Here's a list of useful links regarding the API so far.

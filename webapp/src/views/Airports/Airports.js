@@ -6,26 +6,12 @@ import {
 	CardFooter,
 	Button,
 	CardHeader,
-	Row,
 	Col,
-	Form,
-	FormGroup,
-	Input,
-	InputGroup,
-	InputGroupAddon,
-	InputGroupText,
 } from 'reactstrap';
-import { Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Select from 'react-select';
 import axios from 'axios';
 import qs from 'query-string';
-
-
-const options = [
-	{ value: 'chocolate', label: 'Chocolate' },
-	{ value: 'strawberry', label: 'Strawberry' },
-	{ value: 'vanilla', label: 'Vanilla' }
-];
 
 class Airports extends Component {
 	_isMounted = false;
