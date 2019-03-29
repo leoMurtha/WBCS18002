@@ -116,11 +116,11 @@ class SelectDate extends Component {
               if (this._isMounted) {
                 this.setState({ destination_data: res_d.data.minimal_statistics });
 
-
+                this.calculateBarChart()
               }
             });
 
-          this.calculateBarChart()
+          
         }
       });
 
