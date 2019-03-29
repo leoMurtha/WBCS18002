@@ -1,16 +1,6 @@
 version: '3'
 
 services:
-    webapp:
-        restart: always
-        image: node:latest
-        volumes:
-            - ./webapp:/webapp/
-        working_dir: /webapp
-        command: bash -c "npm install && npm rebuild node-sass && npm start"
-        ports:
-          - 3000:3000
-
 
     database:
         restart: always
