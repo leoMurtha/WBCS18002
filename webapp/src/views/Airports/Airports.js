@@ -6,14 +6,7 @@ import {
 	CardFooter,
 	Button,
 	CardHeader,
-	Row,
 	Col,
-	Form,
-	FormGroup,
-	Input,
-	InputGroup,
-	InputGroupAddon,
-	InputGroupText,
 } from 'reactstrap';
 import { Route, Link } from 'react-router-dom';
 import Select from 'react-select';

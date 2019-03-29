@@ -34,7 +34,7 @@ class Jumbotrons extends Component {
           <Col>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i><strong>Jumbotron</strong>
+                <i className="fa fa-spin-circle-o-notch"></i><strong>Jumbotron</strong>
                 <small> fluid</small>
               </CardHeader>
               <CardBody>
